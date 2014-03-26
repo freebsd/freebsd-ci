@@ -68,7 +68,7 @@ do
     fi
     
     echo "Starting BHyve virtual machine named '${VM}'.  Use 'cu -l ${CONS_B}' to access console"
-    cmd="/usr/sbin/bhyveload -m 4G -d ${IMG} -c ${CONS_A} ${VM}"
+    cmd="/usr/sbin/bhyveload -m ${MEM} -d ${IMG} -c ${CONS_A} ${VM}"
     $cmd
     ret=$?
     if [ $ret -ne 0 ]; then
@@ -77,7 +77,7 @@ do
     fi
     ifconfig ${BRIDGE} up
     touch ${CONS_A}
-    cmd="/usr/sbin/bhyve -c 8 -m 4G -A -H -P -g 0 -s 0:0,hostbridge -s 1:0,lpc -s 2:0,virtio-net,${TAP},mac=${MAC} -s 3:0,virtio-blk,${IMG} -l com1,${CONS_A} ${VM}"
+    cmd="/usr/sbin/bhyve -c ${CPU} -m ${MEM} -A -H -P -g 0 -s 0:0,hostbridge -s 1:0,lpc -s 2:0,virtio-net,${TAP},mac=${MAC} -s 3:0,virtio-blk,${IMG} -l com1,${CONS_A} ${VM}"
     $cmd &
     ifconfig ${BRIDGE} up
     sleep 5

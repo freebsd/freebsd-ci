@@ -58,6 +58,7 @@
     <url href="https://jenkins.FreeBSD.org">Jenkins CI server in FreeBSD cluster</url>
     <url href="https://wiki.freebsd.org/Jenkins#Jenkins_for_FreeBSD_status">Jenkins on FreeBSD project status</url>
     <url href="https://wiki.freebsd.org/Jenkins#Presentations_and_Working_Groups">Video and slides of March 13, 2014 presentation at Bay Area FreeBSD User Group (BAFUG)</url>
+    <url href="http://empt1e.blogspot.ru/2014/03/using-jenkins-libvirt-slave-plugin-with.html">Jenkins, libvirt, and bhyve</url>
     <url href="http://jenkins-ci.org">Jenkins Continuous Integration</url>
     <url href="http://www.ansible.com">Ansible</url>
   </links>
@@ -147,6 +148,10 @@
        builds the ports tree using poudriere.</li>
     </ul>
 
+    <p>At the end of March, Roman Bogorodskiy reported to jenkins-admin that
+       he has successfully run the Jenkins libvirt plugin with his libvirt
+       modifications to integrate with bhyve.  Roman provided a link to a blog
+       posting where he described his experience.</p>
   </body>
 
   <help>

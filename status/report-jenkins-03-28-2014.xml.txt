@@ -1,13 +1,6 @@
-<!-- $FreeBSD: head/en_US.ISO8859-1/htdocs/news/status/report-sample.xml 43567 2014-01-19 12:40:13Z gabor $ -->
-
-<!-- Please send your reports to: monthly@FreeBSD.org -->
-
-<!-- Optional category tag.  -->
-<!-- Tags include: proj, doc, kern, bin, arch, ports, vendor, misc, soc -->
 <project cat='proj'>
   <title>Jenkins Continuous Integration for FreeBSD</title>
 
-  <!-- Required section -->
   <contact>
     <person>
       <name>

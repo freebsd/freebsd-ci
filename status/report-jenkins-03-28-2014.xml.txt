@@ -4,7 +4,6 @@
   <contact>
     <person>
       <name>
-      <!-- For persons -->
 	<given>Craig</given>
 	<common>Rodrigues</common>
       </name>
@@ -57,7 +56,6 @@
 
   <links>
     <url href="https://jenkins.FreeBSD.org">Jenkins CI server in FreeBSD cluster</url>
-    <url href="https://jenkins.mouf.net">Prototype of Jenkins build of FreeBSD ports, using poudriere</url>
     <url href="https://wiki.freebsd.org/Jenkins#Jenkins_for_FreeBSD_status">Jenkins on FreeBSD project status</url>
     <url href="https://wiki.freebsd.org/Jenkins#Presentations_and_Working_Groups">Video and slides of March 13, 2014 presentation at Bay Area FreeBSD User Group (BAFUG)</url>
 
@@ -117,8 +115,7 @@
     <p>Craig assembled a team of volunteers, jenkins-admin, to help
        maintain jenkins.FreeBSD.org and expand the use of Jenkins CI used
        in the FreeBSD cluster.  jenkins-admin consists of
-       R. Tyler Croy, Li-Wen Hsu, Steve Kreuzer, Craig Rodrigues, and
-       Steve Wills.</p>
+       the following people working in the following areas:</p>
 
     <ul>
     <li>R. Tyler Croy is both a FreeBSD developer and a Jenkins developer.
@@ -132,6 +129,12 @@
        Li-Wen set up a Jenkins build which rans the scan-build
        static analyzer which is part of LLVM.</li>
 
+    <li>Steve Kreuzer has experience administering Jenkins systems.
+       Steve set up several builds on jenkins.FreeBSD.org, including
+       a Jenkins build of the FreeBSD documentation.
+       Steve is looking into automatic provisioning of VM's running
+       Jenkins in the FreeBSD cluster using Ansible.</li>
+
     <li>Craig Rodrigues will be running a Continuous Testing working
        group at the FreeBSD Devsummit in Ottawa on May 15, 2014.
        Craig will also give a Jenkins presentation on May 17, 2014.
@@ -139,32 +142,25 @@
        integrate Jenkins and Kyua.  Craig and Julio have exchanged
        some e-mails about this on the freebsd-testing list.</li>
 
-    <li>Steve Kreuzer has experience administering Jenkins systems.
-       Steve set up several builds on jenkins.FreeBSD.org.
-       Steve is looking into automatic provisioning of VM's running
-       Jenkins in the FreeBSD cluster using Ansible.</li>
-
     <li>Steve Wills maintains the devel/jenkins-lts port.
-       Steve has implemented a proof of concept which has Jenkins
-       using poudriere to builds ports.  Steve Will set up a similar
-       system inside the FreeBSD cluster for building ports.</li>
+       Steve has implemented several builds at jenkins.FreeBSD.org
+       which detect commits to the FreeBSD ports repository, and then
+       builds the ports tree using poudriere.</li>
     </ul>
 
   </body>
 
   <help>
     <task>Obtain certificates for LDAP and web servers, to replace self-signed certificates.</task>
-    <task>Set up more Jenkins builds of FreeBSD src.</task>
-    <task>Set up more Jenkins builds of FreeBSD ports.</task>
+    <task>Set up more Jenkins builds of FreeBSD src on different branches and with different configurations.</task>
+    <task>Set up more Jenkins builds of FreeBSD ports on different FreeBSD versions.</task>
     <task>Integrate with Kyua, so that Jenkins can run Kyua tests,
           and report the results directly in the native Jenkins web UI
-          where test results are reported.
-      </task>
+          where test results are reported.</task>
     <task>Write scripts which can take a Jenkins build of FreeBSD, and boot
-          the results in a BHyve VM or on real hardware.
-      </task>
+          the results in a BHyve VM or on real hardware.</task>
     <task>Fix libpam4j on FreeBSD.</task>
-    <task>Lead Continuous Testing working group at Devsummit on May 15, 2014</task> 
-    <task>Give Jenkins presentation at BSDCan on May 17, 2014</task> 
+    <task>Continuous Testing working group at Devsummit on May 15, 2014</task> 
+    <task>Jenkins presentation at BSDCan on May 17, 2014</task> 
   </help>
 </project>

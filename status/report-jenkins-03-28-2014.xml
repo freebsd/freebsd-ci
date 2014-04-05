@@ -58,7 +58,6 @@
     <url href="https://jenkins.FreeBSD.org">Jenkins CI server in FreeBSD cluster</url>
     <url href="https://wiki.freebsd.org/Jenkins#Jenkins_for_FreeBSD_status">Jenkins on FreeBSD project status</url>
     <url href="https://wiki.freebsd.org/Jenkins#Presentations_and_Working_Groups">Video and slides of March 13, 2014 presentation at Bay Area FreeBSD User Group (BAFUG)</url>
-
     <url href="http://jenkins-ci.org">Jenkins Continuous Integration</url>
     <url href="http://www.ansible.com">Ansible</url>
   </links>
@@ -75,7 +74,7 @@
        FreeNAS project with Jenkins, and encouraged Craig to
        set up something similar for the FreeBSD project.
        With the help of the FreeBSD cluster administration team,
-       Craig set up a FreeBSD machine running two BHyve virtual machines,
+       Craig set up a FreeBSD machine running two bhyve virtual machines,
        jenkins-9.FreeBSD.org and jenkins-10.FreeBSD.org.  Craig set up
        software builds of CURRENT and several stable branches
        on these machines.  The status of these builds is visible via
@@ -98,8 +97,8 @@
        the FreeBSD VM to addrses this problem.  Konstantin Belousov
        committed these fixes to HEAD.  These fixes are being tested now.</p>
 
-    <p>During the setup of the BHyve VM's which run Jenkins processes,
-       Craig wrote scripts to start BHyve VM's from the rc.d bootup scripts.
+    <p>During the setup of the bhyve VM's which run Jenkins processes,
+       Craig wrote scripts to start bhyve VM's from the rc.d bootup scripts.
        Craig committed those scripts to github.</p>  
 
     <p>On February 19, 2014, Craig sent a HEADSUP e-mail to developers@
@@ -158,7 +157,7 @@
           and report the results directly in the native Jenkins web UI
           where test results are reported.</task>
     <task>Write scripts which can take a Jenkins build of FreeBSD, and boot
-          the results in a BHyve VM or on real hardware.</task>
+          the results in a bhyve VM or on real hardware.</task>
     <task>Fix libpam4j on FreeBSD.</task>
     <task>Continuous Testing working group at Devsummit on May 15, 2014</task> 
     <task>Jenkins presentation at BSDCan on May 17, 2014</task> 

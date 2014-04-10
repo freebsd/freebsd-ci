@@ -49,13 +49,13 @@ load_rc_config "$name"
 
 bhyvevm_start()
 {
-	/vm/scripts/start_vm.sh CONF=/vm/10.0/vm1.conf
-	/vm/scripts/start_vm.sh CONF=/vm/9.2/vm2.conf
+	/vm/freebsd-ci/vm/scripts/start_vm.sh CONF=/vm/freebsd-ci/vm/10.0/vm1.conf
+	/vm/freebsd-ci/vm/scripts/start_vm.sh CONF=/vm/freebsd-ci/vm/9.2/vm2.conf
 }
 
 bhyvevm_stop()
 {
-	/vm/scripts/stop_vm.sh CONF=/vm/10.0/vm1.conf
-	/vm/scripts/stop_vm.sh CONF=/vm/9.2/vm2.conf
+	/vm/freebsd-ci/vm/scripts/stop_vm.sh CONF=/vm/freebsd-ci/vm/10.0/vm1.conf
+	/vm/freebsd-ci/vm/scripts/stop_vm.sh CONF=/vm/freebsd-ci/vm/9.2/vm2.conf
 }
 run_rc_command "$1"

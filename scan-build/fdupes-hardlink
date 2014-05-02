@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Only works for files without meta chars!!! FIXME
+
+dir=$1; shift
+
+if [ -z "$dir" ] || [ ! -d "$dir" ]; then
+  exit 1
+fi
+
+fdupes -1Hqr "$dir" | \
+while read f x; do
+  set -- $x
+  echo "$f"
+  for dupe; do
+    echo "  <- $dupe"
+    rm "$dupe"
+    ln "$f" "$dupe"
+  done
+  echo
+done

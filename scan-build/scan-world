@@ -1,0 +1,180 @@
+#!/bin/sh
+
+DRY=
+
+WORKDIR=`pwd -P`
+
+SCAN_BUILD=${WORKDIR}/llvm/Release/bin/scan-build
+
+SRCDIR=${WORKDIR}/src
+export OBJ=${WORKDIR}/obj
+export MAKEOBJDIRPREFIX=${OBJ}
+DEST=${WORKDIR}/dest
+#RELEASE=Release
+SRCCONF=${WORKDIR}/freebsd-scan-build/src.conf
+MYFLAGS="__MAKE_CONF=/dev/null -m $SRCDIR/share/mk SRCCONF=${SRCCONF} -DMODULES_WITH_WORLD"
+#MYFLAGS="$MYFLAGS -DWITH_GNUCXX -DWITH_GCC COMPILER_TYPE=gcc"
+#MYFLAGS="$MYFLAGS -DWITHOUT_CLANG -DWITHOUT_LLVM"
+DATE=`date "+%Y-%m-%d"`
+ARCH=`uname -p`
+JFLAG=-j4
+
+#LOCK=/tmp/scan.lock
+#trap 'rm -f ${LOCK} ; exit 1' 1 2 3 15
+#if ! shlock -p $$ -f ${LOCK}; then
+#    echo "Locked by `cat ${LOCK}`, running too long? Please fix ..." >&2
+#    exit 1
+#fi
+
+do_scan()
+{
+    local dir noclean output
+    dir=$1; shift
+    noclean=$1; shift
+    output=$1; shift
+    if [ -z "$DRY" ]; then
+	mkdir -p $output || exit 1
+	if [ -z "$noclean" ]; then
+	    make ${JFLAG} $MYFLAGS clean
+	    make ${JFLAG} $MYFLAGS obj
+	fi
+	echo "-=-> scanning $dir at `date "+%Y-%m-%d %H:%M:%S"`"
+	/usr/bin/time -l \
+	env CCC_ANALYZER_CHECKER_DEADCODE=0 \
+	${SCAN_BUILD} \
+	    --use-cc ${OBJ}${SRCDIR}/tmp/usr/bin/cc \
+	    --use-c++ ${OBJ}${SRCDIR}/tmp/usr/bin/c++ \
+	    -k -o $output make ${JFLAG} $MYFLAGS \
+	    CROSS_COMPILER_PREFIX=${OBJ}${SRCDIR}/tmp/usr/bin/ "$@"
+	rmdir $output 2>/dev/null
+    else
+	echo "$dir -> $output"
+    fi
+}
+
+recurse_dirs()
+{
+    local prefix noclean dir subdirs srcpath limit depth
+    limit=2
+    prefix=$1; shift
+    noclean=$1; shift
+    set -- $*
+    for dir in $*; do
+	srcpath=$prefix/$dir
+	srcpath=${srcpath#/}
+	# only recurse, if 'make -n' returns exactly one line machting
+	# /^for entry in/, as then there's nothing to do here, but there are subdirs
+	(
+	cd $dir
+	depth=`echo "/$srcpath" |tr -Cd /`
+	# pattern was found, and number of lines==1
+	#echo $depth "${#depth}" "$limit"
+	if [ "${#depth}" -le "$limit" ] && \
+	    # grab MK_foo settings from head, not /usr/share/mk
+	    make $MYFLAGS -n | awk '/for entry in/{found=1} END{if(found) exit NR-1; else exit 1}'; then
+	    subdirs=`make $MYFLAGS -V SUBDIR`
+	    recurse_dirs "$srcpath" "$noclean" `echo $subdirs`
+	else
+	    do_scan "$srcpath" "$noclean" $DEST/${SRCDIR##*/}/$(echo $srcpath|tr / .)
+	fi
+	)
+    done
+}
+
+echo "-=-> scan-world started at `date "+%Y-%m-%d %H:%M:%S"`"
+
+#if [ -z "$DRY" ]; then
+#    cd /data/src/llvm
+##./configure --enable-optimized --disable-assertions --disable-docs --enable-targets=host \
+##  --with-c-include-dirs=/usr/obj$SRCDIR/tmp/usr/include \
+##  --with-cxx-include-root=/usr/obj$SRCDIR/tmp/usr/include
+#    gmake update
+#
+#    echo "-=-> Building LLVM"
+#    if ! gmake ${JFLAG}; then
+#	if ! gmake; then
+#	    echo "Error building LLVM, bailing out" 2>&1
+#	    exit 1
+#	fi
+#    fi
+#    # Omit the dead store checker, too many positives to be useful
+#    cp -p ./tools/clang/tools/scan-build/scan-build ./tools/clang/tools/scan-build/scanview.css \
+#	    ./tools/clang/tools/scan-build/sorttable.js $RELEASE/bin
+##    && \
+##	    sed -i.bak -e '/check-dead-stores/d' -e '/check-idempotent-operations/d' \
+##	    -e '/check-objc-self-init/d' $RELEASE/bin/scan-build
+#    # Turn off chatty/verbose progress output
+#    cp -p ./tools/clang/tools/scan-build/ccc-analyzer $RELEASE/bin && \
+#	    ln -sf ccc-analyzer $RELEASE/bin/c++-analyzer
+##    && \
+##	    sed -i.bak -e '/analyzer-display-progress/d' $RELEASE/bin/ccc-analyzer
+#    echo "-=-> Updating source in $SRCDIR"
+#    cd $SRCDIR && svn up
+#    if [ $? != 0 ]; then
+#	echo "Error during bootstrap" >&2
+#	exit 1
+#    fi
+#fi
+
+cd $SRCDIR || exit 1
+
+if [ -z "$DRY" ]; then
+    echo "-=-> Populating .OBJDIR"
+    rm -rf "$OBJ"
+
+    echo "-=-> Preparing build"
+    make $MYFLAGS _worldtmp _legacy _bootstrap-tools _cleanobj _obj _build-tools _cross-tools
+    echo "-=-> Preparing build (includes)"
+    make $MYFLAGS _includes
+    echo "-=-> Preparing build (libraries)"
+    make $MYFLAGS _libraries
+    echo "-=-> Preparing build (depend)"
+    make $MYFLAGS CROSS_COMPILER_PREFIX=${OBJ}${SRCDIR}/tmp/usr/bin/ _depend
+    if [ $? != 0 ]; then
+	echo "Error during bootstrap" >&2
+	exit 1
+    fi
+fi
+
+# Need to have includes, as we hardcode clang for it, so no cleaning
+echo "-=-> Building everything"
+do_scan "$SRCDIR" "noclean" $DEST/${SRCDIR##*/}/WORLD -DNO_CLEAN -DNO_MODULES everything
+
+echo "-=-> Building everything (again, individually)"
+recurse_dirs "" "" lib libexec bin games cddl gnu kerberos5 sbin secure sys usr.bin usr.sbin
+(
+  for srcpath in cddl/usr.sbin/plockstat usr.bin/setchannel; do
+      cd $SRCDIR/$srcpath
+      do_scan "$srcpath" "" $DEST/${SRCDIR##*/}/$(echo $srcpath|tr / .)
+  done
+)
+
+echo "-=-> Building GENERIC kernel"
+do_scan "$SRCDIR" "noclean" $DEST/${SRCDIR##*/}/SYS.GENERIC -DNO_MODULES -DNO_CLEAN KERNCONF=GENERIC buildkernel
+
+echo "-=-> Building LINT kernel"
+make -C sys/$ARCH/conf LINT
+do_scan "$SRCDIR" "noclean" $DEST/${SRCDIR##*/}/SYS.LINT -DNO_MODULES -DNO_CLEAN KERNCONF=LINT buildkernel
+
+echo "-=-> scan-world finished at `date "+%Y-%m-%d %H:%M:%S"`"
+
+if [ -z "$DRY" ]; then
+    cd $DEST/${SRCDIR##*/} || exit 1
+
+    echo "-=-> Renaming output dirs"
+    find . -type d -name "${DATE}-*-[1-9]" -prune -exec sh -c 'd={}; mv "$d" "${d%-??????-*-[1-9]*}-'$ARCH'"' \;
+
+    #echo "-=-> Linking to LATEST"
+    #rm -rf LATEST
+    #mkdir LATEST
+#    find * -type d -name "${DATE}-$ARCH" -prune -exec sh -c 'd={}; ln -s "../$d" "LATEST/`dirname $d`"' \;
+
+    #echo "-=-> Original size"
+    #du -kh -d 0 ${DEST}
+#    find . -not -name \*.gz -not -name \*.log -not -name README.html -not -name HEADER.html -type f -exec gzip -9n {} \;
+#    echo "-=-> After compression"
+#    du -kh -d 0 ${DEST}
+    #freebsd-scan-build/fdupes-hardlink ${DEST} > /dev/null
+    #echo "-=-> After deduping"
+    #du -kh -d 0 ${DEST}
+fi

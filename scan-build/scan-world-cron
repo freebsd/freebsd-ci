@@ -1,0 +1,29 @@
+#!/bin/sh
+
+today="`date +%Y-%m-%d`"
+buildlog="$today-`uname -p`.log"
+
+cd /data/scan-build/freebsd-head && scan-world >$buildlog 2>&1
+
+if [ $? != 0 ]; then
+    echo "Error during scan-world" >&2
+    tail -100 $buildlog | mail -s"scan-world error" uqs@spoerlein.net
+    exit 1
+fi
+
+count=`egrep '^scan-build: [0-9]+ bugs found\.' $buildlog | awk '{sum+=$2} END{print sum}'`
+notfound=`egrep -c 'No such file or directory' $buildlog`
+dontknow=`egrep -c 'don.t know how to make' $buildlog`
+
+if [ -z "$count" ] || [ ! "$count" -gt 0 ]; then
+    echo "Error during scan-world, no bugs found" >&2
+    tail -100 $buildlog | mail -s"scan-world error" uqs@spoerlein.net
+    exit 1
+fi
+
+[ -n "$count" ] && echo "<div id=\"left\">$today</div><div id=\"center\">$count potential bugs found</div><div id=\"clear\"></div>" >> HEADER.html
+
+( echo "Updated #FreeBSD and #llvm #clang scan-build results at http://scan.freebsd.your.org/freebsd-head claiming $count bugs found"
+  echo "notfound=$notfound dontknow=$dontknow date=$today"
+  df -m /data/scan-build
+) | mail -s"`hostname` finished scan-world" uqs@spoerlein.net

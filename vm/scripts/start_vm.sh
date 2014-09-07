@@ -51,7 +51,7 @@ fi
 
 . ${CONF}
 
-PIDFILE=/var/run/vm/${VM}.pid
+PIDFILE=/var/run/vmm/${VM}.pid
 if [ -f ${PIDFILE} ]; then
     PID=$(pgrep -F $PIDFILE bhyve 2> /dev/null)
     if [ -n "$PID" ]; then
@@ -68,7 +68,7 @@ if [ -e /dev/vmm/${VM} ]; then
 	/usr/sbin/bhyvectl --vm=${VM} --destroy
 fi
     
-mkdir -p /var/run/vm
+mkdir -p /var/run/vmm
 (
 while true
 do  
@@ -83,7 +83,7 @@ do
     fi
     ifconfig ${BRIDGE} up
     touch ${CONS_A}
-    pidfile="/var/run/vm/${VM}.pid"
+    pidfile="/var/run/vmm/${VM}.pid"
     cmd="/usr/sbin/bhyve -c ${CPU} -m ${MEM} -A -H -P -g 0 -s 0:0,hostbridge -s 1:0,lpc -s 2:0,virtio-net,${TAP},mac=${MAC} -s 3:0,virtio-blk,${IMG} -l com1,${CONS_A} ${VM}"
     $cmd &
     cmd_pid="$!"

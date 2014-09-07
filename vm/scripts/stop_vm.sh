@@ -56,7 +56,7 @@ fi
 
 echo "Stopping BHyve virtual machine named '$VM'"
 
-PIDFILE=/var/run/vm/${VM}.pid
+PIDFILE=/var/run/vmm/${VM}.pid
 if [ -f $PIDFILE ]; then
     PID=`pgrep -F $PIDFILE bhyve 2> /dev/null`
 fi

@@ -27,18 +27,18 @@
 #
 
 
-usage()                                                                                                        
-{                                                                                                              
-    echo ""                                                                                                    
-    echo "$0 CONF=[configuration file]"                                                                        
-    echo""                                                                                                     
-}                                                                                                              
-                                                                                                               
-# Allow users to pass in from the command line                                                                 
-#   $0  A=VAL1 B=VAL2                                                                                          
-#                                                                                                              
-# which will set the A and B variables                                                                         
-for f in $@;                                                                                                   
+usage()
+{
+    echo ""
+    echo "$0 CONF=[configuration file]"
+    echo""
+}
+
+# Allow users to pass in from the command line
+#   $0  A=VAL1 B=VAL2
+#
+# which will set the A and B variables
+for f in $@;
 do
     if [ "$f" != ${f%%=*} ]; then
         eval $f
@@ -56,23 +56,31 @@ fi
 
 echo "Stopping BHyve virtual machine named '$VM'"
 
-PID=`pgrep bhyve`
-if [ -n "$PID" ]; then
-    kill $PID
+PIDFILE=/var/run/vm/${VM}.pid
+if [ -f $PIDFILE ]; then
+    PID=`pgrep -F $PIDFILE bhyve 2> /dev/null`
 fi
 
-COUNT=0
-while [ $COUNT -lt 20 -a -n "$PID" ] ; do
-    PID2=`pgrep bhyve`
-    if [ "$PID" != "$PID2" ]; then
-        break
-    fi
-    sleep 5
-done
+if [ -z "$PID" ]; then
+    echo "${VM} is not running"
+fi
+ 
+if [ -n "$PID" ]; then
+    COUNT=0
+    kill $PID
+    while [ $COUNT -lt 20 ] ; do
+        PID2=$(pgrep -F $PIDFILE bhyve 2> /dev/null) 
+        if [ -z "$PID2" ]; then
+            break
+        fi
+        sleep 5
+    done
+fi
 
 if [ -e /dev/vmm/${VM} ]; then
     /usr/sbin/bhyvectl --vm=${VM} --destroy
 fi
-touch /var/tmp/${VM}.vm.stop
+
+rm -f $PIDFILE
 
 exit 0

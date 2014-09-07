@@ -51,37 +51,48 @@ fi
 
 . ${CONF}
 
-rm -f /var/tmp/${VM}.vm.stop
+PIDFILE=/var/run/vm/${VM}.pid
+if [ -f ${PIDFILE} ]; then
+    PID=$(pgrep -F $PIDFILE bhyve 2> /dev/null)
+    if [ -n "$PID" ]; then
+        echo ""
+        echo "${PIDFILE} exists.  Not starting ${VM}"
+        echo ""
+        exit 1
+    else
+        rm -f ${PIDFILE}
+    fi
+fi
 
+if [ -e /dev/vmm/${VM} ]; then
+	/usr/sbin/bhyvectl --vm=${VM} --destroy
+fi
+    
+mkdir -p /var/run/vm
 (
 while true
 do  
-    if [ -f /var/tmp/${VM}.vm.stop ]; then
-        echo ""
-        echo "/var/tmp/${VM}.vm.stop exists.  Not starting ${VM}"
-        echo ""
-        exit 1
-    fi
     touch ${CONS_A}
-    if [ -e /dev/vmm/${VM} ]; then
-    	/usr/sbin/bhyvectl --vm=${VM} --destroy
-    fi
-    
     echo "Starting BHyve virtual machine named '${VM}'.  Use 'cu -l ${CONS_B}' to access console"
     cmd="/usr/sbin/bhyveload -m ${MEM} -d ${IMG} -c ${CONS_A} ${VM}"
     $cmd
     ret=$?
     if [ $ret -ne 0 ]; then
-    	echo "[FAILED]: $cmd"
-    	exit $ret
+        echo "[FAILED]: $cmd"
+        exit $ret
     fi
     ifconfig ${BRIDGE} up
     touch ${CONS_A}
+    pidfile="/var/run/vm/${VM}.pid"
     cmd="/usr/sbin/bhyve -c ${CPU} -m ${MEM} -A -H -P -g 0 -s 0:0,hostbridge -s 1:0,lpc -s 2:0,virtio-net,${TAP},mac=${MAC} -s 3:0,virtio-blk,${IMG} -l com1,${CONS_A} ${VM}"
     $cmd &
-    ifconfig ${BRIDGE} up
-    sleep 5
-    echo "~." | cu -l ${CONS_B}
+    cmd_pid="$!"
+    echo -n $cmd_pid > ${pidfile}
     wait %1
+    bhyve_status=$?
+    rm -f ${pidfile}
+    if [ $bhyve_status -ne 0 ]; then
+        break
+    fi
 done
 ) &

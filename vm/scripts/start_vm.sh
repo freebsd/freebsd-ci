@@ -71,7 +71,9 @@ fi
 mkdir -p /var/run/vmm
 (
 while true
-do  
+do
+    CONS_A=/dev/nmdm${VM}A
+    CONS_B=${CONS_A%%A}B  
     touch ${CONS_A}
     echo "Starting BHyve virtual machine named '${VM}'.  Use 'cu -l ${CONS_B}' to access console"
     cmd="/usr/sbin/bhyveload -m ${MEM} -d ${IMG} -c ${CONS_A} ${VM}"

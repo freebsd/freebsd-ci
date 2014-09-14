@@ -16,6 +16,7 @@ These scripts are used to start BSD Hypervisor (BHyve) VM's on boot.
 
 1. Put something like the following in /etc/rc.conf
 
+```
     #####################################################
     # List of bhyve vms
     #####################################################
@@ -23,4 +24,4 @@ These scripts are used to start BSD Hypervisor (BHyve) VM's on boot.
     bhyvevm_list="jenkins10 jenkins9"
     bhyvevm_jenkins10_conf="/vm/freebsd-ci/vm/10.0/jenkins10.conf"
     bhyvevm_jenkins9_conf="/vm/freebsd-ci/vm/9.2/jenkins9.conf"
-
+```

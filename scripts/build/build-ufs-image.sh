@@ -39,6 +39,10 @@ if [ -z "$BUILD_ROOT" ]; then
     exit 1 
 fi
 
+if [ -z "$PACKAGE_ROOT" ]; then
+    PACKAGE_ROOT=$WORKSPACE
+fi
+
 export MAKEOBJDIRPREFIX=/usr/obj
 cd $BUILD_ROOT
 

@@ -88,7 +88,8 @@ def runTest():
     print
     ret = os.system(cmd)
 
-    cmd = "bhyveload -m %s -d %s %s" % (test_config['ram'], test_config['disks'][0], test_config['vm_name'])
+    cmd = "bhyveload -m %s -d %s %s" % \
+          (test_config['ram'], test_config['disks'][0], test_config['vm_name'])
     print(cmd)
     child = pexpect.spawn(cmd)
     child.logfile = sys.stdout

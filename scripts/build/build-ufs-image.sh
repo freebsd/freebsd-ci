@@ -47,7 +47,7 @@ export MAKEOBJDIRPREFIX=/usr/obj
 cd $BUILD_ROOT
 
 if [ -z "$__MAKE_CONF" ]; then
-    if [ -f $BUILD_ROOT/make.conf ]
+    if [ -f $BUILD_ROOT/make.conf ]; then
         __MAKE_CONF=$BUILD_ROOT/make.conf
     else
         __MAKE_CONF=/etc/make.conf

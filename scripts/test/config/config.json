@@ -1,0 +1,16 @@
+{
+    "vm_name": "vm_test",
+    "username": "root",
+    "url": "http://XXXXXXXX",
+    "ip": "XXXXXXXX",
+    "disks": [
+        "/net/jenkins-10.freebsd.org/builds/FreeBSD_HEAD-package/test.img"
+    ],
+    "password": "XXXXXXXX",
+    "ram": "2G",
+    "tap": "tap0",
+    "bridge": "bridge0",
+    "interface": "em0",
+    "mac": "58:9c:fc:00:00:2e",
+    "iso_bootloader": "freebsd"
+}

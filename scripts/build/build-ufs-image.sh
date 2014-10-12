@@ -46,11 +46,19 @@ fi
 export MAKEOBJDIRPREFIX=/usr/obj
 cd $BUILD_ROOT
 
+if [ -z "$__MAKE_CONF" ]; then
+    if [ -f $BUILD_ROOT/make.conf ]
+        __MAKE_CONF=$BUILD_ROOT/make.conf
+    else
+        __MAKE_CONF=/etc/make.conf
+    fi
+fi
+
 sudo rm -fr ${PACKAGE_ROOT}/package
 mkdir -p ${PACKAGE_ROOT}/package
-sudo make installworld NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package
-sudo make  installkernel NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package
-sudo make  distribution NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package
+sudo make installworld NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package __MAKE_CONF=${__MAKE_CONF}
+sudo make  installkernel NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package __MAKE_CONF=${__MAKE_CONF}
+sudo make  distribution NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package __MAKE_CONF=${__MAKE_CONF}
 
 cd $WORKSPACE
 rm -fr tmp

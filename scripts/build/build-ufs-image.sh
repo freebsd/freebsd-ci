@@ -24,6 +24,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 set -e
+set -x
 
 # Jenkins passes parameters to jobs via environment
 # variables, so we need to set these before running the

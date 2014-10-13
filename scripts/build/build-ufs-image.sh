@@ -76,17 +76,17 @@ fdesc                   /dev/fd         fdescfs rw              0       0
 /dev/ufs/TESTROOT             /            ufs    rw              1       1
 EOF
 ) > tmp/fstab
-sudo cp tmp/fstab ${PACKAGE_ROOT}/package/etc/fstab
-sudo cp /etc/resolv.conf ${PACKAGE_ROOT}/package/etc/resolv.conf
+sudo cp tmp/fstab ${PACKAGE_ROOT}/etc/fstab
+sudo cp /etc/resolv.conf ${PACKAGE_ROOT}/etc/resolv.conf
 
 # This hack is required until local fixes to kyua make it into a release
 # version, so we don't have to install our own version of kyua into the image
 if [ -z "$PKG_ARCHITECTURE" ]; then
     PKG_ARCHITECTURE=freebsd:11:x86:64
 fi
-sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT}/package install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash
-sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT}/package delete  -y -f kyua atf lutok
-sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT}/package add http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/atf-0.20_2.txz  http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/lutok-0.4_5.txz http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/kyua-0.10,3.txz
+sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash
+sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} delete  -y -f kyua atf lutok
+sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} add http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/atf-0.20_2.txz  http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/lutok-0.4_5.txz http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/kyua-0.10,3.txz
 
 sudo rm -fr ${IMAGE_ROOT}
 mkdir -p ${IMAGE_ROOT}

@@ -6,7 +6,6 @@
     "disks": [
         "/net/jenkins-10.freebsd.org/builds/Build-UFS-image/image/FreeBSD_HEAD/test.img"
     ],
-    "password": "XXXXXXXX",
     "ram": "2G",
     "tap": "tap0",
     "bridge": "bridge0",

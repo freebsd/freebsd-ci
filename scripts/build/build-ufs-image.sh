@@ -41,7 +41,11 @@ if [ -z "$BUILD_ROOT" ]; then
 fi
 
 if [ -z "$PACKAGE_ROOT" ]; then
-    PACKAGE_ROOT=$WORKSPACE
+    PACKAGE_ROOT=${WORKSPACE}/package/$(basename ${BUILD_ROOT})
+fi
+
+if [ -z "$IMAGE_ROOT" ]; then
+    IMAGE_ROOT=${WORKSPACE}/image/$(basename ${BUILD_ROOT})
 fi
 
 export MAKEOBJDIRPREFIX=/usr/obj
@@ -55,11 +59,11 @@ if [ -z "$__MAKE_CONF" ]; then
     fi
 fi
 
-sudo rm -fr ${PACKAGE_ROOT}/package
-mkdir -p ${PACKAGE_ROOT}/package
-sudo make installworld NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package __MAKE_CONF=${__MAKE_CONF}
-sudo make  installkernel NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package __MAKE_CONF=${__MAKE_CONF}
-sudo make  distribution NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT}/package __MAKE_CONF=${__MAKE_CONF}
+sudo rm -fr ${PACKAGE_ROOT}
+mkdir -p ${PACKAGE_ROOT}
+sudo make installworld NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
+sudo make  installkernel NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
+sudo make  distribution NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
 
 cd $WORKSPACE
 rm -fr tmp
@@ -84,6 +88,8 @@ sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT}/package install -y ports-mgmt
 sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT}/package delete  -y -f kyua atf lutok
 sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT}/package add http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/atf-0.20_2.txz  http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/lutok-0.4_5.txz http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/kyua-0.10,3.txz
 
-sudo rm -fr $WORKSPACE/test.img
-sudo makefs -t ffs -s 2g -o label=TESTROOT $WORKSPACE/test.img $WORKSPACE/package
-sudo chmod a+w $WORKSPACE/test.img
+sudo rm -fr ${IMAGE_ROOT}
+mkdir -p ${IMAGE_ROOT}
+sudo rm -fr ${IMAGE_ROOT}/test.img
+sudo makefs -t ffs -s 2g -o label=TESTROOT ${IMAGE_ROOT}/test.img $PACKAGE_ROOT
+sudo chmod a+w $IMAGE_ROOT/test.img

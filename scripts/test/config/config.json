@@ -4,7 +4,7 @@
     "url": "http://XXXXXXXX",
     "ip": "XXXXXXXX",
     "disks": [
-        "/net/jenkins-10.freebsd.org/builds/FreeBSD_HEAD-package/test.img"
+        "/net/jenkins-10.freebsd.org/builds/Build-UFS-image/image/FreeBSD_HEAD/test.img"
     ],
     "password": "XXXXXXXX",
     "ram": "2G",

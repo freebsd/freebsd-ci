@@ -107,19 +107,19 @@ def runTest():
     print(cmd)
     child2 = pexpect.spawn(cmd)
     child2.logfile = sys.stdout
-    child2.expect(['login:'])
+    child2.expect(['login:'], timeout=1200)
     child2.sendline("root")
     child2.expect("# ")
     child2.sendline("cd /usr/tests")
     child2.expect("# ")
     child2.sendline("kyua test")
-    child2.expect("# ", timeout=1200)
+    child2.expect("# ", timeout=3600)
     child2.sendline("kyua report --verbose --results-filter passed,skipped,xfail,broken,failed  --output test-report.txt")
     child2.expect("# ", timeout=600)
     child2.sendline("kyua report-junit --output=test-report.xml")
     child2.expect("# ")
     child2.sendline("shutdown -p now")
-    child2.expect(pexpect.EOF, 1000)
+    child2.expect(pexpect.EOF, timeout=1000)
 
 def checkpreReqBhyve():
     # Check if Bhyve module is loaded, and if we ran the script as superuser.

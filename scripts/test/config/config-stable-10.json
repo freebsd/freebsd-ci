@@ -1,0 +1,15 @@
+{
+    "vm_name": "vm_stable_10",
+    "username": "root",
+    "url": "http://XXXXXXXX",
+    "ip": "XXXXXXXX",
+    "disks": [
+        "/net/jenkins-10.freebsd.org/builds/Build-UFS-image/image/FreeBSD_stable_10/test.img"
+    ],
+    "ram": "2G",
+    "tap": "tap1",
+    "bridge": "bridge0",
+    "interface": "em0",
+    "mac": "58:9c:fc:00:00:2f",
+    "iso_bootloader": "freebsd"
+}

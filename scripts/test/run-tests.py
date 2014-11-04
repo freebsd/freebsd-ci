@@ -113,7 +113,7 @@ def runTest():
     child2.sendline("cd /usr/tests")
     child2.expect("# ")
     child2.sendline("kyua test")
-    child2.expect("# ", timeout=3600)
+    child2.expect("# ", timeout=7200)
     child2.sendline("kyua report --verbose --results-filter passed,skipped,xfail,broken,failed  --output test-report.txt")
     child2.expect("# ", timeout=600)
     child2.sendline("kyua report-junit --output=test-report.xml")

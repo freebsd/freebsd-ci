@@ -110,14 +110,20 @@ def runTest():
     child2.expect(['login:'], timeout=1200)
     child2.sendline("root")
     child2.expect("# ")
+
+    # Change the prompt to something more unique
+    prompt = "kyuatestprompt # "
+    child2.sendline("export PS1=\"%\"" % (prompt))
+    child2.expect(prompt)
+
     child2.sendline("cd /usr/tests")
-    child2.expect("# ")
+    child2.expect(prompt)
     child2.sendline("kyua test")
-    child2.expect("# ", timeout=3600)
+    child2.expect(prompt, timeout=3600)
     child2.sendline("kyua report --verbose --results-filter passed,skipped,xfail,broken,failed  --output test-report.txt")
-    child2.expect("# ", timeout=600)
+    child2.expect(prompt, timeout=600)
     child2.sendline("kyua report-junit --output=test-report.xml")
-    child2.expect("# ")
+    child2.expect(prompt)
     child2.sendline("shutdown -p now")
     child2.expect(pexpect.EOF, timeout=1000)
 

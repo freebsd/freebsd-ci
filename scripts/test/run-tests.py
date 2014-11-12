@@ -113,7 +113,7 @@ def runTest():
 
     # Change the prompt to something more unique
     prompt = "kyuatestprompt # "
-    child2.sendline("export PS1=\"%\"" % (prompt))
+    child2.sendline("set prompt=\"%s\"" % (prompt))
     child2.expect(prompt)
 
     child2.sendline("cd /usr/tests")

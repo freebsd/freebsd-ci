@@ -7,9 +7,10 @@ if [ -z "$WORKSPACE" ]; then
 	exit 1
 fi
 
+(
 cat <<EOF
 # Put make.conf entries here
-`echo -e "$MAKE_CONF_ENTRIES"`
+`echo -e "$MAKE_CONF_FILE"`
 EOF
 ) > ${WORKSPACE}/make.conf
 

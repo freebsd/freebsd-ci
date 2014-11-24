@@ -7,6 +7,9 @@ if [ -z "$WORKSPACE" ]; then
 	exit 1
 fi
 
+export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
+mkdir -p ${MAKEOBJDIRPREFIX}
+
 (
 cat <<EOF
 # Put make.conf entries here

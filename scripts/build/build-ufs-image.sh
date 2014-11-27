@@ -85,8 +85,6 @@ if [ -z "$PKG_ARCHITECTURE" ]; then
     PKG_ARCHITECTURE=freebsd:11:x86:64
 fi
 sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash
-sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} delete  -y -f kyua atf lutok
-sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} add http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/atf-0.20_2.txz  http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/lutok-0.4_5.txz http://people.freebsd.org/~rodrigc/kyua/pkg/${PKG_ARCHITECTURE}/kyua-0.10,3.txz
 
 sudo rm -fr ${IMAGE_ROOT}
 mkdir -p ${IMAGE_ROOT}

@@ -91,5 +91,5 @@ sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} add http://people.freebsd.org
 sudo rm -fr ${IMAGE_ROOT}
 mkdir -p ${IMAGE_ROOT}
 sudo rm -fr ${IMAGE_ROOT}/test.img
-sudo makefs -t ffs -s 2g -o label=TESTROOT ${IMAGE_ROOT}/test.img $PACKAGE_ROOT
+sudo makefs -t ffs -s 2g -o version=2,label=TESTROOT ${IMAGE_ROOT}/test.img $PACKAGE_ROOT
 sudo chmod a+w $IMAGE_ROOT/test.img

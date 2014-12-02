@@ -45,12 +45,6 @@ if [ -z "${VERSION}" -o -z "${ARCH}" -o -z "${PORTS_TREE}" ]; then
 	usage
 fi
 
-
-if [ -z `which wget` ]; then
-	echo "$0: wget is required in the path
-	exit 1;
-fi
-
 if [ -z `which poudriere` ]; then
 	echo "$0: poudriere is required in the path
 	exit 1;
@@ -96,7 +90,7 @@ sudo poudriere testport -I  -j ${JAIL_NAME}  -p ${PORTS_TREE} -o java/openjdk8
 
 
 echo "Preparing ${JAIL_PORT} to run jtreg"
-wget --no-check-certificate https://adopt-openjdk.ci.cloudbees.com/job/jtreg/lastStableBuild/artifact/jtreg4.1-b10.tar.gz
+fetch https://adopt-openjdk.ci.cloudbees.com/job/jtreg/lastStableBuild/artifact/jtreg4.1-b10.tar.gz
 sudo mv jtreg4.1-b10.tar.gz /usr/local/poudriere/data/build/${JAIL_PORT}/ref/root/
 sudo cp ${JAVA_CI_DIR}/files/jail-run-jtreg.sh  /usr/local/poudriere/data/build/${JAIL_PORT}/ref/root/
 

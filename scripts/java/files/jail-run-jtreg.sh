@@ -23,6 +23,16 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+while getopts "t:" opt; do
+    case $opt in
+        t )  TESTS="$OPTARG" ;;
+        ?)  ;;
+    esac
+done
+
+if [ -z "${TESTS}" ]; then
+    TESTS="nashorn,langtools,hotspot,jdk"
+fi
 
 
 HOME=/root
@@ -39,10 +49,12 @@ export WORKDIR=/wrkdirs/usr/ports/java/openjdk8/work
 rm -rf $WORKDIR/jtreg-work
 rm -rf $WORKDIR/reports
 
-for PACKAGE in jdk langtools hotspot nashorn
+for PACKAGE in `echo $TESTS | tr ',' ' '`
 do
+	echo $PACKAGE
 	$HOME/jtreg/linux/bin/jtreg \
 		-automatic \
+		-conc:4 \
 		-ea \
 		-xml \
     	-jdk:$JAVA_HOME \

@@ -58,8 +58,12 @@ fi
 
 JAIL_NAME=`echo ${VERSION}_${ARCH} |  tr "[a-z]/." "[A-Z]__"`
 JAIL_PORT=${JAIL_NAME}-${PORTS_TREE}
-TMP_DIR=/tmp/${JAIL_PORT}-`date +'%Y%m%d_%H%M'`
-JAVA_CI_DIR=`pwd`/`dirname $0`
+TMP_DIR=`dirname`
+JAVA_CI_DIR=`dirname $0`
+if [ ${JAVA_CI_DIR} != /*]; then
+	JAVA_CI_DIR=`pwd`$JAVA_CI_DIR
+fi
+
 
 
 

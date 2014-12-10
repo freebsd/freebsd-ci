@@ -23,19 +23,28 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-while getopts "v:a:p:n" opt; do
+while getopts "v:a:p:t:n" opt; do
 	case $opt in
 		v )  VERSION="$OPTARG" ;;
 		a )  ARCH="$OPTARG" ;;
 		p )  PORTS_TREE="$OPTARG" ;;
 		n )  NO_CLEANUP="yes" ;;
+		t )  TESTS="$OPTARG" ;;
 		?)  ;;
 	esac
 done
 
 usage() 
 {
-	echo "Usage: $0 -v <version> -a <arch> -p <ports_tree> [-n]"
+	echo "Usage: $0 -v <version> -a <arch> -p <ports_tree> [-n] [-t <tests>]"
+	echo "	-v <version>	: the version should be in the form of svn branches: "
+	echo "					  stable/9 or head for current"
+	echo "	-a <arch>		: the arch should be i386 or amd64"
+	echo "	-p <ports_tree>	: the poudriere ports tree to use, useful for testing openjdk8 patches"
+	echo "	-n				: do not cleanup poudriere jails when finished, also useful for testing openjdk8 patches"
+	echo "	-t <tests>		: run a subset of test projects.  Argument is a comma seperated list of test projects."
+	echo "					  available projects are nashorn, langtools, hotspot, and jdk"
+	echo "					  defaults to running all test projects"
 	echo "Example: $0 -v releng/10.1 -a amd64 -p openjdk8"
 	exit 1;
 }
@@ -43,6 +52,10 @@ usage()
 
 if [ -z "${VERSION}" -o -z "${ARCH}" -o -z "${PORTS_TREE}" ]; then
 	usage
+fi
+
+if [ -z "${TESTS}" ]; then
+	TESTS="nashorn,langtools,hotspot,jdk"
 fi
 
 
@@ -58,11 +71,8 @@ fi
 
 JAIL_NAME=`echo ${VERSION}_${ARCH} |  tr "[a-z]/." "[A-Z]__"`
 JAIL_PORT=${JAIL_NAME}-${PORTS_TREE}
-TMP_DIR=`dirname`
+TMP_DIR=`pwd`
 JAVA_CI_DIR=`dirname $0`
-if [ ${JAVA_CI_DIR} != /*]; then
-	JAVA_CI_DIR=`pwd`$JAVA_CI_DIR
-fi
 
 
 
@@ -90,8 +100,8 @@ fi
 
 
 
-mkdir -p ${TMP_DIR}
-cd ${TMP_DIR}
+mkdir -p "${TMP_DIR}"
+cd "${TMP_DIR}"
 
 
 
@@ -102,13 +112,16 @@ sudo poudriere testport -I  -j ${JAIL_NAME}  -p ${PORTS_TREE} -o java/openjdk8
 echo "Preparing ${JAIL_PORT} to run jtreg"
 wget --no-check-certificate https://adopt-openjdk.ci.cloudbees.com/job/jtreg/lastStableBuild/artifact/jtreg4.1-b10.tar.gz
 sudo mv jtreg4.1-b10.tar.gz /usr/local/poudriere/data/build/${JAIL_PORT}/ref/root/
-sudo cp ${JAVA_CI_DIR}/files/jail-run-jtreg.sh  /usr/local/poudriere/data/build/${JAIL_PORT}/ref/root/
+sudo cp ${JAVA_CI_DIR}/files/jail-run-jtreg.sh ${JAVA_CI_DIR}/files/jail-merge-jtreg.sh /usr/local/poudriere/data/build/${JAIL_PORT}/ref/root/
 
-echo "Running jtreg in ${JAIL_PORT}"
-sudo jexec ${JAIL_PORT} env -i TERM=${TERM} /root/jail-run-jtreg.sh
+echo "Running jtreg in ${JAIL_PORT} for $TESTS"
+sudo jexec ${JAIL_PORT} env -i TERM=${TERM} /root/jail-run-jtreg.sh -t $TESTS
 
 echo "Copying jtreg results to ${TMP_DIR}"
-sudo cp -Rp /usr/local/poudriere/data/build/${JAIL_PORT}/ref/wrkdirs/usr/ports/java/openjdk8/work/jtreg-work /usr/local/poudriere/data/build/${JAIL_PORT}/ref/wrkdirs/usr/ports/java/openjdk8/work/reports ${TMP_DIR}/
+sudo cp -Rp /usr/local/poudriere/data/build/${JAIL_PORT}/ref/wrkdirs/usr/ports/java/openjdk8/work/jtreg-work /usr/local/poudriere/data/build/${JAIL_PORT}/ref/wrkdirs/usr/ports/java/openjdk8/work/reports "${TMP_DIR}"/
+
+#echo "Merging jtreg results"
+#sudo jexec ${JAIL_PORT} env -i TERM=${TERM} /root/jail-merge-jtreg.sh -t $TESTS
 
 
 if [ "${NO_CLEANUP}" != "yes" ]; then

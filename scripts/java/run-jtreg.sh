@@ -23,12 +23,13 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-while getopts "v:a:p:t:n" opt; do
+while getopts "v:a:p:t:nk" opt; do
 	case $opt in
 		v )  VERSION="$OPTARG" ;;
 		a )  ARCH="$OPTARG" ;;
 		p )  PORTS_TREE="$OPTARG" ;;
 		n )  NO_CLEANUP="yes" ;;
+		k )  CLEANUP_FIRST="yes" ;;
 		t )  TESTS="$OPTARG" ;;
 		?)  ;;
 	esac
@@ -42,6 +43,9 @@ usage()
 	echo "	-a <arch>		: the arch should be i386 or amd64"
 	echo "	-p <ports_tree>	: the poudriere ports tree to use, useful for testing openjdk8 patches"
 	echo "	-n				: do not cleanup poudriere jails when finished, also useful for testing openjdk8 patches"
+	echo "	-k				: cleanup and unmount poudriere jail if it is currently mounted, useful alongside the"
+	echo "					  -n switch, to keep jails mounted for debugging between runs while still starting"
+	echo "					  with a fresh start."
 	echo "	-t <tests>		: run a subset of test projects.  Argument is a comma seperated list of test projects."
 	echo "					  available projects are nashorn, langtools, hotspot, and jdk"
 	echo "					  defaults to running all test projects"
@@ -75,6 +79,10 @@ TMP_DIR=`pwd`
 JAVA_CI_DIR=`dirname $0`
 
 
+if [ "${CLEANUP_FIRST}" == "yes" ]; then
+	echo "Cleaning up ${JAIL_PORT}"
+	sudo poudriere jail -k -j ${JAIL_NAME} -p ${PORTS_TREE}
+fi
 
 
 if [ -d /usr/local/poudriere/ports/${PORTS_TREE} ]; then
@@ -126,5 +134,5 @@ sudo cp -Rp /usr/local/poudriere/data/build/${JAIL_PORT}/ref/wrkdirs/usr/ports/j
 
 if [ "${NO_CLEANUP}" != "yes" ]; then
 	echo "Cleaning up ${JAIL_PORT}"
-	sudo poudriere jail -k -j ${JAIL_NAME}
+	sudo poudriere jail -k -j ${JAIL_NAME} -p ${PORTS_TREE}
 fi

@@ -64,7 +64,7 @@ fi
 
 
 if [ -z `which poudriere` ]; then
-	echo "$0: poudriere is required in the path
+	echo "$0: poudriere is required in the path"
 	exit 1;
 fi
 

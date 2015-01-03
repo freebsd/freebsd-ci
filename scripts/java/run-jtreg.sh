@@ -62,7 +62,8 @@ if [ -z "${TESTS}" ]; then
 	TESTS="nashorn,langtools,hotspot,jdk"
 fi
 
-for prog in poudriere sudo; do
+REQUIRED_PROG="poudriere sudo svn"
+for prog in ${REQUIRED_PROG}; do
 	if ! type $prog; then
 		exit 1
 	fi

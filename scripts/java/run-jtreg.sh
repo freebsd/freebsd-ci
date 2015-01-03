@@ -62,11 +62,11 @@ if [ -z "${TESTS}" ]; then
 	TESTS="nashorn,langtools,hotspot,jdk"
 fi
 
-
-if [ -z `which poudriere` ]; then
-	echo "$0: poudriere is required in the path"
-	exit 1;
-fi
+for prog in poudriere sudo; do
+	if ! type $prog; then
+		exit 1
+	fi
+done
 
 JAIL_NAME=`echo ${VERSION}_${ARCH} |  tr "[a-z]/." "[A-Z]__"`
 JAIL_PORT=${JAIL_NAME}-${PORTS_TREE}

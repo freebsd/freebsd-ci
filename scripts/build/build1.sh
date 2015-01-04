@@ -7,10 +7,6 @@ if [ -z "$WORKSPACE" ]; then
 	exit 1
 fi
 
-if [ -z "$KERNCONF" ]; then
-	KERNCONF=GENERIC
-fi
-
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 mkdir -p ${MAKEOBJDIRPREFIX}
 
@@ -31,5 +27,5 @@ echo "--------------------------------------------------------------"
 set -x
 
 make -j 4 buildworld __MAKE_CONF=${WORKSPACE}/make.conf
-make -j 4 buildkernel __MAKE_CONF=${WORKSPACE}/make.conf KERNCONF=${KERNCONF}
+make -j 4 buildkernel __MAKE_CONF=${WORKSPACE}/make.conf
 

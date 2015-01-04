@@ -31,12 +31,12 @@ set -x
 # script.
 
 if [ -z "$WORKSPACE" ]; then
-    echo "$WORKSPACE variable is undefined."
+    echo "WORKSPACE variable is undefined."
     exit 1 
 fi
 
 if [ -z "$BUILD_ROOT" ]; then
-    echo "$BUILD_ROOT variable is undefined."
+    echo "BUILD_ROOT variable is undefined."
     exit 1 
 fi
 

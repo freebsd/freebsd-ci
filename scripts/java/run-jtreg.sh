@@ -86,7 +86,7 @@ if [ -d /usr/local/poudriere/ports/${PORTS_TREE} ]; then
 	sudo poudriere ports -u -p ${PORTS_TREE} 
 else
 	echo "Fetching ports tree ${PORTS_TREE}"
-	sudo poudriere ports -c -p ${PORTS_TREE} -m svn
+	sudo poudriere ports -c -p ${PORTS_TREE} -m svn+http
 fi
 
 if [ -d /usr/local/poudriere/jails/${JAIL_NAME} ]; then

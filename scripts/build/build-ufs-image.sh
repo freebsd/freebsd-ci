@@ -48,6 +48,10 @@ if [ -z "$IMAGE_ROOT" ]; then
     IMAGE_ROOT=${WORKSPACE}/image/$(basename ${BUILD_ROOT})
 fi
 
+if [ -n "$ENDIAN" ]; then
+	BFLAG="-B $ENDIAN"
+fi
+
 export MAKEOBJDIRPREFIX=/usr/obj
 cd $BUILD_ROOT
 
@@ -89,5 +93,5 @@ sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg dev
 sudo rm -fr ${IMAGE_ROOT}
 mkdir -p ${IMAGE_ROOT}
 sudo rm -fr ${IMAGE_ROOT}/test.img
-sudo makefs -d 6144 -t ffs -f 200000 -s 2g -o version=2,bsize=32768,fsize=4096,label=TESTROOT ${IMAGE_ROOT}/test.img $PACKAGE_ROOT
+sudo makefs ${BFLAG} -d 6144 -t ffs -f 200000 -s 2g -o version=2,bsize=32768,fsize=4096,label=TESTROOT ${IMAGE_ROOT}/test.img $PACKAGE_ROOT
 sudo chmod a+w $IMAGE_ROOT/test.img

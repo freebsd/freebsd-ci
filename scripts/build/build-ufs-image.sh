@@ -52,6 +52,10 @@ if [ -n "$ENDIAN" ]; then
 	BFLAG="-B $ENDIAN"
 fi
 
+if [ -z "$MAKEOBJDIRPREFIX" ]; then
+	MAKEOBJDIRPREFIX=/usr/obj
+fi
+
 cd $BUILD_ROOT
 
 if [ -z "$__MAKE_CONF" ]; then
@@ -64,9 +68,9 @@ fi
 
 sudo rm -fr ${PACKAGE_ROOT}
 mkdir -p ${PACKAGE_ROOT}
-sudo make installworld NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
-sudo make  installkernel NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
-sudo make  distribution NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
+sudo env MAKEOBJDIRPREFIX=$MAKEOBJDIRPREFIX make installworld NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
+sudo env MAKEOBJDIRPREFIX=$MAKEOBJDIRPREFIX make  installkernel NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
+sudo env MAKEOBJDIRPREFIX=$MAKEOBJDIRPREFIX make  distribution NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
 
 cd $WORKSPACE
 rm -fr tmp

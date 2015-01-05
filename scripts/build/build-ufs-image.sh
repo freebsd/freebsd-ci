@@ -91,7 +91,10 @@ sudo cp /etc/resolv.conf ${PACKAGE_ROOT}/etc/resolv.conf
 if [ -z "$PKG_ARCHITECTURE" ]; then
     PKG_ARCHITECTURE=freebsd:11:x86:64
 fi
-sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash
+
+if [ -z "$SKIP_INSTALL_PKG" ]; then
+	sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash
+fi
 
 sudo rm -fr ${IMAGE_ROOT}
 mkdir -p ${IMAGE_ROOT}

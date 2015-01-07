@@ -10,7 +10,7 @@ See: http://docs.saltstack.com/en/latest/topics/installation/freebsd.html
  * Ensure a salt CNAME exists for salt master node
  * Start salt_master service and salt_minion services
  * use salt-key (-L: list, -A: Accept all) node memberships if appropriate
- * Test with: salt '' test.ping
+ * Test with: salt '*' test.ping
 
 ## Usage
 

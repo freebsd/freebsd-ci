@@ -37,3 +37,14 @@ Run pkg upgrade, on bhyve VMs
 ```
 salt -G 'virtual:bhyve' pkg.upgrade
 ```
+
+Launch a background freebsd-update job. We use cron as fetch does not allow
+non-interactive use. Here is how to interrogate background jobs
+
+```
+# salt --async 'jenkins-10.*' cmd.run "freebsd-update cron install"
+Executed command with job ID: 20150108050304504294
+# salt-run jobs.active
+# salt-run jobs.list_job 20150108050304504294
+```
+

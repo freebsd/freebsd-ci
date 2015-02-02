@@ -100,15 +100,15 @@ if [ -z "$SKIP_INSTALL_PKG" ]; then
 fi
 
 if [ -n "$INSTALL_PORTS_TREE" ]; then
-	# fetch the ports tree into the image
-	sudo mkdir -p ${PACKAGE_ROOT}/var/db/pkg
-	sudo mkdir -p ${PACKAGE_ROOT}/usr/ports
-	sudo portsnap fetch -d ${PACKAGE_ROOT}/var/db/pkg -p ${PACKAGE_ROOT}/usr/ports
+	if [ -z "$PORTSDIR" ]; then
+		export PORTSDIR=${BUILD_ROOT}/usr/ports
+	fi
+	# copy the ports tree into the image
+	sudo rsync -a $PORTSDIR ${PACKAGE_ROOT}/usr/ports
 
 	# Get the distfiles for some packages we need to build inside the
 	# image 
-	sudo make -C ${PACKAGE_ROOT}/usr/ports/devel/kyua fetch-recursive
-	
+	sudo make -C ${PACKAGE_ROOT}/usr/ports/devel/kyua fetch-recursive PORTSDIR=${PACKAGE_ROOT}/usr/ports
 fi 
 
 sudo rm -fr ${IMAGE_ROOT}

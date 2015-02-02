@@ -104,7 +104,7 @@ if [ -n "$INSTALL_PORTS_TREE" ]; then
 		export PORTSDIR=${BUILD_ROOT}/usr/ports
 	fi
 	# copy the ports tree into the image
-	sudo rsync -a $PORTSDIR ${PACKAGE_ROOT}/usr/ports
+	sudo rsync -a $PORTSDIR/ ${PACKAGE_ROOT}/usr/ports
 
 	# Get the distfiles for some packages we need to build inside the
 	# image 

@@ -36,8 +36,7 @@ if [ -z "$WORKSPACE" ]; then
 fi
 
 if [ -z "$BUILD_ROOT" ]; then
-    echo "BUILD_ROOT variable is undefined."
-    exit 1 
+    BUILD_ROOT="$WORKSPACE"
 fi
 
 if [ -z "$PACKAGE_ROOT" ]; then

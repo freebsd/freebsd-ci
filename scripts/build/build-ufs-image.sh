@@ -72,15 +72,21 @@ sudo env MAKEOBJDIRPREFIX=$MAKEOBJDIRPREFIX make installworld NO_FSCHG=yes DESTD
 sudo env MAKEOBJDIRPREFIX=$MAKEOBJDIRPREFIX make  installkernel NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
 sudo env MAKEOBJDIRPREFIX=$MAKEOBJDIRPREFIX make  distribution NO_FSCHG=yes DESTDIR=${PACKAGE_ROOT} __MAKE_CONF=${__MAKE_CONF}
 
+if [ -z "$FSTAB" ]; then
+    FSTAB="
+# Device                Mountpoint      FStype  Options         Dump    Pass#
+/procfs                 /proc           procfs  rw              0       0
+fdesc                   /dev/fd         fdescfs rw              0       0
+/dev/ufs/TESTROOT             /            ufs    rw              1       1
+"
+fi
+
 cd $WORKSPACE
 rm -fr tmp
 mkdir -p tmp
 (
 cat <<EOF
-# Device                Mountpoint      FStype  Options         Dump    Pass#
-/procfs                 /proc           procfs  rw              0       0
-fdesc                   /dev/fd         fdescfs rw              0       0
-/dev/ufs/TESTROOT             /            ufs    rw              1       1
+$FSTAB
 EOF
 ) > tmp/fstab
 sudo cp tmp/fstab ${PACKAGE_ROOT}/etc/fstab
@@ -89,6 +95,18 @@ sudo cp /etc/resolv.conf ${PACKAGE_ROOT}/etc/resolv.conf
 if [ -z "$SKIP_INSTALL_PKG" ]; then
 	sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash
 fi
+
+if [ -n "$INSTALL_PORTS_TREE" ]; then
+	# fetch the ports tree into the image
+	mkdir -p ${PACKAGE_ROOT}/var/db/pkg
+	mkdir -p ${PACKAGE_ROOT}/usr/ports
+	portsnap fetch -d ${PACKAGE_ROOT}/var/db/pkg -p ${PACKAGE_ROOT}/usr/ports
+
+	# Get the distfiles for some packages we need to build inside the
+	# image 
+	make -C ${PACKAGE_ROOT}/usr/ports/devel/kyua fetch-recursive
+	
+fi 
 
 sudo rm -fr ${IMAGE_ROOT}
 mkdir -p ${IMAGE_ROOT}

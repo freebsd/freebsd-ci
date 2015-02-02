@@ -86,12 +86,6 @@ EOF
 sudo cp tmp/fstab ${PACKAGE_ROOT}/etc/fstab
 sudo cp /etc/resolv.conf ${PACKAGE_ROOT}/etc/resolv.conf
 
-# This hack is required until local fixes to kyua make it into a release
-# version, so we don't have to install our own version of kyua into the image
-if [ -z "$PKG_ARCHITECTURE" ]; then
-    PKG_ARCHITECTURE=freebsd:11:x86:64
-fi
-
 if [ -z "$SKIP_INSTALL_PKG" ]; then
 	sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash
 fi

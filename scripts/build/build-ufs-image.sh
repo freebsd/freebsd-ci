@@ -81,7 +81,7 @@ fdesc                   /dev/fd         fdescfs rw              0       0
 fi
 
 cd $WORKSPACE
-rm -fr tmp
+sudo rm -fr tmp
 mkdir -p tmp
 (
 cat <<EOF
@@ -97,18 +97,18 @@ fi
 
 if [ -n "$INSTALL_PORTS_TREE" ]; then
 	# fetch the ports tree into the image
-	mkdir -p ${PACKAGE_ROOT}/var/db/pkg
-	mkdir -p ${PACKAGE_ROOT}/usr/ports
-	portsnap fetch -d ${PACKAGE_ROOT}/var/db/pkg -p ${PACKAGE_ROOT}/usr/ports
+	sudo mkdir -p ${PACKAGE_ROOT}/var/db/pkg
+	sudo mkdir -p ${PACKAGE_ROOT}/usr/ports
+	sudo portsnap fetch -d ${PACKAGE_ROOT}/var/db/pkg -p ${PACKAGE_ROOT}/usr/ports
 
 	# Get the distfiles for some packages we need to build inside the
 	# image 
-	make -C ${PACKAGE_ROOT}/usr/ports/devel/kyua fetch-recursive
+	sudo make -C ${PACKAGE_ROOT}/usr/ports/devel/kyua fetch-recursive
 	
 fi 
 
 sudo rm -fr ${IMAGE_ROOT}
-mkdir -p ${IMAGE_ROOT}
+sudo mkdir -p ${IMAGE_ROOT}
 sudo rm -fr ${IMAGE_ROOT}/test.img
 sudo makefs ${BFLAG} -d 6144 -t ffs -f 200000 -s 2g -o version=2,bsize=32768,fsize=4096,label=TESTROOT ${IMAGE_ROOT}/test.img $PACKAGE_ROOT
 sudo chmod a+w $IMAGE_ROOT/test.img

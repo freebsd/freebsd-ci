@@ -39,6 +39,10 @@ if [ -z "$BUILD_ROOT" ]; then
     BUILD_ROOT="$WORKSPACE"
 fi
 
+if [ -z "$MAKEOBJDIRPREFIX" ]; then
+	export MAKEOBJDIRPREFIX=${BUILD_ROOT}/obj
+fi
+
 if [ -z "$PACKAGE_ROOT" ]; then
     PACKAGE_ROOT=${WORKSPACE}/package/$(basename ${BUILD_ROOT})
 fi

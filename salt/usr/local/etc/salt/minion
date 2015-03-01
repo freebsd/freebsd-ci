@@ -303,8 +303,8 @@ master: jenkins-9.freebsd.org
 # via the providers option, in this case the default module will be
 # overwritten by the specified module. In this example the pkg module will
 # be provided by the pkgng module instead of the system default.
-#providers:
-#  pkg: pkgng
+providers:
+  pkg: pkgng
 #
 # Enable Cython modules searching and loading. (Default: False)
 #cython_enable: False

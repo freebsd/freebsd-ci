@@ -24,10 +24,10 @@
 
 installworld:
   cmd.run:
-    - name: |
-        cd /usr/src
-        mergemaster -p
-        make installworld
-        mergemaster -i -U -F
-        yes | make delete-old
+    - name: >
+        cd /usr/src &&
+        mergemaster -p &&
+        make installworld &&
+        mergemaster -i -U -F &&
+        yes | make delete-old &&
         yes | make delete-old-libs

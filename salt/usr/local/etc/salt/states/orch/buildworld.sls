@@ -38,6 +38,7 @@ reboot_1:
 wait_for_reboot_1:
   salt.wait_for_event:
     - name: salt/minion/*/start
+    - timeout: 900
     - id_list:
       - {{ pillar['node'] }}
     - require:
@@ -61,6 +62,7 @@ reboot_2:
 wait_for_reboot_2:
   salt.wait_for_event:
     - name: salt/minion/*/start
+    - timeout: 900
     - id_list:
       - {{ pillar['node'] }}
     - require:

@@ -25,3 +25,30 @@ These scripts are used to start BSD Hypervisor (BHyve) VM's on boot.
     bhyvevm_jenkins10_conf="/vm/freebsd-ci/vm/10.0/jenkins10.conf"
     bhyvevm_jenkins9_conf="/vm/freebsd-ci/vm/9.2/jenkins9.conf"
 ```
+
+2. Add something like the following in /etc/rc.conf to enable the tap devices:
+
+```
+    #####################################################
+    # Create tap devices, one tap interface per BHyve VM.
+    # Add the tap interfaces to bridge0
+    ####################################################
+    cloned_interfaces="bridge0 tap0 tap1"
+
+    autobridge_interfaces="bridge0"
+    autobridge_bridge0="tap* igb0"
+```
+
+
+   Each VM should have a separate tap device, all connected to the same bridge.
+   If you add more VM's, remember to add another tap device to cloned_interfaces
+
+3. Add the following to /etc/sysctl.conf on the host machine:
+
+```
+    # BHyve needs this for tap interfaces
+    net.link.tap.user_open=1
+    net.link.tap.up_on_open=1
+```
+
+   Refer to: http://www.freebsd.org/doc/handbook/network-bridging.html 

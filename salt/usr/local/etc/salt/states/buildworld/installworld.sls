@@ -26,8 +26,8 @@ installworld:
   cmd.run:
     - name: >
         cd /usr/src &&
-        mergemaster -p &&
+        etcupdate -s /usr/src -D "" -p &&
         make installworld &&
-        mergemaster -i -U -F &&
+        etcupdate -s /usr/src -D "" &&
         yes | make delete-old &&
         yes | make delete-old-libs

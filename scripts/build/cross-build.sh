@@ -54,14 +54,6 @@ echo "--------------------------------------------------------------"
 set -x
 
 sudo pkg install -y devel/${TARGET_ARCH}-xtoolchain-gcc
-
-
-# Newer versions of gcc compile boot2 too large, so try to cut the space down
-sed -i "" \
-    -e "s/^BOOT2_UFS?=	UFS1_AND_UFS2/#BOOT2_UFS?=	UFS1_AND_UFS2/" \
-    -e "s/^#BOOT2_UFS?=	UFS2_ONLY/BOOT2_UFS?=	UFS2_ONLY/" \
-    sys/boot/i386/boot2/Makefile
-
 make -j 4 CROSS_TOOLCHAIN=${TARGET_ARCH}-gcc buildworld __MAKE_CONF=${WORKSPACE}/make.conf
 make -j 4 CROSS_TOOLCHAIN=${TARGET_ARCH}-gcc buildkernel __MAKE_CONF=${WORKSPACE}/make.conf
 

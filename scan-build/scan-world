@@ -4,7 +4,7 @@ DRY=
 
 WORKDIR=`pwd -P`
 
-SCAN_BUILD=${WORKDIR}/llvm/Release/bin/scan-build
+SCAN_BUILD=/usr/local/bin/scan-build-devel
 
 SRCDIR=${WORKDIR}/src
 export OBJ=${WORKDIR}/obj

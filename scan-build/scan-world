@@ -9,7 +9,7 @@ SCAN_BUILD=/usr/local/bin/scan-build-devel
 SRCDIR=${WORKDIR}/src
 export OBJ=${WORKDIR}/obj
 export MAKEOBJDIRPREFIX=${OBJ}
-DEST=${WORKDIR}/dest
+DEST=${WORKDIR}/clangScanBuildReports
 #RELEASE=Release
 SRCCONF=${WORKDIR}/freebsd-ci/scan-build/src.conf
 MYFLAGS="__MAKE_CONF=/dev/null -m $SRCDIR/share/mk SRCCONF=${SRCCONF} -DMODULES_WITH_WORLD"

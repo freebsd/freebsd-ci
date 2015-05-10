@@ -12,6 +12,11 @@ jenkins_group:
     - name: jenkins
     - gid: 8180
 
+jenkins_sshkey:
+  ssh_auth.present:
+    - user: jenkins
+    - source: salt://ssh_keys/jenkins.id_rsa.pub
+
 install_java:
   pkg.installed:
     - name: openjdk8

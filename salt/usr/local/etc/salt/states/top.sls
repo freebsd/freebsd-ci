@@ -1,3 +1,3 @@
 base:
   '*':
-    - cron.pkg_audit
+    - ci

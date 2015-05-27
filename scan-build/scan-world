@@ -71,5 +71,5 @@ all:
 EOF
 ) > Makefile.scanbuild
 
-do_scan -f Makefile.scanbuild
+do_scan make -f Makefile.scanbuild
 echo "-=-> scan finished at `date "+%Y-%m-%d %H:%M:%S"`"

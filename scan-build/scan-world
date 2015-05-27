@@ -57,6 +57,8 @@ do_scan()
 echo "-=-> scan started at `date "+%Y-%m-%d %H:%M:%S"`"
 
 cd $SRCDIR || exit 1
+rm -fr "$DEST"
+mkdir -p "$DEST"
 
 rm -f Makefile.scanbuild
 

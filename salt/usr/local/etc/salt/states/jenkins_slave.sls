@@ -1,8 +1,8 @@
 jenkins_user:
   user.present:
     - name: jenkins
-    - uid: 8180
-    - gid: 8180
+    - uid: 5213
+    - gid: 5213
     - fullname: Jenkins CI
     - home: /usr/local/jenkins
     - shell: /bin/sh

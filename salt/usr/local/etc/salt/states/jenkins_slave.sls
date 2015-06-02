@@ -10,7 +10,7 @@ jenkins_user:
 jenkins_group:
   group.present:
     - name: jenkins
-    - gid: 8180
+    - gid: 5213
 
 jenkins_sshkey:
   ssh_auth.present:

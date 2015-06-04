@@ -4,7 +4,7 @@ jenkins_user:
     - uid: 5213
     - gid: 5213
     - fullname: Jenkins CI
-    - home: /usr/local/jenkins
+    - home: /jenkins
     - shell: /bin/sh
 
 jenkins_group:

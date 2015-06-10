@@ -1,3 +1,3 @@
 root ALL=(ALL) ALL
-Cmnd_Alias CI_COMMANDS = /usr/sbin/jail, /usr/sbin/jexec, /sbin/mount, /sbin/umount, /sbin/devfs, /bin/chflags, /bin/rm
+Cmnd_Alias CI_COMMANDS = /usr/sbin/jail, /usr/sbin/jexec, /sbin/mount, /sbin/umount, /sbin/devfs, /bin/chflags, /bin/rm, /sbin/zfs
 jenkins ALL=(root) NOPASSWD: CI_COMMANDS

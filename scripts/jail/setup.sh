@@ -38,7 +38,8 @@ fi
 sudo mount -t devfs devfs ${JPATH}/dev
 sudo devfs -m ${JPATH}/dev rule -s 4 applyset
 
-sudo mount -t nullfs src ${JPATH}/usr/src
+sudo mkdir ${JPATH}/workspace
+sudo mount -t nullfs ${WORKSPACE} ${JPATH}/workspace
 
 printf "${BUILDER_RESOLV_CONF}" | sudo tee ${JPATH}/etc/resolv.conf
 

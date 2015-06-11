@@ -14,7 +14,7 @@ echo "clean jail ${JNAME}"
 sudo jail -r ${JNAME} || true
 sudo ifconfig ${BUILDER_NETIF} inet6 ${BUILDER_JAIL_IP} -alias || true
 
-sudo umount ${JPATH}/usr/src || true
+sudo umount ${JPATH}/workspace || true
 sudo umount ${JPATH}/dev || true
 
 sudo zfs destroy ${ZFS_PARENT}/${JNAME} || true

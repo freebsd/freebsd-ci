@@ -48,7 +48,7 @@ sudo jail -c persist name="${JNAME}" path="${JPATH}" osrelease="${OSRELEASE}" ho
 
 echo "setup build environment"
 
-sudo jexec ${JNAME} sh -c "env ASSUME_ALWAYS_YES=yes pkg install clang-devel"
+sudo jexec ${JNAME} sh -c "env ASSUME_ALWAYS_YES=yes pkg update"
 
 echo "build environment:"
 

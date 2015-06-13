@@ -35,21 +35,11 @@ SRCDIR=${WORKDIR}/src
 export OBJ=${WORKDIR}/obj
 export MAKEOBJDIRPREFIX=${OBJ}
 DEST=${WORKDIR}/clangScanBuildReports
-#RELEASE=Release
 SRCCONF=${WORKDIR}/freebsd-ci/scan-build/src.conf
 MYFLAGS="__MAKE_CONF=/dev/null -m $SRCDIR/share/mk SRCCONF=${SRCCONF} -DMODULES_WITH_WORLD"
-#MYFLAGS="$MYFLAGS -DWITH_GNUCXX -DWITH_GCC COMPILER_TYPE=gcc"
-#MYFLAGS="$MYFLAGS -DWITHOUT_CLANG -DWITHOUT_LLVM"
 DATE=`date "+%Y-%m-%d"`
 ARCH=`uname -p`
 JFLAG=-j4
-
-#LOCK=/tmp/scan.lock
-#trap 'rm -f ${LOCK} ; exit 1' 1 2 3 15
-#if ! shlock -p $$ -f ${LOCK}; then
-#    echo "Locked by `cat ${LOCK}`, running too long? Please fix ..." >&2
-#    exit 1
-#fi
 
 do_scan()
 {
@@ -108,39 +98,6 @@ recurse_dirs()
 
 echo "-=-> scan-world started at `date "+%Y-%m-%d %H:%M:%S"`"
 
-#if [ -z "$DRY" ]; then
-#    cd /data/src/llvm
-##./configure --enable-optimized --disable-assertions --disable-docs --enable-targets=host \
-##  --with-c-include-dirs=/usr/obj$SRCDIR/tmp/usr/include \
-##  --with-cxx-include-root=/usr/obj$SRCDIR/tmp/usr/include
-#    gmake update
-#
-#    echo "-=-> Building LLVM"
-#    if ! gmake ${JFLAG}; then
-#	if ! gmake; then
-#	    echo "Error building LLVM, bailing out" 2>&1
-#	    exit 1
-#	fi
-#    fi
-#    # Omit the dead store checker, too many positives to be useful
-#    cp -p ./tools/clang/tools/scan-build/scan-build ./tools/clang/tools/scan-build/scanview.css \
-#	    ./tools/clang/tools/scan-build/sorttable.js $RELEASE/bin
-##    && \
-##	    sed -i.bak -e '/check-dead-stores/d' -e '/check-idempotent-operations/d' \
-##	    -e '/check-objc-self-init/d' $RELEASE/bin/scan-build
-#    # Turn off chatty/verbose progress output
-#    cp -p ./tools/clang/tools/scan-build/ccc-analyzer $RELEASE/bin && \
-#	    ln -sf ccc-analyzer $RELEASE/bin/c++-analyzer
-##    && \
-##	    sed -i.bak -e '/analyzer-display-progress/d' $RELEASE/bin/ccc-analyzer
-#    echo "-=-> Updating source in $SRCDIR"
-#    cd $SRCDIR && svn up
-#    if [ $? != 0 ]; then
-#	echo "Error during bootstrap" >&2
-#	exit 1
-#    fi
-#fi
-
 cd $SRCDIR || exit 1
 
 if [ -z "$DRY" ]; then
@@ -188,18 +145,4 @@ if [ -z "$DRY" ]; then
 
     echo "-=-> Renaming output dirs"
     find . -type d -name "${DATE}-*-[1-9]" -prune -exec sh -c 'd={}; mv "$d" "${d%-??????-*-[1-9]*}-'$ARCH'"' \;
-
-    #echo "-=-> Linking to LATEST"
-    #rm -rf LATEST
-    #mkdir LATEST
-#    find * -type d -name "${DATE}-$ARCH" -prune -exec sh -c 'd={}; ln -s "../$d" "LATEST/`dirname $d`"' \;
-
-    #echo "-=-> Original size"
-    #du -kh -d 0 ${DEST}
-#    find . -not -name \*.gz -not -name \*.log -not -name README.html -not -name HEADER.html -type f -exec gzip -9n {} \;
-#    echo "-=-> After compression"
-#    du -kh -d 0 ${DEST}
-    #freebsd-ci/scan-build/fdupes-hardlink ${DEST} > /dev/null
-    #echo "-=-> After deduping"
-    #du -kh -d 0 ${DEST}
 fi

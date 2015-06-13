@@ -65,10 +65,10 @@ rm -f Makefile.scanbuild
 (
 cat <<EOF
 all:
-	\${MAKE} -f Makefile ${JFLAG} ${MYFLAGS} NO_CLEAN=yes NO_KERNELCLEAN=yes bmake
-#	\${MAKE} -f Makefile ${JFLAG} ${MYFLAGS} NO_CLEAN=yes NO_KERNELCLEAN=yes buildworld
-#	\${MAKE} -f Makefile ${JFLAG} ${MYFLAGS}  NO_CLEAN=yes NO_KERNELCLEAN=yes KERNCONF=GENERIC buildkernel
-#	\${MAKE} -f Makefile ${JFLAG} ${MYFLAGS} NO_CLEAN=yes NO_KERNELCLEAN=yes KERNCONF=LINT buildkernel
+#	\${MAKE} -f Makefile ${JFLAG} ${MYFLAGS} NO_CLEAN=yes NO_KERNELCLEAN=yes bmake
+	\${MAKE} -f Makefile ${JFLAG} ${MYFLAGS} NO_CLEAN=yes NO_KERNELCLEAN=yes buildworld
+	\${MAKE} -f Makefile ${JFLAG} ${MYFLAGS} NO_CLEAN=yes NO_KERNELCLEAN=yes KERNCONF=GENERIC buildkernel
+	\${MAKE} -f Makefile ${JFLAG} ${MYFLAGS} NO_CLEAN=yes NO_KERNELCLEAN=yes KERNCONF=LINT buildkernel
 
 EOF
 ) > Makefile.scanbuild

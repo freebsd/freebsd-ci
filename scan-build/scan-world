@@ -99,6 +99,7 @@ recurse_dirs()
 echo "-=-> scan-world started at `date "+%Y-%m-%d %H:%M:%S"`"
 
 cd $SRCDIR || exit 1
+rm -fr ${DEST}
 
 if [ -z "$DRY" ]; then
     echo "-=-> Populating .OBJDIR"

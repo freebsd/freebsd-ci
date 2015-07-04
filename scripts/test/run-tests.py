@@ -31,7 +31,7 @@
 #   (2) boots it
 #   (3) runs tests in /usr/tests
 #
-
+from __future__ import print_function
 from optparse import OptionParser
 import atexit
 import ctypes
@@ -85,7 +85,7 @@ def runTest():
     global sentinel_file
 
     cmd = "bhyvectl --destroy --vm=%s" % test_config['vm_name']
-    print
+    print("")
     ret = os.system(cmd)
 
     cmd = "bhyveload -m %s -d %s %s" % \
@@ -118,6 +118,9 @@ def runTest():
 
     child2.sendline("cd /usr/tests")
     child2.expect(prompt)
+    child2.sendline("sh -c \"ifconfig %s | grep inet | awk '{print $2}'\"" % test_config['interface'])
+    child2.expect(prompt)
+    print("Interface: %s" % (child2.before))
     child2.sendline("kyua test")
     child2.expect(prompt, timeout=7200)
     child2.sendline("kyua report --verbose --results-filter passed,skipped,xfail,broken,failed  --output test-report.txt")

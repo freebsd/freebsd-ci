@@ -84,6 +84,12 @@ fdesc                   /dev/fd         fdescfs rw              0       0
 "
 fi
 
+if [ -z "$RC_CONF" ]; then
+    RC_CONF="
+sshd_enable=\"YES\"
+"
+fi
+
 cd $WORKSPACE
 sudo rm -fr tmp
 mkdir -p tmp
@@ -94,6 +100,13 @@ EOF
 ) > tmp/fstab
 sudo cp tmp/fstab ${PACKAGE_ROOT}/etc/fstab
 sudo cp /etc/resolv.conf ${PACKAGE_ROOT}/etc/resolv.conf
+
+(
+cat <<EOF
+$RC_CONF
+EOF
+) > ${PACKAGE_ROOT}/etc/rc.conf
+sudo sed -i "" -e 's/#PermitRootLogin no/PermitRootLogin yes/' ${PACKAGE_ROOT}/etc/ssh/sshd_config
 
 if [ -z "$SKIP_INSTALL_PKG" ]; then
 	sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash

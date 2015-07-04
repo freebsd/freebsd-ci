@@ -32,7 +32,7 @@ set -x
 
 if [ -z "$WORKSPACE" ]; then
     echo "WORKSPACE variable is undefined."
-    exit 1 
+    exit 1
 fi
 
 if [ -z "$BUILD_ROOT" ]; then
@@ -107,9 +107,9 @@ if [ -n "$INSTALL_PORTS_TREE" ]; then
 	sudo rsync -a $PORTSDIR/ ${PACKAGE_ROOT}/usr/ports
 
 	# Get the distfiles for some packages we need to build inside the
-	# image 
+	# image
 	sudo make -C ${PACKAGE_ROOT}/usr/ports/devel/kyua fetch-recursive PORTSDIR=${PACKAGE_ROOT}/usr/ports
-fi 
+fi
 
 sudo rm -fr ${IMAGE_ROOT}
 sudo mkdir -p ${IMAGE_ROOT}

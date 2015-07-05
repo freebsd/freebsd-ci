@@ -105,7 +105,8 @@ sudo cp /etc/resolv.conf ${PACKAGE_ROOT}/etc/resolv.conf
 cat <<EOF
 $RC_CONF
 EOF
-) > ${PACKAGE_ROOT}/etc/rc.conf
+) > tmp/rc.conf
+sudo cp tmp/rc.conf ${PACKAGE_ROOT}/etc/rc.conf
 sudo sed -i "" -e 's/#PermitRootLogin no/PermitRootLogin yes/' ${PACKAGE_ROOT}/etc/ssh/sshd_config
 
 if [ -z "$SKIP_INSTALL_PKG" ]; then

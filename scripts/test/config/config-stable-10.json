@@ -8,6 +8,8 @@
     ],
     "ram": "2G",
     "tap": "tap11",
+    "bridge": "bridge1",
+    "bridgeip": "192.168.10.1",
     "interface": "vtnet0",
     "ip": "192.168.10.3",
     "mac": "58:9c:fc:00:00:2f",

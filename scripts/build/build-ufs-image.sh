@@ -106,6 +106,17 @@ cat <<EOF
 $RC_CONF
 EOF
 ) > tmp/rc.conf
+
+if [ -n "$CONFIG_JSON" ]; then
+    INTERFACE=$(python -c "import json; f = open('$CONFIG_JSON', 'r'); j = json.load(f); print(j['interface'])")
+    IP=$(python -c "import json; f = open('$CONFIG_JSON', 'r'); j = json.load(f); print(j['ip'])")
+    (
+cat <<EOF
+ifconfig_${INTERFACE}="inet $IP/24"
+EOF
+    ) >> tmp/rc.conf
+fi
+
 sudo cp tmp/rc.conf ${PACKAGE_ROOT}/etc/rc.conf
 sudo cp ${PACKAGE_ROOT}/etc/ssh/sshd_config tmp/sshd_config
 sed -i "" -e 's/#PermitRootLogin no/PermitRootLogin yes/' tmp/sshd_config

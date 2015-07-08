@@ -7,8 +7,9 @@
         "/net/jenkins-10.freebsd.org/builds/Build-UFS-image/image/FreeBSD_stable_10/test.img"
     ],
     "ram": "2G",
-    "tap": "tap1",
+    "tap": "tap11",
     "interface": "vtnet0",
+    "ip": "192.168.10.3",
     "mac": "58:9c:fc:00:00:2f",
     "iso_bootloader": "freebsd"
 }

@@ -121,6 +121,7 @@ sudo cp tmp/rc.conf ${PACKAGE_ROOT}/etc/rc.conf
 sudo cp ${PACKAGE_ROOT}/etc/ssh/sshd_config tmp/sshd_config
 sed -i "" -e 's/#PermitRootLogin no/PermitRootLogin yes/' tmp/sshd_config
 sudo cp tmp/sshd_config ${PACKAGE_ROOT}/etc/ssh/sshd_config
+sudo chroot ${PACKAGE_ROOT} /bin/sh -c 'echo test | pw mod user root -h 0'
 
 if [ -z "$SKIP_INSTALL_PKG" ]; then
 	sudo /usr/local/sbin/pkg-static -c ${PACKAGE_ROOT} install -y ports-mgmt/pkg devel/kyua devel/autoconf shells/bash

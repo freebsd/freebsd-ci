@@ -184,6 +184,7 @@ def runTest():
             fabric.api.run("kyua report --verbose --results-filter passed,skipped,xfail,broken,failed  --output test-report.txt")
             fabric.api.run("kyua report-junit --output=test-report.xml")
             fabric.api.run("shutdown -p now")
+            child2.expect(pexpect.EOF, timeout=1000)
 
 def checkpreReqBhyve():
     # Check if Bhyve module is loaded, and if we ran the script as superuser.

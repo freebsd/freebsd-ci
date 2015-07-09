@@ -34,15 +34,14 @@
 from __future__ import print_function
 from optparse import OptionParser
 import atexit
-import ctypes
 import getopt
 import json
 import os
+import os.path
 import pexpect
 import sys
 import subprocess
-import tempfile
-import time
+import fabric.api
 
 test_config = None
 test_config_file = None
@@ -82,7 +81,32 @@ def main(argv):
 def runTest():
     global test_config
     global test_config_file
-    global sentinel_file
+
+    home = os.path.expanduser("~")
+    known_hosts = "%s/.ssh/known_hosts" % (home)
+
+    # Create the bridge interface if it does not exist.
+    # Configure the bridge with an IP address.
+    print(["ifconfig", test_config['bridge']])
+    ret = subprocess.call(["ifconfig", test_config['bridge']])
+    if ret != 0:
+        ret = subprocess.call(["ifconfig", test_config['bridge'], "create"])
+        if ret != 0:
+            sys.exit(ret)
+        ret = subprocess.call(["ifconfig", test_config['bridge'], "inet", "%s/24" % test_config['bridge_ip']])
+        if ret != 0:
+            sys.exit(ret)
+
+    # Create the tap interface if it does not exist.
+    # Add the tap interface to the bridge.
+    ret = subprocess.call(["ifconfig", test_config['tap']])
+    if ret != 0:
+        ret = subprocess.call(["ifconfig", test_config['tap'], "create"])
+        if ret != 0:
+            sys.exit(ret)
+        ret = subprocess.call(["ifconfig", test_config['bridge'], "addm", test_config['tap']])
+        if ret != 0:
+            sys.exit(ret)
 
     cmd = "bhyvectl --destroy --vm=%s" % test_config['vm_name']
     print("")
@@ -93,7 +117,7 @@ def runTest():
     print(cmd)
     child = pexpect.spawn(cmd)
     child.logfile = sys.stdout
-    child.expect(pexpect.EOF)
+    child.expect(pexpect.EOF, timeout=120)
 
     macaddress = ""
     if test_config.has_key('mac'):
@@ -107,45 +131,72 @@ def runTest():
     print(cmd)
     child2 = pexpect.spawn(cmd)
     child2.logfile = sys.stdout
+
+    # Log into the VM via expect, and execute enough
+    # commands to figure out the IP address.
     child2.expect(['login:'], timeout=1200)
     child2.sendline("root")
+    child2.expect(['Password:'], timeout=1200)
+    child2.sendline("test")
     child2.expect("# ")
 
     # Change the prompt to something more unique
     prompt = "kyuatestprompt # "
     child2.sendline("set prompt=\"%s\"" % (prompt))
     child2.expect(prompt)
+    child2.expect(prompt)
 
-    child2.sendline("cd /usr/tests")
-    child2.expect(prompt)
-    child2.sendline("sh -c \"ifconfig %s | grep inet | awk '{print $2}'\"" % test_config['interface'])
-    child2.expect(prompt)
-    print("Interface: %s" % (child2.before))
-    child2.sendline("kyua test")
-    child2.expect(prompt, timeout=7200)
-    child2.sendline("kyua report --verbose --results-filter passed,skipped,xfail,broken,failed  --output test-report.txt")
-    child2.expect(prompt, timeout=7200)
-    child2.sendline("kyua report-junit --output=test-report.xml")
-    child2.expect(prompt)
-    child2.sendline("shutdown -p now")
-    child2.expect(pexpect.EOF, timeout=1000)
+    child2.sendline("ifconfig %s | grep 'inet '" % (test_config['interface']))
+    child2.before = None
+    child2.after = None
+    i = child2.expect(['       inet ', prompt, pexpect.EOF])
+    ip_address = None
+    if i == 0:
+        # matched "	inet 8.8.178.209 netmask 0xffffffe0 broadcast 8.8.178.223"
+        i1 = child2.expect(['netmask ', prompt, pexpect.EOF])
+        if i1 == 0:
+            # matched "netmask 0xffffffe0 broadcast 8.8.178.223"
+            ip_address = child2.before.strip()
+            print("\nFound IP address: %s" % (ip_address))
+            subprocess.call(["sed", "-i", "", "-e", "/%s/d" % (ip_address), known_hosts])
+
+    if ip_address is None:
+        print("\nDid not find IP address for %s" %  (test_config['interface']))
+        child2.sendline("shutdown -p now")
+        child2.expect(pexpect.EOF, timeout=1000)
+    else:
+        # If at this point we have figured out the IP address for
+        # this host, then execute all subsequent commands over SSH
+        # using the Python Fabric library.
+
+        # Set global state used by Python Fabric library
+        fabric.api.env.host_string = ip_address
+        fabric.api.env.user = "root"
+        fabric.api.env.password = "test"
+        fabric.api.env.shell = "/bin/sh -c"
+        fabric.api.env.warn_only = True
+
+        # Execute commands over SSH.  We can more easily
+        # grab the exit status code of executed commands over SSH,
+        # compared to expect.
+        with fabric.api.cd("/usr/tests"):
+            fabric.api.run("kyua test")
+            fabric.api.run("kyua report --verbose --results-filter passed,skipped,xfail,broken,failed  --output test-report.txt")
+            fabric.api.run("kyua report-junit --output=test-report.xml")
+            fabric.api.run("shutdown -p now")
 
 def checkpreReqBhyve():
     # Check if Bhyve module is loaded, and if we ran the script as superuser.
     # If not, silently kill the application.
-    # XXX: Maybe this should not be so silent?
     euid = os.geteuid()
     if euid != 0:
         raise(EnvironmentError, "this script need to be run as root")
-        sys.exit()
     ret = os.system("kldload -n vmm")
     if ret != 0:
         raise(EnvironmentError, "missing vmm.ko")
-        sys.exit()
     ret = os.system("kldload -n if_tap")
     if ret != 0:
         raise(EnvironmentError, "missing if_tap.ko")
-        sys.exit()
 
 def cleanup():
     os.system("rm -f %s" % (sentinel_file))

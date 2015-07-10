@@ -9,6 +9,8 @@ ZFS_PARENT=zroot/j/jails
 JHOME=/j/jails
 JPATH=${JHOME}/${JNAME}
 
+JOB_CONF=freebsd-ci/jobs/${JOB_NAME}/job.conf
+
 TARGET=amd64
 TARGET_ARCH=amd64
 WITH_32BIT=1
@@ -17,11 +19,28 @@ OSRELEASE=11.0-CURRENT
 echo "env:"
 /usr/bin/env
 
-echo "setup jail ${JNAME}"
+if [ -f ${JOB_CONF} ]; then
+	. ${JOB_CONF}
+else
+	echo "warning: job configuration file not found, use default settings."
+fi
 
-fetch -m http://ftp.freebsd.org:/pub/FreeBSD/snapshots/${TARGET}/${TARGET_ARCH}/${OSRELEASE}/base.txz
+echo "setup jail ${JNAME} using following parameters:"
+echo "TARGET=${TARGET}"
+echo "TARGET_ARCH=${TARGET_ARCH}"
+echo "WITH_32BIT=${WITH_32BIT}"
+echo "OSRELEASE=${OSRELEASE}"
+
+if [ `echo ${OSRELEASE} | cut -f 2 -d '-'` = "RELEASE" ]; then
+	SUBDIR=releases
+else
+	SUBDIR=snapshots
+fi
+BASE_URL=http://ftp.FreeBSD.org/pub/FreeBSD/${SUBDIR}/${TARGET}/${TARGET_ARCH}/${OSRELEASE}
+
+fetch -m ${BASE_URL}/base.txz
 if [ ${WITH_32BIT} -eq 1 ]; then
-	fetch -m http://ftp.freebsd.org:/pub/FreeBSD/snapshots/${TARGET}/${TARGET_ARCH}/${OSRELEASE}/lib32.txz
+	fetch -m ${BASE_URL}/lib32.txz
 fi
 
 sudo zfs create ${ZFS_PARENT}/${JNAME}

@@ -31,11 +31,15 @@ echo "TARGET_ARCH=${TARGET_ARCH}"
 echo "WITH_32BIT=${WITH_32BIT}"
 echo "OSRELEASE=${OSRELEASE}"
 
-if [ `echo ${OSRELEASE} | cut -f 2 -d '-'` = "RELEASE" ]; then
+RELEASE_TYPE=`echo ${OSRELEASE} | cut -f 2 -d '-' | tr -d [:digit:]`
+case ${RELEASE_TYPE} in
+"RELEASE"|"BETA"|"RC")
 	SUBDIR=releases
-else
+	;;
+*)
 	SUBDIR=snapshots
-fi
+	;;
+esac
 BASE_URL=http://ftp.FreeBSD.org/pub/FreeBSD/${SUBDIR}/${TARGET}/${TARGET_ARCH}/${OSRELEASE}
 
 fetch -m ${BASE_URL}/base.txz

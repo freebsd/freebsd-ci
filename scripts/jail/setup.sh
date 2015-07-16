@@ -71,7 +71,7 @@ sudo jail -c persist name="${JNAME}" path="${JPATH}" osrelease="${OSRELEASE}" ho
 
 echo "setup build environment"
 
-if [ freebsd-ci/jobs/${JOB_NAME}/pkg-list ]; then
+if [ -s freebsd-ci/jobs/${JOB_NAME}/pkg-list ]; then
 	sudo jexec ${JNAME} sh -c "env ASSUME_ALWAYS_YES=yes pkg update"
 	sudo jexec ${JNAME} sh -c "pkg install -y `cat freebsd-ci/jobs/${JOB_NAME}/pkg-list`"
 fi

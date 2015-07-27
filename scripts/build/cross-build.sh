@@ -53,7 +53,7 @@ set +x
 echo "--------------------------------------------------------------"
 set -x
 
-sudo pkg install -y devel/${TARGET_ARCH}-xtoolchain-gcc
+#sudo pkg install -y devel/${TARGET_ARCH}-xtoolchain-gcc
 make -j 4 CROSS_TOOLCHAIN=${TARGET_ARCH}-gcc buildworld __MAKE_CONF=${WORKSPACE}/make.conf
 make -j 4 CROSS_TOOLCHAIN=${TARGET_ARCH}-gcc buildkernel __MAKE_CONF=${WORKSPACE}/make.conf
 

@@ -12,7 +12,13 @@ JPATH=${JHOME}/${JNAME}
 echo "clean jail ${JNAME}"
 
 sudo jail -r ${JNAME} || true
-sudo ifconfig ${BUILDER_NETIF} inet6 ${BUILDER_JAIL_IP} -alias || true
+
+if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP6} ]; then
+	sudo ifconfig ${BUILDER_NETIF} inet6 ${BUILDER_JAIL_IP6} -alias || true
+fi
+if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP4} ]; then
+	sudo ifconfig ${BUILDER_NETIF} inet ${BUILDER_JAIL_IP4} -alias || true
+fi
 
 sudo umount ${JPATH}/workspace || true
 sudo umount ${JPATH}/dev || true

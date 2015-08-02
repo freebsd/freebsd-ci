@@ -68,13 +68,13 @@ printf "${BUILDER_RESOLV_CONF}" | sudo tee ${JPATH}/etc/resolv.conf
 
 if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP6} ]; then
 	sudo ifconfig ${BUILDER_NETIF} inet6 ${BUILDER_JAIL_IP6} alias
-	JAIL_ARG_IP6="ip6.addr=\"${BUILDER_JAIL_IP6}\""
+	JAIL_ARG_IP6="ip6.addr=${BUILDER_JAIL_IP6}"
 else
 	JAIL_ARG_IP6="ip6=disable"
 fi
 if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP4} ]; then
 	sudo ifconfig ${BUILDER_NETIF} inet ${BUILDER_JAIL_IP4} alias
-	JAIL_ARG_IP4="ip4.addr=\"${BUILDER_JAIL_IP4}\""
+	JAIL_ARG_IP4="ip4.addr=${BUILDER_JAIL_IP4}"
 else
 	JAIL_ARG_IP4="ip4=disable"
 fi

@@ -30,6 +30,7 @@ DRY=
 WORKDIR=`pwd -P`
 
 SCAN_BUILD=${SCAN_BUILD-"/usr/local/bin/scan-build-devel"}
+JFLAG=${JFLAG-"-j4"}
 
 SRCDIR=${WORKDIR}/src
 export OBJ=${WORKDIR}/obj
@@ -39,7 +40,6 @@ SRCCONF=${WORKDIR}/freebsd-ci/scan-build/src.conf
 MYFLAGS="__MAKE_CONF=/dev/null -m $SRCDIR/share/mk SRCCONF=${SRCCONF} -DMODULES_WITH_WORLD"
 DATE=`date "+%Y-%m-%d"`
 ARCH=`uname -p`
-JFLAG=-j4
 
 do_scan()
 {

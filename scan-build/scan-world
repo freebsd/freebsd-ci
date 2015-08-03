@@ -29,7 +29,7 @@ DRY=
 
 WORKDIR=`pwd -P`
 
-SCAN_BUILD=/usr/local/bin/scan-build-devel
+SCAN_BUILD=${SCAN_BUILD-"/usr/local/bin/scan-build-devel"}
 
 SRCDIR=${WORKDIR}/src
 export OBJ=${WORKDIR}/obj

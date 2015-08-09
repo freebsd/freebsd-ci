@@ -95,6 +95,18 @@ if [ -s freebsd-ci/jobs/${JOB_NAME}/pkg-list ]; then
 	sudo jexec ${JNAME} sh -c "pkg install -y `cat freebsd-ci/jobs/${JOB_NAME}/pkg-list`"
 fi
 
+# remove network for quarantine env
+if [ "$QUARANTINE" ]; then
+	if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP6} ]; then
+		sudo ifconfig ${BUILDER_NETIF} inet6 ${BUILDER_JAIL_IP6} -alias
+		sudo jail -m name=${JNAME} ip6=disable ip6.addr=
+	fi
+	if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP4} ]; then
+		sudo ifconfig ${BUILDER_NETIF} inet ${BUILDER_JAIL_IP4} -alias
+		sudo jail -m name=${JNAME} ip4=disable ip4.addr=
+	fi
+fi
+
 echo "build environment:"
 
 sudo jexec ${JNAME} sh -c "uname -a"

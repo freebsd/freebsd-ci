@@ -7,7 +7,8 @@ Address[] jenkinsAdmin = [
 
 patterns = [
     'hudson.remoting.RequestAbortedException:',
-    'Connection aborted: org.jenkinsci.remoting'
+    'Connection aborted: org.jenkinsci.remoting',
+    'Test reports were found but none of them are new.'
 ]
 
 try {

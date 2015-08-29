@@ -6,6 +6,7 @@ Address[] jenkinsAdmin = [
 ].collect { new InternetAddress(it) }
 
 patterns = [
+    'hudson.remoting.ChannelClosedException',
     'hudson.remoting.RequestAbortedException:',
     'Connection aborted: org.jenkinsci.remoting',
     'Test reports were found but none of them are new.'

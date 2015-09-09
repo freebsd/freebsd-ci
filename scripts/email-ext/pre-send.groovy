@@ -8,6 +8,7 @@ Address[] jenkinsAdmin = [
 patterns = [
     'hudson.remoting.ChannelClosedException',
     'hudson.remoting.RequestAbortedException:',
+    'org.tmatesoft.svn.core.SVNException',
     'Connection aborted: org.jenkinsci.remoting',
     'Test reports were found but none of them are new.'
 ]

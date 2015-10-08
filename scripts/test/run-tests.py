@@ -120,7 +120,7 @@ def runTest():
     child.expect(pexpect.EOF, timeout=120)
 
     macaddress = ""
-    if test_config.has_key('mac'):
+    if "mac" in test_config:
         macaddress = ",mac=%s" % test_config['mac']
 
     cmd = "bhyve -c 2 -m %s -AI -H -P -g 0 -s 0:0,hostbridge " \

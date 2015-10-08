@@ -191,13 +191,13 @@ def checkpreReqBhyve():
     # If not, silently kill the application.
     euid = os.geteuid()
     if euid != 0:
-        raise(EnvironmentError, "this script need to be run as root")
+        raise EnvironmentError("this script need to be run as root")
     ret = os.system("kldload -n vmm")
     if ret != 0:
-        raise(EnvironmentError, "missing vmm.ko")
+        raise EnvironmentError("missing vmm.ko")
     ret = os.system("kldload -n if_tap")
     if ret != 0:
-        raise(EnvironmentError, "missing if_tap.ko")
+        raise EnvironmentError("missing if_tap.ko")
 
 def cleanup():
     os.system("rm -f %s" % (sentinel_file))

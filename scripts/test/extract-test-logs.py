@@ -30,6 +30,7 @@
 #   (3) extracts test logs from /usr/tests directory
 #
 
+from __future__ import print_function
 from optparse import OptionParser
 import atexit
 import getopt

@@ -10,6 +10,7 @@ patterns = [
     'hudson.remoting.RequestAbortedException:',
     'org.tmatesoft.svn.core.SVNException',
     'Connection aborted: org.jenkinsci.remoting',
+    'Connection was broken: java.io.IOException',
     'Test reports were found but none of them are new.'
 ]
 

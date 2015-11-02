@@ -15,3 +15,4 @@ packages_common:
       - shells/bash
       - shells/zsh
       - sysutils/py-salt
+      - textproc/igor

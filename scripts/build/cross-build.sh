@@ -54,6 +54,21 @@ echo "--------------------------------------------------------------"
 set -x
 
 sudo pkg install -y devel/${TARGET_ARCH}-xtoolchain-gcc
+
+XCC=$(make -f /usr/local/share/toolchains/${TARGET_ARCH}-gcc.mk -V XCC)
+
+set +x
+echo "--------------------------------------------------------------"
+echo ">>> Compiler version:"
+set -x
+echo ""
+$XCC --version
+$XCC -v
+set +x
+echo "--------------------------------------------------------------"
+echo ""
+set -x
+
 make -j 4 CROSS_TOOLCHAIN=${TARGET_ARCH}-gcc buildworld __MAKE_CONF=${WORKSPACE}/make.conf
 make -j 4 CROSS_TOOLCHAIN=${TARGET_ARCH}-gcc buildkernel __MAKE_CONF=${WORKSPACE}/make.conf
 

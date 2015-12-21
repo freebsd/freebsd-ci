@@ -55,10 +55,6 @@ if [ -n "$ENDIAN" ]; then
 	BFLAG="-B $ENDIAN"
 fi
 
-if [ -z "$MAKEOBJDIRPREFIX" ]; then
-	MAKEOBJDIRPREFIX=/usr/obj
-fi
-
 cd $BUILD_ROOT
 
 if [ -z "$__MAKE_CONF" ]; then

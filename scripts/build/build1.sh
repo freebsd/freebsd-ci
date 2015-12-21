@@ -29,7 +29,11 @@ if [ -z "$WORKSPACE" ]; then
 	exit 1
 fi
 
-export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
+if [ -z "$BUILD_ROOT" ]; then
+    BUILD_ROOT="$WORKSPACE"
+fi
+
+export MAKEOBJDIRPREFIX=${BUILD_ROOT}/obj
 mkdir -p ${MAKEOBJDIRPREFIX}
 
 (
@@ -37,17 +41,17 @@ cat <<EOF
 # Put make.conf entries here
 `echo -e "$MAKE_CONF_FILE"`
 EOF
-) > ${WORKSPACE}/make.conf
+) > ${BUILD_ROOT}/make.conf
 
 set +x
 echo "--------------------------------------------------------------"
-echo ">>> ${WORKSPACE}/make.conf contains:"
+echo ">>> ${BUILD_ROOT}/make.conf contains:"
 set -x
-cat ${WORKSPACE}/make.conf
+cat ${BUILD_ROOT}/make.conf
 set +x
 echo "--------------------------------------------------------------"
 set -x
 
-make -j 4 buildworld __MAKE_CONF=${WORKSPACE}/make.conf
-make -j 4 buildkernel __MAKE_CONF=${WORKSPACE}/make.conf
+make -j 4 buildworld __MAKE_CONF=${BUILD_ROOT}/make.conf
+make -j 4 buildkernel __MAKE_CONF=${BUILD_ROOT}/make.conf
 

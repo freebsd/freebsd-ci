@@ -33,7 +33,9 @@ if [ -z "$BUILD_ROOT" ]; then
     BUILD_ROOT="$WORKSPACE"
 fi
 
-export MAKEOBJDIRPREFIX=${BUILD_ROOT}/obj
+if [ -z "$MAKEOBJDIRPREFIX" ]; then
+    export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
+fi
 mkdir -p ${MAKEOBJDIRPREFIX}
 
 (

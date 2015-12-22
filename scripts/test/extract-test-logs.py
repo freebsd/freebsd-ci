@@ -82,16 +82,14 @@ def main(argv):
         sys.exit(ret)
 
     temp_dir = tempfile.mkdtemp()
-    cmd = "mount /dev/md99 %s" % (temp_dir) 
+    cmd = "mount /dev/md99 %s" % (temp_dir)
     ret = os.system(cmd)
     if ret != 0:
         sys.exit(ret)
 
     cmd = "cp %s/usr/tests/*.xml %s/usr/tests/*.txt ." \
-           % (temp_dir, temp_dir) 
+           % (temp_dir, temp_dir)
     os.system(cmd)
-    
-
 
 def cleanup():
     os.system("rm -f %s" % (sentinel_file))

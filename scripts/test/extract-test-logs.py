@@ -35,7 +35,7 @@ from optparse import OptionParser
 import atexit
 import getopt
 import json
-import os
+import subprocess
 import sys
 import tempfile
 
@@ -43,6 +43,7 @@ test_config = None
 test_config_file = None
 sentinel_file = None
 temp_dir = None
+md = ""
 
 def usage(argv):
     print("Usage:")
@@ -54,12 +55,14 @@ def main(argv):
     try:
         opts, args = getopt.getopt(sys.argv[1:], "f:")
     except getopt.GetoptError as err:
+        print(err)
         sys.exit(2)
 
     global test_config
     global test_config_file
     global sentinel_file
     global temp_dir
+    global md
 
     for o, a in opts:
         if o == "-f":
@@ -75,32 +78,30 @@ def main(argv):
     test_config = json.load(config_file)
     config_file.close()
 
-    cmd = "mdconfig -a -u 99 -t vnode -f %s" % (test_config['disks'][0])
-    print(cmd)
-    ret = os.system(cmd)
-    if ret != 0:
-        sys.exit(ret)
-
+    md = subprocess.check_output(["mdconfig", "-a", "-f", test_config['disks'][0]])
+    md = md.strip()
     temp_dir = tempfile.mkdtemp()
-    cmd = "mount /dev/md99 %s" % (temp_dir)
-    ret = os.system(cmd)
+    cmd = ["mount", "/dev/%s" % (md), temp_dir]
+    print(" ".join(cmd))
+    ret = subprocess.call(cmd)
     if ret != 0:
         sys.exit(ret)
 
     cmd = "cp %s/usr/tests/*.xml %s/usr/tests/*.txt ." \
            % (temp_dir, temp_dir)
-    os.system(cmd)
+    subprocess.call(cmd, shell=True)
 
 def cleanup():
-    os.system("rm -f %s" % (sentinel_file))
+    global md
+    subprocess.call("rm -f %s" % (sentinel_file), shell=True)
     if temp_dir is not None:
-        cmd = "umount %s" % (temp_dir)
-        print(cmd)
-        os.system(cmd)
+        cmd = ["umount", temp_dir]
+        print(" ".join(cmd))
+        subprocess.call(cmd)
 
-    cmd = "mdconfig -d -u 99"
-    print(cmd)
-    os.system(cmd)
+    cmd = ["mdconfig", "-d", "-u", md]
+    print(" ".join(cmd))
+    subprocess.call(cmd)
 
 if __name__ == "__main__":
     atexit.register(cleanup)

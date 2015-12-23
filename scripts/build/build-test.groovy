@@ -76,7 +76,7 @@ try {
 
     stage 'Checkout scripts'
     dir ("freebsd-ci") {
-        git changelog: false, url: "${script_url}"
+        git changelog: false, poll: false, url: "${script_url}"
     }
 
     dir('src') {

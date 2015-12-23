@@ -97,7 +97,7 @@ try {
 
            // Wait a bit before calling the Warnings plugin
            // so that all console output is available.
-           sleep 3
+           sleep 3L
 
            // Use the Warnings plugin to analyze for compiler warnigs
            step([$class: 'WarningsPublisher',

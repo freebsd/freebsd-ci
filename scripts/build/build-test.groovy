@@ -103,7 +103,7 @@ try {
     dir('src') {
         stage 'Checkout src'
         // Check out the source tree
-        svn "${src_url}"
+        //svn "${src_url}"
         checkout([$class: 'SubversionSCM',
                   additionalCredentials: [],
                   browser: [$class: 'ViewSVN', url: view_svn],

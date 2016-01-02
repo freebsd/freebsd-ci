@@ -42,6 +42,7 @@
 //    EMAIL_TO
 //    MAKE_CONF_FILE
 //    SCRIPT_URL
+//    SKIP_TEST
 //    TEST_NODE
 //    TEST_CONFIG_FILE
 
@@ -55,6 +56,7 @@ String make_conf_file = MAKE_CONF_FILE
 String workspace
 String json_str
 String email_to
+boolean skip_test = false
 
 if (getBinding().hasVariable("FREEBSD_SRC_URL")) {
     src_url = FREEBSD_SRC_URL
@@ -66,6 +68,10 @@ if (getBinding().hasVariable("SCRIPT_URL")) {
 
 if (getBinding().hasVariable("EMAIL_TO")) {
     email_to = EMAIL_TO
+}
+
+if (getBinding().hasVariable("SKIP_TEST")) {
+    skip_test = SKIP_TEST.toBoolean()
 }
 
 /*
@@ -157,6 +163,10 @@ try {
         }
 
     }
+
+    if (skip_test) {
+        return
+    }
     // Parse the template json config file
     def conf = readFile("${TEST_CONFIG_FILE}")
     def slurper = new JsonSlurper()
@@ -185,6 +195,10 @@ try {
  */
 node(TEST_NODE) {
 try {
+    if (skip_test) {
+        return
+    }
+
     dir ("freebsd-ci") {
         git changelog: false, url: "${script_url}"
     }

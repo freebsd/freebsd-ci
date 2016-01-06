@@ -42,6 +42,7 @@
 //    EMAIL_TO
 //    MAKE_CONF_FILE
 //    SCRIPT_URL
+//    SKIP_BUILD_UFS_IMAGE
 //    SKIP_TEST
 //    TEST_NODE
 //    TEST_CONFIG_FILE
@@ -57,6 +58,7 @@ String workspace
 String json_str
 String email_to
 boolean skip_test = false
+boolean skip_build_ufs_image = false
 
 if (getBinding().hasVariable("FREEBSD_SRC_URL")) {
     src_url = FREEBSD_SRC_URL
@@ -72,6 +74,10 @@ if (getBinding().hasVariable("EMAIL_TO")) {
 
 if (getBinding().hasVariable("SKIP_TEST")) {
     skip_test = SKIP_TEST.toBoolean()
+}
+
+if (getBinding().hasVariable("SKIP_BUILD_UFS_IMAGE")) {
+    skip_build_ufs_image = SKIP_BUILD_UFS_IMAGE.toBoolean()
 }
 
 /*
@@ -156,7 +162,9 @@ try {
               messagesPattern: '',
               unHealthy: ''])
 
-
+           if (skip_build_ufs_image) {
+               return
+           }
            // Build a UFS image which can be booted in bhyve
            stage "Build UFS image"
            sh "${build_ufs_script}"

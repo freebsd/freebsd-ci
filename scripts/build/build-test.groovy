@@ -75,6 +75,8 @@ if (getBinding().hasVariable("EMAIL_TO")) {
 
 if (getBinding().hasVariable("TEST_NODE")) {
     test_node = TEST_NODE
+} else {
+    test_node = BUILD_NODE
 }
 
 if (getBinding().hasVariable("SKIP_TEST")) {

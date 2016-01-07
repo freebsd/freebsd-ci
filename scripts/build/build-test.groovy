@@ -57,6 +57,7 @@ String make_conf_file = MAKE_CONF_FILE
 String workspace
 String json_str
 String email_to
+String test_node = ''
 boolean skip_test = false
 boolean skip_build_ufs_image = false
 
@@ -70,6 +71,10 @@ if (getBinding().hasVariable("SCRIPT_URL")) {
 
 if (getBinding().hasVariable("EMAIL_TO")) {
     email_to = EMAIL_TO
+}
+
+if (getBinding().hasVariable("TEST_NODE")) {
+    test_node = TEST_NODE
 }
 
 if (getBinding().hasVariable("SKIP_TEST")) {
@@ -201,7 +206,7 @@ try {
  * parameter in the job.
  *
  */
-node(TEST_NODE) {
+node("${test_node}") {
 try {
     if (skip_test) {
         return

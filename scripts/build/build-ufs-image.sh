@@ -115,7 +115,15 @@ fi
 
 sudo cp tmp/rc.conf ${PACKAGE_ROOT}/etc/rc.conf
 sudo cp ${PACKAGE_ROOT}/etc/ssh/sshd_config tmp/sshd_config
-sed -i "" -e 's/#PermitRootLogin no/PermitRootLogin yes/' tmp/sshd_config
+sed -i "" -e '/PermitRootLogin/d' tmp/sshd_config
+(
+cat <<EOF
+
+## Additional SSH settings, added by $(whoami) on $(date)
+PermitRootLogin yes
+EOF
+) >> tmp/sshd_config
+
 sudo cp tmp/sshd_config ${PACKAGE_ROOT}/etc/ssh/sshd_config
 sudo chroot ${PACKAGE_ROOT} /bin/sh -c 'echo test | pw mod user root -h 0'
 

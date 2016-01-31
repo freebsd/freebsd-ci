@@ -49,6 +49,7 @@
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
+import hudson.model.Result
 import java.net.URL
 
 String src_url = 'svn://svnmir.freebsd.org/base/head'
@@ -87,6 +88,10 @@ if (getBinding().hasVariable("SKIP_BUILD_UFS_IMAGE")) {
     skip_build_ufs_image = SKIP_BUILD_UFS_IMAGE.toBoolean()
 }
 
+def err = null
+currentBuild.result = Result.SUCCESS
+
+try {
 /*
  * Allocate a node to perform build steps on.
  * The name of the node is configured in the BUILD_NODE
@@ -94,7 +99,6 @@ if (getBinding().hasVariable("SKIP_BUILD_UFS_IMAGE")) {
  *
  */
 node(BUILD_NODE) {
-try {
     workspace = pwd()
     String script_root = "${workspace}/freebsd-ci"
     String build_script = "${script_root}/scripts/build/build1.sh"
@@ -142,7 +146,6 @@ try {
                               ])
 
 
-        stage 'Build'
         withEnv(["WORKSPACE=${workspace}",
                  "MAKEOBJDIRPREFIX=${makeobjdirprefix}",
                  "BUILD_ROOT=" + pwd(),
@@ -169,37 +172,25 @@ try {
               messagesPattern: '',
               unHealthy: ''])
 
-           if (skip_build_ufs_image) {
-               return
+           if (!skip_build_ufs_image) {
+               // Build a UFS image which can be booted in bhyve
+               stage "Build UFS image"
+               sh "${build_ufs_script}"
            }
-           // Build a UFS image which can be booted in bhyve
-           stage "Build UFS image"
-           sh "${build_ufs_script}"
         }
 
     }
 
-    if (skip_test) {
-        return
-    }
     // Parse the template json config file
     def conf = readFile("${TEST_CONFIG_FILE}")
     def slurper = new JsonSlurper()
     json_data = slurper.parseText(conf)
 
-    // Put the put to the disk image in new json config file,
-    // prefixed with /net so that we can access it via NFS. 
+    // Write out location of disk image in new json config file,
+    // prefixed with /net so that we can access it via NFS.
     json_data['disks'][0] = '/net/' + BUILD_NODE + "/${workspace}/image/src/test.img"
     def builder = new JsonBuilder(json_data)
     json_str = builder.toPrettyString()
-} finally {
-        // Send e-mail notifications for failed or unstable builds
-        step([$class: 'Mailer',
-           notifyEveryUnstableBuild: true,
-           recipients: "${email_to}",
-           sendToIndividuals: true])
-
-}
 }
 
 /*
@@ -208,43 +199,49 @@ try {
  * parameter in the job.
  *
  */
-node("${test_node}") {
-try {
-    if (skip_test) {
-        return
+!skip_build_ufs_image && !skip_test && 
+    node("${test_node}") {
+        dir ("freebsd-ci") {
+            git changelog: false, url: "${script_url}"
+        }
+    
+        // Write out the new json config file, to be used by subsequent scripts
+        writeFile file: 'config.json', text: json_str
+    
+        stage "Test"
+        /*
+         * Boot the UFS image in a bhyve VM.
+         * Run the tests in the VM.
+         * Shut down the VM.
+         */
+        sh 'sudo python freebsd-ci/scripts/test/run-tests.py -f config.json'
+    
+        /*
+         * Mount the UFS image, and extract the JUnit test-report.xml
+         * file.
+         */
+        sh 'sudo python freebsd-ci/scripts/test/extract-test-logs.py -f config.json'
+    
+        /*
+         * Use the JUnit plugin to analyze the test-report.xml test results
+         */
+        step([$class: 'JUnitResultArchiver', testResults: 'test-report.xml'])
     }
-
-    dir ("freebsd-ci") {
-        git changelog: false, url: "${script_url}"
-    }
-
-    // Write out the new json config file, to be used by subsequent scripts
-    writeFile file: 'config.json', text: json_str
-
-    stage "Test"
-    /*
-     * Boot the UFS image in a bhyve VM.
-     * Run the tests in the VM.
-     * Shut down the VM.
-     */
-    sh 'sudo python freebsd-ci/scripts/test/run-tests.py -f config.json'
-
-
-    /*
-     * Mount the UFS image, and extract the JUnit test-report.xml
-     * file.
-     */
-    sh 'sudo python freebsd-ci/scripts/test/extract-test-logs.py -f config.json'
-
-    /*
-     * Use the JUnit plugin to analyze the test-report.xml test results
-     */
-    step([$class: 'JUnitResultArchiver', testResults: 'test-report.xml'])
+} catch (caughtError) {
+    err = caughtError
+    currentBuild.result = Result.FAILURE
 } finally {
-        // Send e-mail notifications for failed or unstable builds
+    node("master") {
+        // Send e-mail notifications for failed or unstable builds.
+        // currentBuild.result must be non-null for this step to work.
         step([$class: 'Mailer',
            notifyEveryUnstableBuild: true,
            recipients: "${email_to}",
            sendToIndividuals: true])
-}
+    }
+
+    /* Must re-throw exception to propagate error */
+    if (err) {
+        throw err
+    }
 }

@@ -49,7 +49,6 @@
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
-import hudson.model.Result
 import java.net.URL
 
 String src_url = 'svn://svnmir.freebsd.org/base/head'
@@ -89,7 +88,7 @@ if (getBinding().hasVariable("SKIP_BUILD_UFS_IMAGE")) {
 }
 
 def err = null
-currentBuild.result = Result.SUCCESS
+currentBuild.result = "SUCCESS"
 
 try {
 /*
@@ -229,9 +228,9 @@ node(BUILD_NODE) {
     }
 } catch (caughtError) {
     err = caughtError
-    currentBuild.result = Result.FAILURE
+    currentBuild.result = "FAILURE"
 } finally {
-    node("master") {
+    (currentBuild.result != "ABORTED") && node("master") {
         // Send e-mail notifications for failed or unstable builds.
         // currentBuild.result must be non-null for this step to work.
         step([$class: 'Mailer',

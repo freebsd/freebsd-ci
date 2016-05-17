@@ -47,7 +47,7 @@
 //    TEST_NODE
 //    TEST_CONFIG_FILE
 
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 import groovy.json.JsonBuilder
 import java.net.URL
 
@@ -182,7 +182,7 @@ node(BUILD_NODE) {
 
     // Parse the template json config file
     def conf = readFile("${TEST_CONFIG_FILE}")
-    def slurper = new JsonSlurper()
+    def slurper = new JsonSlurperClassic()
     json_data = slurper.parseText(conf)
 
     // Write out location of disk image in new json config file,

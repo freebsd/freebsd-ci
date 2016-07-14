@@ -40,7 +40,7 @@ case ${RELEASE_TYPE} in
 	SUBDIR=snapshots
 	;;
 esac
-BASE_URL=http://ftp.FreeBSD.org/pub/FreeBSD/${SUBDIR}/${TARGET}/${TARGET_ARCH}/${OSRELEASE}
+BASE_URL=https://download.FreeBSD.org/ftp/${SUBDIR}/${TARGET}/${TARGET_ARCH}/${OSRELEASE}
 
 fetch -m ${BASE_URL}/base.txz
 if [ ${WITH_32BIT} -eq 1 ]; then

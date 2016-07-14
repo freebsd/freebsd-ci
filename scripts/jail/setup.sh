@@ -14,7 +14,7 @@ JOB_CONF=freebsd-ci/jobs/${JOB_NAME}/job.conf
 TARGET=amd64
 TARGET_ARCH=amd64
 WITH_32BIT=1
-OSRELEASE=11.0-CURRENT
+OSRELEASE=10.3-RELEASE
 
 echo "env:"
 /usr/bin/env

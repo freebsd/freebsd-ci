@@ -111,6 +111,7 @@ if [ "$QUARANTINE" ]; then
 	fi
 fi
 
+sudo jexec ${JNAME} sh -c "/usr/sbin/pw groupadd jenkins -g 5213"
 sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default -c \"Jenkins CI\" -d /workspace /bin/sh"
 
 echo "build environment:"

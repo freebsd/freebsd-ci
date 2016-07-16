@@ -116,5 +116,9 @@ sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default 
 
 echo "build environment:"
 
+echo "uname:"
 sudo jexec ${JNAME} sh -c "uname -a"
+echo "packages:"
 sudo jexec ${JNAME} sh -c "pkg info -q"
+echo "environment variables:"
+sudo jexec -U jenkins ${JNAME} sh -c "env"

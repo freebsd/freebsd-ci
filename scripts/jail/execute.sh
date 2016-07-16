@@ -8,4 +8,4 @@ echo "--------------------------------------------------------------"
 echo "start build in jail ${JNAME}"
 echo "--------------------------------------------------------------"
 
-sudo jexec ${JNAME} sh -c "cd /workspace && sh -x freebsd-ci/jobs/${JOB_NAME}/build.sh"
+sudo -E jexec ${JNAME} sh -c "cd /workspace && sh -x freebsd-ci/jobs/${JOB_NAME}/build.sh"

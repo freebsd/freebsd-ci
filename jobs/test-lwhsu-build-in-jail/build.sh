@@ -1,4 +1,6 @@
 #!/bin/sh
 
-cd doc
-make -j ${BUILDER_JFLAG} all
+cd src
+export MAKEOBJDIRPREFIX=/workspace/obj
+make -j ${BUILDER_JFLAG} buildworld
+make -j ${BUILDER_JFLAG} buildkernel

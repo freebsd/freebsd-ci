@@ -15,6 +15,8 @@ TARGET=amd64
 TARGET_ARCH=amd64
 WITH_32BIT=1
 OSRELEASE=10.3-RELEASE
+eval BUILDER_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
+eval BUILDER_IP4="\$BUILDER_${EXECUTOR_NUMBER}_IP4"
 
 echo "env:"
 /usr/bin/env
@@ -30,6 +32,8 @@ echo "TARGET=${TARGET}"
 echo "TARGET_ARCH=${TARGET_ARCH}"
 echo "WITH_32BIT=${WITH_32BIT}"
 echo "OSRELEASE=${OSRELEASE}"
+echo "BUILDER_IP6=${BUILDER_IP6}"
+echo "BUILDER_IP4=${BUILDER_IP4}"
 
 RELEASE_TYPE=`echo ${OSRELEASE} | cut -f 2 -d '-' | tr -d [:digit:]`
 case ${RELEASE_TYPE} in
@@ -63,9 +67,6 @@ sudo devfs -m ${JPATH}/dev rule -s 4 applyset
 
 sudo mkdir ${JPATH}/workspace
 sudo mount -t nullfs ${WORKSPACE} ${JPATH}/workspace
-
-eval BUILDER_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
-eval BUILDER_IP4="\$BUILDER_${EXECUTOR_NUMBER}_IP4"
 
 printf "${BUILDER_RESOLV_CONF}" | sudo tee ${JPATH}/etc/resolv.conf
 

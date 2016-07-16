@@ -5,4 +5,4 @@ env
 echo "========"
 
 cd doc
-make -j ${BUILDER_JFLAG}
+make -j ${BUILDER_JFLAG} all

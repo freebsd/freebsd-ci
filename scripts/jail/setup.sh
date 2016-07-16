@@ -64,6 +64,9 @@ sudo devfs -m ${JPATH}/dev rule -s 4 applyset
 sudo mkdir ${JPATH}/workspace
 sudo mount -t nullfs ${WORKSPACE} ${JPATH}/workspace
 
+eval BUILDER_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
+eval BUILDER_IP4="\$BUILDER_${EXECUTOR_NUMBER}_IP4"
+
 printf "${BUILDER_RESOLV_CONF}" | sudo tee ${JPATH}/etc/resolv.conf
 
 if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP6} ]; then

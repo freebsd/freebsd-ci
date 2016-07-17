@@ -1,6 +1,18 @@
 #!/bin/sh
 
-cd src
 export MAKEOBJDIRPREFIX=/workspace/obj
-make -j ${BUILDER_JFLAG} buildworld
-make -j ${BUILDER_JFLAG} buildkernel
+rm -fr ${MAKEOBJDIRPREFIX}
+
+MAKECONF=/dev/null
+SRCCONF=/dev/null
+
+cd src
+
+make -j ${BUILDER_JFLAG} -DNO_CLEAN \
+        buildworld \
+       __MAKE_CONF=${MAKECONF} \
+       SRCCONF=${SRCCONF}
+make -j ${BUILDER_JFLAG} -DNO_CLEAN \
+        buildkernel \
+        __MAKE_CONF=${MAKECONF} \
+        SRCCONF=${SRCCONF}

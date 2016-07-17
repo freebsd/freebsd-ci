@@ -1,13 +1,6 @@
 #!/bin/sh
 
-export PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin"
-
-JNAME="${JOB_NAME}"
-
-ZFS_PARENT=zroot/j/jails
-
-JHOME=/j/jails
-JPATH=${JHOME}/${JNAME}
+. jail.conf
 
 echo "clean jail ${JNAME}"
 

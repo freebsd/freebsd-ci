@@ -1,25 +1,9 @@
 #!/bin/sh
 
-export PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin"
+. jail.conf
 
-JNAME="${JOB_NAME}"
-
-ZFS_PARENT=zroot/j/jails
-
-JHOME=/j/jails
-JPATH=${JHOME}/${JNAME}
-
-JOB_CONF=freebsd-ci/jobs/${JOB_NAME}/job.conf
-
-TARGET=amd64
-TARGET_ARCH=amd64
-WITH_32BIT=1
-OSRELEASE=10.3-RELEASE
 eval BUILDER_JAIL_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
 eval BUILDER_JAIL_IP4="\$BUILDER_${EXECUTOR_NUMBER}_IP4"
-
-echo "env:"
-/usr/bin/env
 
 if [ -f ${JOB_CONF} ]; then
 	. ${JOB_CONF}

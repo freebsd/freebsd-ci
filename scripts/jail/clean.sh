@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. jail.conf
+. freebsd-ci/scripts/jail/jail.conf
 
 echo "clean jail ${JNAME}"
 

@@ -1,12 +1,14 @@
 #!/bin/sh
 
-export MAKEOBJDIRPREFIX=/workspace/obj
+WORKSPACE=/workspace
+
+export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 rm -fr ${MAKEOBJDIRPREFIX}
 
 MAKECONF=/dev/null
 SRCCONF=/dev/null
 
-cd src
+cd ${WORKSPACE}/src
 
 make -j ${JFLAG} -DNO_CLEAN \
 	-DTARGET=${TARGET} \

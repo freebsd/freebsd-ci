@@ -99,7 +99,7 @@ fi
 
 sudo jexec ${JNAME} sh -c "/usr/sbin/pw groupadd jenkins -g 5213"
 sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default -c \"Jenkins CI\" -d /workspace /bin/sh"
-sudo jexec ${JNAME} sh -c "echo 'root ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/jenkins"
+sudo jexec ${JNAME} sh -c "umask 7337; echo 'root ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/jenkins"
 
 echo "build environment:"
 

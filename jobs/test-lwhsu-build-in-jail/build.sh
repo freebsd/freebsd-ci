@@ -18,22 +18,18 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
        SRCCONF=${SRCCONF}
 
 sudo make -DNO_CLEAN \
-        -DNO_ROOT \
         distributeworld \
         __MAKE_CONF=${MAKECONF} \
         SRCCONF=${SRCCONF} \
 sudo make -DNO_CLEAN \
-       -DNO_ROOT \
        packageworld \
        __MAKE_CONF=${MAKECONF} \
        SRCCONF=${SRCCONF} \
 sudo make -DNO_CLEAN \
-       -DNO_ROOT \
        distributekernel \
        __MAKE_CONF=${MAKECONF} \
        SRCCONF=${SRCCONF} \
 sudo make -DNO_CLEAN \
-       -DNO_ROOT \
        packagekernel \
        __MAKE_CONF=${MAKECONF} \
        SRCCONF=${SRCCONF} \

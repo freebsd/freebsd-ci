@@ -33,3 +33,5 @@ sudo make -DNO_CLEAN \
        packagekernel \
        __MAKE_CONF=${MAKECONF} \
        SRCCONF=${SRCCONF}
+
+find / -name \*.txz

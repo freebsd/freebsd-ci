@@ -4,6 +4,8 @@
 
 echo "clean jail ${JNAME}"
 
+sudo jexec ${JNAME} sh -c "find /workspace -not -user jenkins -exec rm -r {} \;" || true
+
 sudo jail -r ${JNAME} || true
 
 if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP6} ]; then

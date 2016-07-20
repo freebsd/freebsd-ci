@@ -15,6 +15,7 @@ if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP4} ]; then
 	sudo ifconfig ${BUILDER_NETIF} inet ${BUILDER_JAIL_IP4} -alias || true
 fi
 
+sudo umount ${JPATH}/usr/${MOUNT_REPO} || true
 sudo umount ${JPATH}/workspace || true
 sudo umount ${JPATH}/dev || true
 

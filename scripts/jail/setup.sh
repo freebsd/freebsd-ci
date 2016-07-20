@@ -52,6 +52,9 @@ sudo devfs -m ${JPATH}/dev rule -s 4 applyset
 sudo mkdir ${JPATH}/workspace
 sudo mount -t nullfs ${WORKSPACE} ${JPATH}/workspace
 
+sudo mkdir ${JPATH}/usr/${MOUNT_REPO}
+sudo mount -t nullfs ${WORKSPACE}/${MOUNT_REPO} ${JPATH}/usr/${MOUNT_REPO}
+
 printf "${BUILDER_RESOLV_CONF}" | sudo tee ${JPATH}/etc/resolv.conf
 
 if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP6} ]; then

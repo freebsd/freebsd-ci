@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd src
-export MAKEOBJDIRPREFIX=/workspace/obj
-make -j ${BUILDER_JFLAG} buildworld
-make -j ${BUILDER_JFLAG} buildkernel
+sudo touch aaa
+sudo mkdir bbb
+touch ccc
+mkdir ddd

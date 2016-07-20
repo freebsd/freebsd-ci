@@ -10,28 +10,18 @@ cd /usr/src
 
 sudo make -j ${JFLAG} -DNO_CLEAN \
        buildworld \
+       TARGET=${TARGET} \
        __MAKE_CONF=${MAKECONF} \
        SRCCONF=${SRCCONF}
 sudo make -j ${JFLAG} -DNO_CLEAN \
        buildkernel \
+       TARGET=${TARGET} \
        __MAKE_CONF=${MAKECONF} \
        SRCCONF=${SRCCONF}
 
-sudo make -DNO_CLEAN \
-        distributeworld \
-        __MAKE_CONF=${MAKECONF} \
-        SRCCONF=${SRCCONF}
-sudo make -DNO_CLEAN \
-       packageworld \
-       __MAKE_CONF=${MAKECONF} \
-       SRCCONF=${SRCCONF}
-sudo make -DNO_CLEAN \
-       distributekernel \
-       __MAKE_CONF=${MAKECONF} \
-       SRCCONF=${SRCCONF}
-sudo make -DNO_CLEAN \
-       packagekernel \
-       __MAKE_CONF=${MAKECONF} \
-       SRCCONF=${SRCCONF}
+cd /usr/src/release
+
+sudo make base.txz TARGET=${TARGET}
+sudo make kernel.txz TARGET=${TARGET}
 
 find / -name \*.txz

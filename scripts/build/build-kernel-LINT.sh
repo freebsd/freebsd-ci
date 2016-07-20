@@ -12,7 +12,8 @@ cd ${WORKSPACE}/src/sys/${TARGET}/conf
 make LINT
 
 cd ${WORKSPACE}/src
-make -j ${JFLAG} -DNO_CLEAN \
+make \
+	-DNO_CLEAN \
 	-DTARGET=${TARGET} \
         buildkernel \
 	KERNCONF=LINT \

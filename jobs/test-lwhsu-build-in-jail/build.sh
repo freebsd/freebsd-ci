@@ -23,6 +23,3 @@ cd /usr/src/release
 
 sudo make base.txz TARGET=${TARGET}
 sudo make kernel.txz TARGET=${TARGET}
-
-mkdir /workspace/artifacts
-cp /workspace/src/release/*.txz /workspace/artifacts

@@ -22,6 +22,6 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 cd /usr/src/release
 
 sudo make -DNOPORTS -DNOSRC -DNODOC ftp TARGET=${TARGET}
-SRC_REVISION=`svnliteversion /usr/src`
-sudo mkdir -p artifact/${SRC_REVISION}/${TARGET}
-sudo mv ftp/* artifact/${SRC_REVISION}/${TARGET}
+SVN_REVISION=`svnliteversion /usr/src`
+sudo mkdir -p artifact/${SVN_REVISION}/${TARGET}
+sudo mv ftp/* artifact/${SVN_REVISION}/${TARGET}

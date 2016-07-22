@@ -23,5 +23,5 @@ cd /usr/src/release
 
 sudo make -DNOPORTS -DNOSRC -DNODOC ftp TARGET=${TARGET}
 SVN_REVISION=`svnliteversion /usr/src`
-sudo mkdir -p artifact/${SVN_REVISION}/${TARGET}
-sudo mv ftp/* artifact/${SVN_REVISION}/${TARGET}
+sudo mkdir -p artifact/${FBSD_BRANCH}/${SVN_REVISION}/${TARGET}
+sudo mv ftp/* artifact/${FBSD_BRANCH}/${SVN_REVISION}/${TARGET}

@@ -21,5 +21,7 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 
 cd /usr/src/release
 
-sudo make base.txz TARGET=${TARGET}
-sudo make kernel.txz TARGET=${TARGET}
+sudo make -DNOPORTS -DNOSRC -DNODOC ftp TARGET=${TARGET}
+SRC_REVISION=`svnliteversion /usr/src`
+sudo mkdir artifact
+sudo mv ftp artifact/${SRC_REVISION}

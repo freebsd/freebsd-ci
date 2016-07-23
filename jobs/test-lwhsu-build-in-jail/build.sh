@@ -1,8 +1,8 @@
 #!/bin/sh
 
 JFLAG=${BUILDER_JFLAG}
-TARGET_ARCH=aarch64
-TARGET=arm64
+TARGET_ARCH=i386
+TARGET=i386
 
 MAKECONF=/dev/null
 SRCCONF=/dev/null

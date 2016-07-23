@@ -7,6 +7,8 @@ TARGET=i386
 MAKECONF=/dev/null
 SRCCONF=/dev/null
 
+env; exit 0
+
 cd /usr/src
 
 sudo make -j ${JFLAG} -DNO_CLEAN \
@@ -25,6 +27,5 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 cd /usr/src/release
 
 sudo make -DNOPORTS -DNOSRC -DNODOC ftp TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH}
-SVN_REVISION=`svnliteversion /usr/src`
 sudo mkdir -p artifact/${FBSD_BRANCH}/${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 sudo mv ftp/* artifact/${FBSD_BRANCH}/${SVN_REVISION}/${TARGET}/${TARGET_ARCH}

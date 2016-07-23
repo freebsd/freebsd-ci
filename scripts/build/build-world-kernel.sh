@@ -11,17 +11,17 @@ SRCCONF=/dev/null
 cd /usr/src
 
 sudo make -j ${JFLAG} -DNO_CLEAN \
-       buildworld \
-       TARGET=${TARGET} \
+	buildworld \
+	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
-       __MAKE_CONF=${MAKECONF} \
-       SRCCONF=${SRCCONF}
+	__MAKE_CONF=${MAKECONF} \
+	SRCCONF=${SRCCONF}
 sudo make -j ${JFLAG} -DNO_CLEAN \
-       buildkernel \
-       TARGET=${TARGET} \
+	buildkernel \
+	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
-       __MAKE_CONF=${MAKECONF} \
-       SRCCONF=${SRCCONF}
+	__MAKE_CONF=${MAKECONF} \
+	SRCCONF=${SRCCONF}
 
 cd /usr/src/release
 

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 WORKSPACE=/workspace
 
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj

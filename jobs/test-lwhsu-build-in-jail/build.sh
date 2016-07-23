@@ -7,8 +7,6 @@ TARGET=i386
 MAKECONF=/dev/null
 SRCCONF=/dev/null
 
-env; exit 0
-
 cd /usr/src
 
 sudo make -j ${JFLAG} -DNO_CLEAN \

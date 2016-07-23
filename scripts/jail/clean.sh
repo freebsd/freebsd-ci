@@ -4,7 +4,7 @@
 
 echo "clean jail ${JNAME}"
 
-sudo jexec ${JNAME} sh -c "find /workspace -d -not -user jenkins -flags schg -exec chflags noschg {} \;" || true
+sudo jexec ${JNAME} sh -c "find /workspace -d -not -user jenkins -flags +schg -exec chflags noschg {} \;" || true
 sudo jexec ${JNAME} sh -c "find /workspace -d -not -user jenkins -exec rm -rf {} \;" || true
 
 sudo jail -r ${JNAME} || true

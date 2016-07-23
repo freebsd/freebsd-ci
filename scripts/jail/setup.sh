@@ -5,10 +5,10 @@
 eval BUILDER_JAIL_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
 eval BUILDER_JAIL_IP4="\$BUILDER_${EXECUTOR_NUMBER}_IP4"
 
-if [ -f ${JOB_CONF} ]; then
-	. ${JOB_CONF}
+if [ -f ${JAIL_CONF} ]; then
+	. ${JAIL_CONF}
 else
-	echo "warning: job configuration file not found, use default settings."
+	echo "Warning: jail configuration file not found, use default settings."
 fi
 
 echo "setup jail ${JNAME} using following parameters:"

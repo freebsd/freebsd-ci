@@ -25,5 +25,6 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 cd /usr/src/release
 
 sudo make -DNOPORTS -DNOSRC -DNODOC ftp TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH}
-sudo mkdir -p artifact/${FBSD_BRANCH}/${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
-sudo mv ftp/* artifact/${FBSD_BRANCH}/${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+sudo mkdir -p ${ARTIFACT_DEST}
+sudo mv ftp/* ${ARTIFACT_DEST}

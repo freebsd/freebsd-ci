@@ -1,30 +1,17 @@
 #!/bin/sh
 
-JFLAG=${BUILDER_JFLAG}
-TARGET_ARCH=i386
-TARGET=i386
+sudo rm -fr work
+mkdir -p work
+cd work
 
-MAKECONF=/dev/null
-SRCCONF=/dev/null
+fetch http://artifact.ci.freebsd.org/snapshot/head/r303605/amd64/amd64/base.txz
+fetch http://artifact.ci.freebsd.org/snapshot/head/r303605/amd64/amd64/kernel.txz
 
-cd /usr/src
+mkdir -p ufs
+cd ufs
+sudo tar zxvf ../base.txz
+sudo tar zxvf ../kernel.txz
+cd -
 
-sudo make -j ${JFLAG} -DNO_CLEAN \
-	buildworld \
-	TARGET=${TARGET} \
-	TARGET_ARCH=${TARGET_ARCH} \
-	__MAKE_CONF=${MAKECONF} \
-	SRCCONF=${SRCCONF}
-sudo make -j ${JFLAG} -DNO_CLEAN \
-	buildkernel \
-	TARGET=${TARGET} \
-	TARGET_ARCH=${TARGET_ARCH} \
-	__MAKE_CONF=${MAKECONF} \
-	SRCCONF=${SRCCONF}
-
-cd /usr/src/release
-
-sudo make -DNOPORTS -DNOSRC -DNODOC ftp TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH}
-ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
-sudo mkdir -p ${ARTIFACT_DEST}
-sudo mv ftp/* ${ARTIFACT_DEST}
+sudo makefs -d 6144 -t ffs -f 200000 -s 32g -o version=2,bsize=32768,fsize=4096,label=ROOT ufs.img ufs
+mkimg -s gpt -b ufs/boot/pmbr -p freebsd-boot:=ufs/boot/gptboot -p freebsd-swap::1G -p freebsd-ufs:=ufs.img -o disc.img

@@ -14,7 +14,7 @@ ARTIFACT_SUBDIR=${BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
 sudo rm -fr work
 mkdir -p work
-pushd work
+cd work
 
 mkdir -p ufs
 for f in base kernel
@@ -27,8 +27,7 @@ sudo makefs -d 6144 -t ffs -f 200000 -s 2g -o version=2,bsize=32768,fsize=4096,l
 mkimg -s gpt -b ufs/boot/pmbr -p freebsd-boot:=ufs/boot/gptboot -p freebsd-swap::1G -p freebsd-ufs:=ufs.img -o disc.img
 xz -0 disc.img
 
-popd
-
+cd /workspace
 rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
 mv work/disc.img.xz artifact/${ARTIFACT_SUBDIR}

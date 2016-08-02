@@ -6,7 +6,6 @@ if [ -z "${REVISION}" ]; then
 fi
 
 BRANCH=head
-SVN_REVISION=${REVISION}
 TARGET=amd64
 TARGET_ARCH=amd64
 

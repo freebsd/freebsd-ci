@@ -20,7 +20,7 @@ mkdir -p ufs
 for f in base kernel
 do
 	fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
-	sudo tar Jxf -C ufs ${f}.txz
+	sudo tar Jxf ${f}.txz -C ufs
 done
 
 sudo makefs -d 6144 -t ffs -f 200000 -s 2g -o version=2,bsize=32768,fsize=4096,label=ROOT ufs.img ufs

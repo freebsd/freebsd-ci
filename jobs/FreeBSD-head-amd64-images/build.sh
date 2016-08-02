@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -z "${REVISION}" ]; then
+if [ -z "${SVN_REVISION}" ]; then
 	echo "No subversion revision specified"
 	exit 1
 fi

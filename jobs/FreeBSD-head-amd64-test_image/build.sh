@@ -31,7 +31,7 @@ cat <<EOF | sudo tee ufs/etc/fstab
 EOF
 
 sudo makefs -d 6144 -t ffs -f 200000 -s 2g -o version=2,bsize=32768,fsize=4096 ufs.img ufs
-mkimg -s gpt -f raw  \
+mkimg -s gpt -f raw \
 	-b ufs/boot/pmbr \
 	-p freebsd-boot/bootfs:=ufs/boot/gptboot \
 	-p freebsd-swap/swapfs::1G \

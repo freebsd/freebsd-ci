@@ -29,7 +29,7 @@ cat <<EOF | sudo tee ufs/etc/fstab
 proc            /proc           procfs  rw      0       0
 EOF
 
-cat > ufs/etc/resolv.conf <<EOF
+cat <<EOF | sudo tee ufs/etc/resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 nameserver 2610:1c1:1:6002::100

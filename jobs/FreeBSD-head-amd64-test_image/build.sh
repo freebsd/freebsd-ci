@@ -44,3 +44,5 @@ cd /workspace
 rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
 mv work/disk-test.img.xz artifact/${ARTIFACT_SUBDIR}
+
+echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

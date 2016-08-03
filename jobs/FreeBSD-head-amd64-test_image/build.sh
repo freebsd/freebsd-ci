@@ -22,7 +22,7 @@ do
 	sudo tar Jxf ${f}.txz -C ufs
 done
 
-cat > ufs/etc/fstab <<EOF
+cat <<EOF | sudo tee ufs/etc/fstab
 # Device        Mountpoint      FStype  Options Dump    Pass#
 /dev/ada0p2     none            swap    sw      0       0
 /dev/ufs/ROOT   /               ufs     rw      1       1

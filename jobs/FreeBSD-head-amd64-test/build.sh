@@ -15,7 +15,7 @@ IMG_NAME=disk-test.img
 fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
-# run disk-test.img with bhyve
+# run test VM image with bhyve
 TEST_VM_NAME=test_vm
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
 sudo /usr/sbin/bhyveload -c stdio -m 2048m -d ${IMG_NAME} ${TEST_VM_NAME}
@@ -25,6 +25,15 @@ sudo /usr/sbin/bhyve -c 2 -m 2048m -A -H -P -g 0 \
 	-s 2:0,ahci-hd,${IMG_NAME} \
 	-l com1,stdio \
 	test_vm
+BHYVE_PID=`ps auxwww | grep "\'bhyve: ${TEST_VM_NAME}\'" | grep -v grep | awk '{ print $2 }'`
+while [ 1 ]; do
+	ps ${BHYVE_PID} > /dev/null
+	rc=$?
+	if [ $rc -ne 0 ]; then
+		break
+	fi
+	sleep 1
+done
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
 
 # extract test result

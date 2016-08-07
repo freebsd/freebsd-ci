@@ -10,10 +10,21 @@ TARGET=amd64
 TARGET_ARCH=amd64
 
 ARTIFACT_SUBDIR=${BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+IMG_NAME=disk-test.img
 
-fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/disk-test.img.xz
-xz -d disk-test.img.xz
+fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
+xz -d ${IMG_NAME}.xz
 
 # run disk-test.img with bhyve
+sudo sh /usr/share/examples/bhyve/vmrun.sh -c 2 -m 1024m -t tap0 -d ${IMG_NAME} test_vm
 
 # extract test result
+TMP_DIR=`mktemp -d`
+MD_UNIT=`sudo mdconfig -a -t vnode -f ${IMG_NAME}`
+sudo mount /dev/${MD_UNIT}p3 ${TMP_DIR}
+
+cp ${TMP_DIR}/usr/tests/test-report.* .
+
+sudo umount ${TMP_DIR}
+sudo mdconfig -d -u ${MD_UNIT}
+rm -fr ${TMP_DIR}

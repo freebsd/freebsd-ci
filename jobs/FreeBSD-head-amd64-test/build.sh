@@ -16,7 +16,7 @@ fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -d ${IMG_NAME}.xz
 
 # run disk-test.img with bhyve
-sudo sh /usr/share/examples/bhyve/vmrun.sh -c 2 -m 1024m -t tap0 -d ${IMG_NAME} test_vm
+sudo /usr/share/examples/bhyve/vmrun.sh -c 2 -m 1024m -t tap0 -d ${IMG_NAME} test_vm
 
 # extract test result
 TMP_DIR=`mktemp -d`

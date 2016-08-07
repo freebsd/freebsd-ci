@@ -16,9 +16,9 @@ fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
 # run disk-test.img with bhyve
-bhyvectl --destroy --vm=test_vm || true
-bhyveload -m 2048m -d ${IMG_NAME} test_vm
-bhyve -c 2 -m 2048m -A -H -P -g 0 \
+sudo bhyvectl --destroy --vm=test_vm || true
+sudo bhyveload -m 2048m -d ${IMG_NAME} test_vm
+sudo bhyve -c 2 -m 2048m -A -H -P -g 0 \
 	-s 0:0,lpc \
 	-s 1:0,ahci-hd,${IMG_NAME}  \
 	-l com1,stdio \

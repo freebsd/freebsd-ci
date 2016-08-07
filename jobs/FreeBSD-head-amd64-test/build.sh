@@ -16,7 +16,13 @@ fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
 # run disk-test.img with bhyve
-sudo /usr/share/examples/bhyve/vmrun.sh -c 2 -m 1024m -t tap0 -d ${IMG_NAME} test_vm
+bhyvectl --destroy --vm=test_vm
+bhyveload -m 2048m -d ${IMG_NAME} test_vm
+bhyve -c 2 -m 2048m -A -H -P -g 0 \
+	-s 0:0,lpc \
+	-s 1:0,ahci-hd,${IMG_NAME}  \
+	-l com1,stdio \
+	test_vm
 
 # extract test result
 TMP_DIR=`mktemp -d`

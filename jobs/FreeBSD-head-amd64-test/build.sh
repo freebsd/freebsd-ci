@@ -25,7 +25,7 @@ sudo /usr/sbin/bhyve -c 2 -m 2048m -A -H -P -g 0 \
 	-s 2:0,ahci-hd,${IMG_NAME} \
 	-l com1,stdio \
 	test_vm
-BHYVE_PID=`ps auxwww | grep "\'bhyve: ${TEST_VM_NAME}\'" | grep -v grep | awk '{ print $2 }'`
+BHYVE_PID=`ps auxwww | grep "bhyve: ${TEST_VM_NAME}" | grep -v grep | awk '{ print $2 }'`
 while [ 1 ]; do
 	ps ${BHYVE_PID} > /dev/null
 	rc=$?

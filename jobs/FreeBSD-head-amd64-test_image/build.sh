@@ -37,6 +37,8 @@ EOF
 
 cat <<EOF | sudo tee ufs/etc/rc.local
 #!/bin/sh -ex
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+export PATH
 echo
 echo "--------------------------------------------------------------"
 echo "start kyua tests!"

@@ -2,10 +2,6 @@
 
 WORKSAPCE=/workspace
 
-cd /usr/src
-patch < ${WORKSAPCE}/freebsd-ci/jobs/FreeBSD-head-amd64-build/keep-empty-files-in-dist.diff
-cd -
-
 env \
 	JFLAG=${BUILDER_JFLAG} \
 	TARGET=amd64 \

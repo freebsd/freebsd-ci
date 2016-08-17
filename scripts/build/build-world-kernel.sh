@@ -7,8 +7,8 @@ WORKSPACE=/workspace
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 rm -fr ${MAKEOBJDIRPREFIX}
 
-MAKECONF=/dev/null
-SRCCONF=/dev/null
+MAKECONF=${MAKECONF:-/dev/null}
+SRCCONF=${SRCCONF:-/dev/null}
 
 cd /usr/src
 

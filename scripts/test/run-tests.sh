@@ -33,6 +33,7 @@ TMP_DIR=`mktemp -d`
 MD_UNIT=`sudo mdconfig -a -t vnode -f ${IMG_NAME}`
 sudo mount /dev/${MD_UNIT}p3 ${TMP_DIR}
 
+rm -f test-report.*
 cp ${TMP_DIR}/usr/tests/test-report.* . || true
 
 sudo umount ${TMP_DIR}

@@ -14,10 +14,10 @@ xz -fd ${IMG_NAME}.xz
 # run test VM image with bhyve
 TEST_VM_NAME=VM-${JOB_NAME}-${BUILD_NUMBER}
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
-sudo /usr/sbin/bhyveload -c stdio -m 2048m -d ${IMG_NAME} ${TEST_VM_NAME}
+sudo /usr/sbin/bhyveload -c stdio -m 4096m -d ${IMG_NAME} ${TEST_VM_NAME}
 set +e
 expect -c "set timeout 7200; \
-	spawn sudo /usr/sbin/bhyve -c 2 -m 2048m -A -H -P -g 0 \
+	spawn sudo /usr/sbin/bhyve -c 2 -m 4096m -A -H -P -g 0 \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
 	-s 2:0,ahci-hd,${IMG_NAME} \

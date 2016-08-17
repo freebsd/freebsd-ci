@@ -16,9 +16,15 @@ sudo rm -fr work
 mkdir -p work
 cd work
 
-DIST_PACKAGES="base kernel base-dbg kernel-dbg doc tests"
-if [ "${TARGET_ARCH}" = "amd64" ]; then
+DIST_PACKAGES="base kernel doc tests"
+if [ "${WITH_DEBUG}" = 1 ]; then
+	DIST_PACKAGES="${DIST_PACKAGES} base-dbg kernel-dbg"
+fi
+if [ "${WITH_LIB32}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} lib32 lib32-dbg"
+	if [ "${WITH_DEBUG}" = 1 ]; then
+		DIST_PACKAGES="${DIST_PACKAGES} lib32-dbg"
+	fi
 fi
 mkdir -p ufs
 for f in ${DIST_PACKAGES}

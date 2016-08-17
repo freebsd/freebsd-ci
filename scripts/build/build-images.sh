@@ -10,6 +10,7 @@ if [ -z "${SVN_REVISION}" ]; then
 fi
 
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+OUTPUT_IMG_NAME=disk.img
 
 sudo rm -fr work
 mkdir -p work
@@ -38,10 +39,10 @@ mkimg -s gpt -f raw \
 	-p freebsd-boot/bootfs:=ufs/boot/gptboot \
 	-p freebsd-swap/swapfs::1G \
 	-p freebsd-ufs/rootfs:=ufs.img \
-	-o disk.img
-xz -0 disk.img
+        -o ${OUTPUT_IMG_NAME}
+xz -0 ${OUTPUT_IMG_NAME}
 
 cd ${WORKSPACE}
 rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
-mv work/disk.img.xz artifact/${ARTIFACT_SUBDIR}
+mv work/${OUTPUT_IMG_NAME}.xz artifact/${ARTIFACT_SUBDIR}

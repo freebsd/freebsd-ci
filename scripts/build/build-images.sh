@@ -16,7 +16,13 @@ sudo rm -fr work
 mkdir -p work
 cd work
 
-DIST_PACKAGES="base kernel doc tests"
+DIST_PACKAGES="base kernel"
+if [ "${WITH_DOC}" = 1 ]; then
+	DIST_PACKAGES="${DIST_PACKAGES} doc"
+fi
+if [ "${WITH_TESTS}" = 1 ]; then
+	DIST_PACKAGES="${DIST_PACKAGES} tests"
+fi
 if [ "${WITH_DEBUG}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} base-dbg kernel-dbg"
 fi

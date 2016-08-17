@@ -27,7 +27,7 @@ if [ "${WITH_DEBUG}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} base-dbg kernel-dbg"
 fi
 if [ "${WITH_LIB32}" = 1 ]; then
-	DIST_PACKAGES="${DIST_PACKAGES} lib32 lib32-dbg"
+	DIST_PACKAGES="${DIST_PACKAGES} lib32"
 	if [ "${WITH_DEBUG}" = 1 ]; then
 		DIST_PACKAGES="${DIST_PACKAGES} lib32-dbg"
 	fi

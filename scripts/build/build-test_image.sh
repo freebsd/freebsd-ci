@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 WORKSPACE=/workspace
 
 if [ -z "${SVN_REVISION}" ]; then

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SRCCONF=`dirname $0`/src.conf
+SRCCONF=/workspace/`dirname $0`/src.conf
 env \
 	JFLAG=${BUILDER_JFLAG} \
 	TARGET=amd64 \

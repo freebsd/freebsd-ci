@@ -1,6 +1,8 @@
 #!/bin/sh
 
 SRCCONF=/workspace/`dirname $0`/src.conf
+
+sudo cp ${SRCCONF} /etc
 env \
 	JFLAG=${BUILDER_JFLAG} \
 	TARGET=amd64 \

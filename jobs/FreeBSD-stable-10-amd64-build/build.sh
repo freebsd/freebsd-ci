@@ -6,7 +6,7 @@ TARGET=amd64
 TARGET_ARCH=amd64
 
 SRCCONF=/workspace/`dirname $0`/src.conf
-MAKECONF=/dev/null
+MAKECONF=/workspace/`dirname $0`/make.conf
 
 WORKSPACE=/workspace
 

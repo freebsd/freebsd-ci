@@ -1,5 +1,7 @@
 #!/bin/sh
 
+WORKSPACE=/workspace
+
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 rm -fr ${MAKEOBJDIRPREFIX}
 

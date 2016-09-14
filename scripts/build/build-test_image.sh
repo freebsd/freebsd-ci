@@ -47,6 +47,7 @@ cat <<EOF | sudo tee ufs/etc/fstab
 # Device        Mountpoint      FStype  Options Dump    Pass#
 /dev/gpt/swapfs none            swap    sw      0       0
 /dev/gpt/rootfs /               ufs     rw      1       1
+fdesc           /dev/fd         fdescfs rw      0       0
 EOF
 
 cat <<EOF | sudo tee ufs/etc/rc.local

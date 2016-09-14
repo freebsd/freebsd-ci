@@ -1,3 +1,9 @@
 #!/bin/sh
 
-env SCAN_BUILD=scan-build36 ./freebsd-ci/scan-build/scan-world
+set +e
+
+for d in bin sbin usr.bin usr.sbin lib libexec sys; do
+	cd ${d};
+	make -j ${BUILDER_JFLAG} CLANG_ANALYZE_OUTPUT_DIR=${WORKSPACE}/clangScanBuildReports CLANG_ANALYZE_OUTPUT=html analyze
+	cd -
+done

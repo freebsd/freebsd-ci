@@ -11,7 +11,8 @@ rm -fr ${MAKEOBJDIRPREFIX}
 cd src
 
 set -e
-for d in bin sbin usr.bin usr.sbin lib libexec sys; do
+#for d in bin sbin usr.bin usr.sbin lib libexec sys; do
+for d in bin; do
 	cd ${d};
 	make -i -j ${BUILDER_JFLAG} \
 		CLANG_ANALYZE_OUTPUT_DIR=${WORKSPACE}/clangScanBuildReports \

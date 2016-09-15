@@ -10,6 +10,7 @@ rm -fr ${MAKEOBJDIRPREFIX}
 
 cd src
 
+set -e
 for d in bin sbin usr.bin usr.sbin lib libexec sys; do
 	cd ${d};
 	make -i -j ${BUILDER_JFLAG} \
@@ -20,3 +21,5 @@ for d in bin sbin usr.bin usr.sbin lib libexec sys; do
 		analyze
 	cd -
 done
+
+true

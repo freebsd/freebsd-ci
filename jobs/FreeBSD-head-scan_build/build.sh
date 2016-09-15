@@ -1,7 +1,7 @@
 #!/bin/sh
 
-SRCCONF=/workspace/`dirname $0`/src.conf
-MAKECONF=/workspace/`dirname $0`/make.conf
+SRCCONF=${WORKSPACE}/`dirname $0`/src.conf
+MAKECONF=${WORKSPACE}/`dirname $0`/make.conf
 
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 rm -fr ${MAKEOBJDIRPREFIX}

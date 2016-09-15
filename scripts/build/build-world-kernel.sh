@@ -2,8 +2,6 @@
 
 set -ex
 
-WORKSPACE=/workspace
-
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 rm -fr ${MAKEOBJDIRPREFIX}
 

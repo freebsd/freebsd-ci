@@ -1,7 +1,5 @@
 #!/bin/sh
 
-WORKSPACE=/workspace
-
 env \
 	JFLAG=${BUILDER_JFLAG} \
 	TARGET=amd64 \

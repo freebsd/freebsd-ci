@@ -1,7 +1,5 @@
 #!/bin/sh
 
-WORKSPACE=/workspace
-
 if [ -z "${SVN_REVISION}" ]; then
 	echo "No subversion revision specified"
 	exit 1

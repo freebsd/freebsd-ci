@@ -1,8 +1,6 @@
 #!/bin/sh
 
-SRCCONF=/workspace/`dirname $0`/src.conf
-
-WORKSPACE=/workspace
+SRCCONF=${WORKSPACE}/`dirname $0`/src.conf
 
 env \
 	JFLAG=${BUILDER_JFLAG} \

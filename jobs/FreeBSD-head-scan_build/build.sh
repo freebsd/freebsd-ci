@@ -12,8 +12,7 @@ rm -fr ${CLANG_ANALYZE_OUTPUT_DIR}
 cd ${WORKSPACE}/src
 
 set -e
-#for d in bin sbin usr.bin usr.sbin lib libexec sys; do
-for d in bin; do
+for d in bin sbin usr.bin usr.sbin lib libexec sys; do
 	cd ${d};
 	make -i -j ${BUILDER_JFLAG} \
 		CLANG_ANALYZE_OUTPUT_DIR=${CLANG_ANALYZE_OUTPUT_DIR} \

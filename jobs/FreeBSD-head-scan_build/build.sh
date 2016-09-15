@@ -8,6 +8,9 @@ WORKSPACE=/workspace
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 rm -fr ${MAKEOBJDIRPREFIX}
 
+CLANG_ANALYZE_OUTPUT_DIR=${WORKSPACE}/clangScanBuildReports
+rm -fr ${CLANG_ANALYZE_OUTPUT_DIR}
+
 cd src
 
 set -e
@@ -15,7 +18,7 @@ set -e
 for d in bin; do
 	cd ${d};
 	make -i -j ${BUILDER_JFLAG} \
-		CLANG_ANALYZE_OUTPUT_DIR=${WORKSPACE}/clangScanBuildReports \
+		CLANG_ANALYZE_OUTPUT_DIR=${CLANG_ANALYZE_OUTPUT_DIR} \
 		CLANG_ANALYZE_OUTPUT=html  \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF} \

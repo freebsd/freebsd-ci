@@ -1,5 +1,7 @@
 #!/bin/sh
 
+return 0
+
 SRCCONF=${WORKSPACE}/`dirname $0`/src.conf
 MAKECONF=${WORKSPACE}/`dirname $0`/make.conf
 

@@ -49,8 +49,13 @@ fi
 sudo mount -t devfs devfs ${JPATH}/dev
 sudo devfs -m ${JPATH}/dev rule -s 4 applyset
 
-sudo mkdir ${JPATH}/workspace
-sudo mount -t nullfs ${WORKSPACE} ${JPATH}/workspace
+if [ "${KEEP_WORKSPACE_PATH}" = "1" ]; then
+	sudo mkdir ${JPATH}/${WORKSPACE}
+	sudo mount -t nullfs ${WORKSPACE} ${JPATH}/${WORKSPACE}
+else
+	sudo mkdir ${JPATH}/workspace
+	sudo mount -t nullfs ${WORKSPACE} ${JPATH}/workspace
+fi
 
 if [ -n "${MOUNT_REPO}" ]; then
 	sudo mkdir ${JPATH}/usr/${MOUNT_REPO}

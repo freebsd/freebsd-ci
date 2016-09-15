@@ -49,13 +49,8 @@ fi
 sudo mount -t devfs devfs ${JPATH}/dev
 sudo devfs -m ${JPATH}/dev rule -s 4 applyset
 
-if [ "${KEEP_WORKSPACE_PATH}" = "1" ]; then
-	sudo mkdir ${JPATH}/${WORKSPACE}
-	sudo mount -t nullfs ${WORKSPACE} ${JPATH}/${WORKSPACE}
-else
-	sudo mkdir ${JPATH}/workspace
-	sudo mount -t nullfs ${WORKSPACE} ${JPATH}/workspace
-fi
+sudo mkdir -p ${JPATH}/${WORKSPACE}
+sudo mount -t nullfs ${WORKSPACE} ${JPATH}/${WORKSPACE}
 
 if [ -n "${MOUNT_REPO}" ]; then
 	sudo mkdir ${JPATH}/usr/${MOUNT_REPO}
@@ -108,7 +103,7 @@ if [ "$QUARANTINE" ]; then
 fi
 
 sudo jexec ${JNAME} sh -c "/usr/sbin/pw groupadd jenkins -g 5213"
-sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default -c \"Jenkins CI\" -d /workspace /bin/sh"
+sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default -c \"Jenkins CI\" -d ${WORKSPACE} /bin/sh"
 sudo jexec ${JNAME} sh -c "umask 7337; echo 'jenkins ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/jenkins"
 
 echo "build environment:"

@@ -11,7 +11,9 @@ rm -fr ${MAKEOBJDIRPREFIX}
 CLANG_ANALYZE_OUTPUT_DIR=${WORKSPACE}/clangScanBuildReports
 rm -fr ${CLANG_ANALYZE_OUTPUT_DIR}
 
-cd src
+mkdir -p ${JOB_NAME}
+ln -sf ../src ${JOB_NAME}/src
+cd ${JOB_NAME}/src
 
 set -e
 #for d in bin sbin usr.bin usr.sbin lib libexec sys; do

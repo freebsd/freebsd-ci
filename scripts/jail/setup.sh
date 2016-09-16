@@ -49,8 +49,8 @@ fi
 sudo mount -t devfs devfs ${JPATH}/dev
 sudo devfs -m ${JPATH}/dev rule -s 4 applyset
 
-sudo mkdir -p ${JPATH}/${WORKSPACE}
-sudo mount -t nullfs ${WORKSPACE} ${JPATH}/${WORKSPACE}
+sudo mkdir -p ${JPATH}/${WORKSPACE_IN_JAIL}
+sudo mount -t nullfs ${WORKSPACE} ${JPATH}/${WORKSPACE_IN_JAIL}
 
 if [ -n "${MOUNT_REPO}" ]; then
 	sudo mkdir ${JPATH}/usr/${MOUNT_REPO}
@@ -103,7 +103,7 @@ if [ "$QUARANTINE" ]; then
 fi
 
 sudo jexec ${JNAME} sh -c "/usr/sbin/pw groupadd jenkins -g 5213"
-sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default -c \"Jenkins CI\" -d ${WORKSPACE} /bin/sh"
+sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default -c \"Jenkins CI\" -d ${WORKSPACE_IN_JAIL} /bin/sh"
 sudo jexec ${JNAME} sh -c "umask 7337; echo 'jenkins ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/jenkins"
 
 echo "build environment:"
@@ -113,4 +113,4 @@ sudo jexec ${JNAME} sh -c "uname -a"
 echo "packages:"
 sudo jexec ${JNAME} sh -c "pkg info -q"
 echo "environment variables:"
-sudo jexec -U jenkins ${JNAME} sh -c "env"
+sudo jexec -U jenkins ${JNAME} sh -c "env WORKSPACE=${WORKSPACE_IN_JAIL} env"

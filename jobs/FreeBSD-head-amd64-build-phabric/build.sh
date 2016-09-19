@@ -1,9 +1,5 @@
 #!/bin/sh
 
-cd src
-svnlite cleanup --remove-ignored --remove-unversioned
-cd -
-
 env \
 	JFLAG=${BUILDER_JFLAG} \
 	TARGET=amd64 \

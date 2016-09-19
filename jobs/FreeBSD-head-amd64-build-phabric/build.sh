@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd src
-svn cleanup --remove-ignored --remove-unversioned
+svnlite cleanup --remove-ignored --remove-unversioned
 cd -
 
 env \

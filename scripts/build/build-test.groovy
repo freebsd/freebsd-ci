@@ -117,33 +117,33 @@ node(BUILD_NODE) {
         return deleteDir()
     }
 
-    stage 'Checkout scripts'
-    dir ("freebsd-ci") {
-        git changelog: false, poll: false, url: "${script_url}"
+    stage 'Checkout scripts' {
+        dir ("freebsd-ci") {
+            git changelog: false, poll: false, url: "${script_url}"
+        }
     }
-
     dir('src') {
-        stage 'Checkout src'
-        // Check out the source tree
-        //svn "${src_url}"
-        checkout([$class: 'SubversionSCM',
-                  additionalCredentials: [],
-                  browser: [$class: 'ViewSVN', url: view_svn],
-                  excludedCommitMessages: '',
-                  excludedRegions: '',
-                  excludedRevprop: '',
-                  excludedUsers: '',
-                  filterChangelog: false,
-                  ignoreDirPropChanges: false,
-                  includedRegions: '',
-                  locations: [[credentialsId: '',
-                               depthOption: 'infinity',
-                               ignoreExternalsOption: false,
-                               local: '.',
-                               remote: "${src_url}"]],
-                               workspaceUpdater: [$class: 'UpdateUpdater']
-                              ])
-
+        stage 'Checkout src' {
+            // Check out the source tree
+            //svn "${src_url}"
+            checkout([$class: 'SubversionSCM',
+                      additionalCredentials: [],
+                      browser: [$class: 'ViewSVN', url: view_svn],
+                      excludedCommitMessages: '',
+                      excludedRegions: '',
+                      excludedRevprop: '',
+                      excludedUsers: '',
+                      filterChangelog: false,
+                      ignoreDirPropChanges: false,
+                      includedRegions: '',
+                      locations: [[credentialsId: '',
+                                   depthOption: 'infinity',
+                                   ignoreExternalsOption: false,
+                                   local: '.',
+                                   remote: "${src_url}"]],
+                                   workspaceUpdater: [$class: 'UpdateUpdater']
+                                  ])
+        }
 
         withEnv(["WORKSPACE=${workspace}",
                  "MAKEOBJDIRPREFIX=${makeobjdirprefix}",
@@ -152,29 +152,30 @@ node(BUILD_NODE) {
                  "CONFIG_JSON=" + TEST_CONFIG_FILE ]) {
 
            // Build the source tree
-           stage "Build"
-           sh "${build_script}"
+           stage "Build" {
+               sh "${build_script}"
+               // Wait a bit before calling the Warnings plugin
+               // so that all console output is available.
+               sleep 3L
 
-           // Wait a bit before calling the Warnings plugin
-           // so that all console output is available.
-           sleep 3L
-
-           // Use the Warnings plugin to analyze for compiler warnigs
-           step([$class: 'WarningsPublisher',
-              canComputeNew: false,
-              canResolveRelativePaths: false,
-              consoleParsers: [[parserName: 'Clang (LLVM based)']],
-              defaultEncoding: '',
-              excludePattern: '',
-              healthy: '',
-              includePattern: '',
-              messagesPattern: '',
-              unHealthy: ''])
+               // Use the Warnings plugin to analyze for compiler warnigs
+               step([$class: 'WarningsPublisher',
+                  canComputeNew: false,
+                  canResolveRelativePaths: false,
+                  consoleParsers: [[parserName: 'Clang (LLVM based)']],
+                  defaultEncoding: '',
+                  excludePattern: '',
+                  healthy: '',
+                  includePattern: '',
+                  messagesPattern: '',
+                  unHealthy: ''])
+           }
 
            if (!skip_build_ufs_image) {
                // Build a UFS image which can be booted in bhyve
-               stage "Build UFS image"
-               sh "${build_ufs_script}"
+               stage "Build UFS image" {
+                   sh "${build_ufs_script}"
+               }
            }
         }
 
@@ -198,33 +199,34 @@ node(BUILD_NODE) {
  * parameter in the job.
  *
  */
-!skip_build_ufs_image && !skip_test && 
+!skip_build_ufs_image && !skip_test &&
     node("${test_node}") {
         dir ("freebsd-ci") {
             git changelog: false, url: "${script_url}"
         }
-    
+
         // Write out the new json config file, to be used by subsequent scripts
         writeFile file: 'config.json', text: json_str
-    
-        stage "Test"
-        /*
-         * Boot the UFS image in a bhyve VM.
-         * Run the tests in the VM.
-         * Shut down the VM.
-         */
-        sh 'sudo python freebsd-ci/scripts/test/run-tests.py -f config.json'
-    
-        /*
-         * Mount the UFS image, and extract the JUnit test-report.xml
-         * file.
-         */
-        sh 'sudo python freebsd-ci/scripts/test/extract-test-logs.py -f config.json'
-    
-        /*
-         * Use the JUnit plugin to analyze the test-report.xml test results
-         */
-        step([$class: 'JUnitResultArchiver', testResults: 'test-report.xml'])
+
+        stage "Test" {
+            /*
+             * Boot the UFS image in a bhyve VM.
+             * Run the tests in the VM.
+             * Shut down the VM.
+             */
+            sh 'sudo python freebsd-ci/scripts/test/run-tests.py -f config.json'
+
+            /*
+             * Mount the UFS image, and extract the JUnit test-report.xml
+             * file.
+             */
+            sh 'sudo python freebsd-ci/scripts/test/extract-test-logs.py -f config.json'
+
+            /*
+             * Use the JUnit plugin to analyze the test-report.xml test results
+             */
+            step([$class: 'JUnitResultArchiver', testResults: 'test-report.xml'])
+        }
     }
 } catch (caughtError) {
     err = caughtError

@@ -61,30 +61,32 @@ String test_node = ''
 boolean skip_test = false
 boolean skip_build_ufs_image = false
 
-if (getBinding().hasVariable("FREEBSD_SRC_URL")) {
+def envVars = env.getEnvironment()
+
+if (envVars.containsKey("FREEBSD_SRC_URL")) {
     src_url = FREEBSD_SRC_URL
 }
 
-if (getBinding().hasVariable("SCRIPT_URL")) {
+if (envVars.containsKey("SCRIPT_URL")) {
     script_url = SCRIPT_URL
 }
 
-if (getBinding().hasVariable("EMAIL_TO")) {
+if (envVars.containsKey("EMAIL_TO")) {
     email_to = EMAIL_TO
 }
 
-if (getBinding().hasVariable("TEST_NODE")) {
+if (envVars.containsKey("TEST_NODE")) {
     test_node = TEST_NODE
 } else {
     test_node = BUILD_NODE
 }
 
-if (getBinding().hasVariable("SKIP_TEST")) {
-    skip_test = SKIP_TEST.toBoolean()
+if (envVars.containsKey("SKIP_TEST")) {
+    skip_test = SKIP_TEST
 }
 
-if (getBinding().hasVariable("SKIP_BUILD_UFS_IMAGE")) {
-    skip_build_ufs_image = SKIP_BUILD_UFS_IMAGE.toBoolean()
+if (envVars.containsKey("SKIP_BUILD_UFS_IMAGE")) {
+    skip_build_ufs_image = SKIP_BUILD_UFS_IMAGE
 }
 
 def err = null
@@ -104,7 +106,7 @@ node(BUILD_NODE) {
     String build_ufs_script = "${script_root}/scripts/build/build-ufs-image.sh"
     java.net.URL view_svn = new java.net.URL("http://svnweb.freebsd.org/base/")
 
-    if (getBinding().hasVariable("VIEW_SVN")) {
+    if (envVars.containsKey("VIEW_SVN")) {
         view_svn = VIEW_SVN.toURL()
     }
 
@@ -117,13 +119,13 @@ node(BUILD_NODE) {
         return deleteDir()
     }
 
-    stage 'Checkout scripts' {
+    stage(name : 'Checkout scripts') {
         dir ("freebsd-ci") {
             git changelog: false, poll: false, url: "${script_url}"
         }
     }
     dir('src') {
-        stage 'Checkout src' {
+        stage(name : 'Checkout src') {
             // Check out the source tree
             //svn "${src_url}"
             checkout([$class: 'SubversionSCM',
@@ -152,7 +154,7 @@ node(BUILD_NODE) {
                  "CONFIG_JSON=" + TEST_CONFIG_FILE ]) {
 
            // Build the source tree
-           stage "Build" {
+           stage(name : 'Build') {
                sh "${build_script}"
                // Wait a bit before calling the Warnings plugin
                // so that all console output is available.
@@ -173,7 +175,7 @@ node(BUILD_NODE) {
 
            if (!skip_build_ufs_image) {
                // Build a UFS image which can be booted in bhyve
-               stage "Build UFS image" {
+               stage(name : 'Build UFS image') {
                    sh "${build_ufs_script}"
                }
            }
@@ -208,7 +210,7 @@ node(BUILD_NODE) {
         // Write out the new json config file, to be used by subsequent scripts
         writeFile file: 'config.json', text: json_str
 
-        stage "Test" {
+        stage(name : 'Test') {
             /*
              * Boot the UFS image in a bhyve VM.
              * Run the tests in the VM.

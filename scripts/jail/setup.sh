@@ -53,7 +53,7 @@ sudo mkdir -p ${JPATH}/${WORKSPACE_IN_JAIL}
 sudo mount -t nullfs ${WORKSPACE} ${JPATH}/${WORKSPACE_IN_JAIL}
 
 if [ -n "${MOUNT_REPO}" ]; then
-	sudo mkdir ${JPATH}/usr/${MOUNT_REPO}
+	sudo mkdir -p ${JPATH}/usr/${MOUNT_REPO}
 	sudo mount -t nullfs ${WORKSPACE}/${MOUNT_REPO} ${JPATH}/usr/${MOUNT_REPO}
 fi
 

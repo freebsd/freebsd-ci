@@ -33,7 +33,7 @@ fi
 mkdir -p ufs
 for f in ${DIST_PACKAGES}
 do
-	fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
+	fetch http://artifact.ci-dev.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs
 done
 

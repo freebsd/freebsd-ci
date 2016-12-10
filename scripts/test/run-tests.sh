@@ -12,7 +12,7 @@ fetch http://artifact.ci-dev.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}
 xz -fd ${IMG_NAME}.xz
 
 # run test VM image with bhyve
-TEST_VM_NAME=FreeBSD-${JOB_NAME#FreeBSD-stable-}-${BUILD_NUMBER}
+TEST_VM_NAME=`echo ${JOB_NAME} | sed -e 's,stable-,,'`-${BUILD_NUMBER}
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
 sudo /usr/sbin/bhyveload -c stdio -m 4096m -d ${IMG_NAME} ${TEST_VM_NAME}
 set +e

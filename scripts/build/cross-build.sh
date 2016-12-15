@@ -54,6 +54,7 @@ echo "--------------------------------------------------------------"
 set -x
 
 sudo pkg install -y devel/${TARGET_ARCH}-xtoolchain-gcc
+pkg info -I devel/${TARGET_ARCH}-xtoolchain-gcc
 
 XCC=$(make -f /usr/local/share/toolchains/${TARGET_ARCH}-gcc.mk -V XCC)
 

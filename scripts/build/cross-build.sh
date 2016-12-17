@@ -53,8 +53,8 @@ set +x
 echo "--------------------------------------------------------------"
 set -x
 
-sudo pkg upgrade -y
-sudo pkg install -y devel/${TARGET_ARCH}-xtoolchain-gcc
+sudo pkg upgrade -y || true
+sudo pkg install -y devel/${TARGET_ARCH}-xtoolchain-gcc || true
 pkg info | grep ^${TARGET_ARCH}
 
 XCC=$(make -f /usr/local/share/toolchains/${TARGET_ARCH}-gcc.mk -V XCC)

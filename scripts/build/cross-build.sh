@@ -35,6 +35,7 @@ if [ -z "$TARGET_ARCH" ]; then
 fi
 
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
+rm -fr ${MAKEOBJDIRPREFIX}
 mkdir -p ${MAKEOBJDIRPREFIX}
 
 (

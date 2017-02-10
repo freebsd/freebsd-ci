@@ -12,12 +12,14 @@ cd /usr/src
 
 sudo make -j ${JFLAG} -DNO_CLEAN \
 	buildworld \
+	${MAKE_ARGS} \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF}
 sudo make -j ${JFLAG} -DNO_CLEAN \
 	buildkernel \
+	${MAKE_ARGS} \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	__MAKE_CONF=${MAKECONF} \
@@ -26,6 +28,7 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 cd /usr/src/release
 
 sudo make -DNOPORTS -DNOSRC -DNODOC ftp \
+	${MAKE_ARGS} \
 	TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \
 	MAKE="make __MAKE_CONF=${MAKECONF} SRCCONF=${SRCCONF}"
 

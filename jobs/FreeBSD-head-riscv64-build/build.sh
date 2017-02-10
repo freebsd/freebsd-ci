@@ -1,6 +1,7 @@
 #!/bin/sh
 
 IMAGE_NAME=riscv.img
+JOB_BASE=${WORKSPACE}/freebsd-ci/jobs/${JOB_NAME}
 
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 rm -fr ${MAKEOBJDIRPREFIX}
@@ -38,10 +39,11 @@ make CROSS_TOOLCHAIN=riscv64-gcc \
 	distribution
 
 cd ${WORKSPACE}
-src/tools/tools/makeroot/makeroot.sh -s 32m -f basic.files ${IMAGE_NAME} ${DESTDIR}
+src/tools/tools/makeroot/makeroot.sh -s 32m -f ${JOB_BASE}/basic.files ${IMAGE_NAME} ${DESTDIR}
 
-cat QEMUTEST | sed -e "s,%%MFS_IMAGE%%,${WORKSPACE}/${IMAGE_NAME}," | tee src/sys/riscv/conf/QEMUTEST
+cat ${JOB_BASE}/QEMUTEST | sed -e "s,%%MFS_IMAGE%%,${WORKSPACE}/${IMAGE_NAME}," | tee src/sys/riscv/conf/QEMUTEST
 
+cd ${WORKSPACE}/src
 make -j ${BUILDER_JFLAG} \
 	-DNO_CLEAN \
 	CROSS_TOOLCHAIN=riscv64-gcc \

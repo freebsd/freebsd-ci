@@ -14,7 +14,7 @@ cd ${WORKSPACE}/src
 
 make -j ${BUILDER_JFLAG} \
 	-DNO_CLEAN \
-	CROSS_TOOLCHAIN=riscv64-gcc
+	CROSS_TOOLCHAIN=riscv64-gcc \
 	TARGET=riscv \
 	TARGET_ARCH=riscv64 \
 	WITHOUT_FORMAT_EXTENSIONS=yes \

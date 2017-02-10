@@ -1,5 +1,7 @@
 #!/bin/sh
 
+SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
+
 if [ -z "${SVN_REVISION}" ]; then
 	echo "No subversion revision specified"
 	exit 1
@@ -8,7 +10,7 @@ fi
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 IMG_NAME=disk-test.img
 
-fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
+fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
 # run test VM image with bhyve

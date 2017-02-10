@@ -1,5 +1,7 @@
 #!/bin/sh
 
+SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
+
 set -ex
 
 if [ -z "${SVN_REVISION}" ]; then
@@ -33,7 +35,7 @@ fi
 mkdir -p ufs
 for f in ${DIST_PACKAGES}
 do
-	fetch http://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
+	fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs
 done
 

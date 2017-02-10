@@ -18,7 +18,6 @@ make -j ${BUILDER_JFLAG} \
 	CROSS_TOOLCHAIN=riscv64-gcc \
 	TARGET=riscv \
 	TARGET_ARCH=riscv64 \
-	WITHOUT_FORMAT_EXTENSIONS=yes \
 	buildworld
 
 make CROSS_TOOLCHAIN=riscv64-gcc \
@@ -51,6 +50,7 @@ make -j ${BUILDER_JFLAG} \
 	TARGET_ARCH=riscv64 \
 	KERNCONF=QEMUTEST \
 	MODULES_OVERRIDE='' \
+	WITHOUT_FORMAT_EXTENSIONS=yes \
 	buildkernel
 
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}

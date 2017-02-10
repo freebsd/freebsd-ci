@@ -1,5 +1,7 @@
 #!/bin/sh
 
+SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
+
 if [ -z "${SVN_REVISION}" ]; then
 	echo "No subversion revision specified"
 	exit 1

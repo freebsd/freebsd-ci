@@ -22,6 +22,7 @@ git clone --depth=1 --single-branch https://github.com/freebsd-riscv/riscv-pk
 
 mkdir riscv-pk/build/
 cd riscv-pk/build/
+git rev-parse HEAD
 
 export CFLAGS="-nostdlib"
 ../configure --host=riscv64-unknown-freebsd11.0 --with-payload=${WORKSPACE}/kernel
@@ -31,6 +32,7 @@ xz bbl
 
 cd ${WORKSPACE}
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+mkdir -p ${ARTIFACT_DEST}
 mv riscv-pk/build/bbl.xz ${ARTIFACT_DEST}
 
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

@@ -28,11 +28,12 @@ export CFLAGS="-nostdlib"
 ../configure --host=riscv64-unknown-freebsd11.0 --with-payload=${WORKSPACE}/kernel
 gmake LIBS=''
 
-xz bbl
+mv bbl bbl-qemu
+xz bbl-qemu
 
 cd ${WORKSPACE}
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 mkdir -p ${ARTIFACT_DEST}
-mv riscv-pk/build/bbl.xz ${ARTIFACT_DEST}
+mv riscv-pk/build/bbl-qemu.xz ${ARTIFACT_DEST}
 
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

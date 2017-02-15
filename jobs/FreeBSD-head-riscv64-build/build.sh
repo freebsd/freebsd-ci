@@ -45,7 +45,7 @@ src/tools/tools/makeroot/makeroot.sh -s 32m -f ${JOB_BASE}/basic.files ${IMAGE_N
 
 cd ${WORKSPACE}/src
 
-cat ${JOB_BASE}/QEMUTEST | sed -e "s,%%MFS_IMAGE%%,${WORKSPACE}/${IMAGE_NAME}," | tee src/sys/riscv/conf/QEMUTEST
+cat ${JOB_BASE}/QEMUTEST | sed -e "s,%%MFS_IMAGE%%,${WORKSPACE}/${IMAGE_NAME}," | tee sys/riscv/conf/QEMUTEST
 make -j ${BUILDER_JFLAG} \
 	-DNO_CLEAN \
 	CROSS_TOOLCHAIN=riscv64-gcc \
@@ -56,7 +56,7 @@ make -j ${BUILDER_JFLAG} \
 	WITHOUT_FORMAT_EXTENSIONS=yes \
 	buildkernel
 
-cat ${JOB_BASE}/SPIKETEST | sed -e "s,%%MFS_IMAGE%%,${WORKSPACE}/${IMAGE_NAME}," | tee src/sys/riscv/conf/SPIKETEST
+cat ${JOB_BASE}/SPIKETEST | sed -e "s,%%MFS_IMAGE%%,${WORKSPACE}/${IMAGE_NAME}," | tee sys/riscv/conf/SPIKETEST
 make -j ${BUILDER_JFLAG} \
 	-DNO_CLEAN \
 	CROSS_TOOLCHAIN=riscv64-gcc \

@@ -12,6 +12,7 @@ fi
 
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 ARTIFACT_DEST=${WORKSPACE}/artifact/${ARTIFACT_SUBDIR}
+rm -fr ${WORKSPACE}/artifact
 mkdir -p ${ARTIFACT_DEST}
 
 rm -fr riscv-pk

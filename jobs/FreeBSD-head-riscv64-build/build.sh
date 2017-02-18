@@ -69,7 +69,7 @@ make -j ${BUILDER_JFLAG} \
 
 cd ${WORKSPACE}
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
-rm -fr ${ARTIFACT_DEST}
+rm -fr ${WORKSPACE}/artifact
 mkdir -p ${ARTIFACT_DEST}
 
 xz ${IMAGE_NAME}

@@ -1,0 +1,73 @@
+#!/usr/local/bin/python3
+
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import base64
+import json
+import os
+import sys
+
+key = None
+basedir = '/home/artifact/snapshot'
+
+def set_link(x):
+    branch = x['branch']
+    revision = 'r' + str(x['revision'])
+    target = x['target']
+    target_arch = x['target_arch']
+    build_type = x['build_type']
+
+    dst = os.path.join(basedir, branch, build_type, target, target_arch)
+    dst_dir = os.path.dirname(dst)
+    dst_base = os.path.basename(dst)
+    os.makedirs(dst_dir, exist_ok=True)
+    os.chdir(dst_dir)
+    src = os.path.join('../..', revision, target, target_arch)
+    os.symlink(src, dst_base)
+
+class RequestHandler(BaseHTTPRequestHandler):
+
+    def do_POST(self):
+        global key
+
+        auth_header = self.headers['Authorization']
+
+        if auth_header == ('Basic ' + key):
+            length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(length).decode('utf-8')
+            json_data = json.loads(post_data)
+
+            set_link(json_data)
+
+            self.send_response(200)
+            self.send_header('Content-type','text/html')
+            self.end_headers()
+
+            self.wfile.write(bytes('Link created\n', 'utf-8'))
+
+        elif auth_header is None:
+            self.send_response(401)
+            self.send_header('WWW-Authenticate', 'Basic realm=\"artifact\"')
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+
+            self.wfile.write(bytes('No auth header received\n', 'utf-8'))
+
+        else:
+            self.send_response(403)
+            self.send_header('WWW-Authenticate', 'Basic realm=\"artifact\"')
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+
+            self.wfile.write(bytes('Auth header wrong\n', 'utf-8'))
+
+def main():
+    server_address = ('127.0.0.1', 8182)
+    httpd = HTTPServer(server_address, RequestHandler)
+    httpd.serve_forever()
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print('Usage: ' + sys.argv[0] + ' [username:password]')
+        sys.exit()
+    key = base64.b64encode(bytes(sys.argv[1], 'utf-8')).decode('utf-8')
+    main()

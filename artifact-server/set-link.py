@@ -51,26 +51,28 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self.send_response(500)
                 msg = 'Link not created\n'
 
-            self.send_header('Content-type','text/html')
+            self.send_header('Content-type', 'text/html; charset=UTF-8')
             self.end_headers()
 
-            self.wfile.write(bytes(msg, 'utf-8'))
+            self.wfile.write(bytes(json.dumps(msg), 'utf-8'))
 
         elif auth_header is None:
             self.send_response(401)
             self.send_header('WWW-Authenticate', 'Basic realm=\"artifact\"')
-            self.send_header('Content-type', 'text/html')
+            self.send_header('Content-type', 'text/html; charset=UTF-8')
             self.end_headers()
 
-            self.wfile.write(bytes('No auth header received\n', 'utf-8'))
+            msg = 'No auth header received\n'
+            self.wfile.write(bytes(json.dumps(msg), 'utf-8'))
 
         else:
             self.send_response(403)
             self.send_header('WWW-Authenticate', 'Basic realm=\"artifact\"')
-            self.send_header('Content-type', 'text/html')
+            self.send_header('Content-type', 'text/html; charset=UTF-8')
             self.end_headers()
 
-            self.wfile.write(bytes('Auth header wrong\n', 'utf-8'))
+            msg = 'Auth header wrong\n'
+            self.wfile.write(bytes(json.dumps(msg), 'utf-8'))
 
 def main():
     server_address = ('127.0.0.1', 8182)

@@ -75,7 +75,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(bytes(json.dumps(msg), 'utf-8'))
 
 def main():
-    server_address = ('127.0.0.1', 8182)
+    server_address = ('127.0.0.1', 4080)
     httpd = HTTPServer(server_address, RequestHandler)
     httpd.serve_forever()
 

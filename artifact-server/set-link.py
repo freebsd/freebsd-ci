@@ -2,6 +2,7 @@
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import base64
+import errno
 import json
 import os
 import sys
@@ -22,7 +23,12 @@ def set_link(x):
     os.makedirs(dst_dir, exist_ok=True)
     os.chdir(dst_dir)
     src = os.path.join('../..', revision, target, target_arch)
-    os.symlink(src, dst_base)
+    try:
+        os.symlink(src, dst_base)
+    except OSError as e:
+        if e.errno == errno.EEXIST:
+            os.remove(dst_base)
+            os.symlink(src, dst_base)
 
 class RequestHandler(BaseHTTPRequestHandler):
 
@@ -36,13 +42,19 @@ class RequestHandler(BaseHTTPRequestHandler):
             post_data = self.rfile.read(length).decode('utf-8')
             json_data = json.loads(post_data)
 
-            set_link(json_data)
+            msg = None
+            try:
+                set_link(json_data)
+                self.send_response(201)
+                msg = 'Link created\n'
+            except:
+                self.send_response(500)
+                msg = 'Link not created\n'
 
-            self.send_response(200)
             self.send_header('Content-type','text/html')
             self.end_headers()
 
-            self.wfile.write(bytes('Link created\n', 'utf-8'))
+            self.wfile.write(bytes(msg, 'utf-8'))
 
         elif auth_header is None:
             self.send_response(401)

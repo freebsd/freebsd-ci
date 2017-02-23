@@ -18,8 +18,8 @@ def set_link(x):
     target_arch = x['target_arch']
     build_type = x['build_type']
 
-    dst = os.path.join(basedir, branch, build_type, target, target_arch)
-    dst_dir = os.path.dirname(dst)
+    dst = os.path.join(branch, build_type, target, target_arch)
+    dst_dir = os.path.dirname(os.path.join(basedir, dst))
     dst_base = os.path.basename(dst)
     os.makedirs(dst_dir, exist_ok=True)
     os.chdir(dst_dir)
@@ -30,6 +30,8 @@ def set_link(x):
         if e.errno == errno.EEXIST:
             os.remove(dst_base)
             os.symlink(src, dst_base)
+
+    return "{} -> {}".format(dst, src)
 
 class RequestHandler(BaseHTTPRequestHandler):
 
@@ -45,9 +47,9 @@ class RequestHandler(BaseHTTPRequestHandler):
 
             msg = None
             try:
-                set_link(json_data)
+                r = set_link(json_data)
                 self.send_response(201)
-                msg = 'Link created\n'
+                msg = 'Link created: {}\n'.format(r)
             except:
                 self.send_response(500)
                 msg = 'Link not created\n'

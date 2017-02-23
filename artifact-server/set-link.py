@@ -77,11 +77,6 @@ class RequestHandler(BaseHTTPRequestHandler):
             msg = 'Auth header wrong\n'
             self.wfile.write(bytes(json.dumps(msg), 'utf-8'))
 
-def main():
-    server_address = ('127.0.0.1', 4080)
-    httpd = HTTPServer(server_address, RequestHandler)
-    httpd.serve_forever()
-
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print('Usage: ' + sys.argv[0] + ' set-link.ini')
@@ -98,4 +93,6 @@ if __name__ == "__main__":
 
     sys.stderr = open(log_file, 'a')
 
-    main()
+    server_address = ('127.0.0.1', 4080)
+    httpd = HTTPServer(server_address, RequestHandler)
+    httpd.serve_forever()

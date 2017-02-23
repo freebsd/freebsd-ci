@@ -1,3 +1,4 @@
 [set-link]
+log_file = set-link.log
 username = username
 password = password

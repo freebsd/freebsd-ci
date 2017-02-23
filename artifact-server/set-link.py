@@ -92,6 +92,10 @@ if __name__ == "__main__":
     config.read(config_file)
     username = config['set-link']['username']
     password = config['set-link']['password']
+    log_file = config['set-link']['log_file']
+
     key = base64.b64encode(bytes(username + ':' + password, 'utf-8')).decode('utf-8')
+
+    sys.stderr = open(log_file, 'a')
 
     main()

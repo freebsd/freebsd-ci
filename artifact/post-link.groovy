@@ -13,10 +13,10 @@ if (build.result == hudson.model.Result.SUCCESS) {
     branch = build.envVars.FBSD_BRANCH
     target = build.envVars.FBSD_TARGET
     target_arch = build.envVars.FBSD_TARGET_ARCH
-    build_type = build.envVars.LINK_TYPE
+    link_type = build.envVars.LINK_TYPE
 
-    json_req = sprintf("{\"job_name\":\"%s\",\"revision\":%d,\"branch\":\"%s\",\"target\":\"%s\",\"target_arch\":\"%s\",\"build_type\":\"%s\"}",
-                    job_name, revision, branch, target, target_arch, build_type)
+    json_req = sprintf("{\"job_name\":\"%s\",\"revision\":%d,\"branch\":\"%s\",\"target\":\"%s\",\"target_arch\":\"%s\",\"link_type\":\"%s\"}",
+                    job_name, revision, branch, target, target_arch, link_type)
     
     def http = new HTTPBuilder('https://artifact.ci.freebsd.org:8182')
     http.auth.basic(build.envVars.ARTIFACT_CRED_USER, build.envVars.ARTIFACT_CRED_PASS)

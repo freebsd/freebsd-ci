@@ -16,9 +16,9 @@ def set_link(x):
     revision = 'r' + str(x['revision'])
     target = x['target']
     target_arch = x['target_arch']
-    build_type = x['build_type']
+    link_type = x['link_type']
 
-    dst = os.path.join(branch, build_type, target, target_arch)
+    dst = os.path.join(branch, link_type, target, target_arch)
     dst_dir = os.path.dirname(os.path.join(basedir, dst))
     dst_base = os.path.basename(dst)
     os.makedirs(dst_dir, exist_ok=True)

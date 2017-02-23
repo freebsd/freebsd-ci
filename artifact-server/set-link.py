@@ -2,6 +2,7 @@
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import base64
+import configparser
 import errno
 import json
 import os
@@ -81,7 +82,14 @@ def main():
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print('Usage: ' + sys.argv[0] + ' [username:password]')
+        print('Usage: ' + sys.argv[0] + ' set-link.ini')
         sys.exit()
-    key = base64.b64encode(bytes(sys.argv[1], 'utf-8')).decode('utf-8')
+
+    config_file = sys.argv[1]
+    config = configparser.ConfigParser()
+    config.read(config_file)
+    username = config['set-link']['username']
+    password = config['set-link']['password']
+    key = base64.b64encode(bytes(username + ':' + password, 'utf-8')).decode('utf-8')
+
     main()

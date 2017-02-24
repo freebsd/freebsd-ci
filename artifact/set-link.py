@@ -89,7 +89,7 @@ if __name__ == "__main__":
     password = config['set-link']['password']
     log_file = config['set-link']['log_file']
 
-    key = base64.b64encode(bytes(username + ':' + password, 'utf-8')).decode('utf-8')
+    key = base64.b64encode(bytes(username + ':' + password, 'ascii')).decode('ascii')
 
     sys.stderr = open(log_file, 'a')
 

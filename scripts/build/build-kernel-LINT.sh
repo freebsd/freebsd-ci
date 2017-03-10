@@ -13,6 +13,7 @@ cd ${WORKSPACE}/src
 make -j ${JFLAG} \
 	-DNO_CLEAN \
 	-DTARGET=${TARGET} \
+	kernel-toolchain \
         buildkernel \
 	KERNCONF=LINT \
         __MAKE_CONF=${MAKECONF} \

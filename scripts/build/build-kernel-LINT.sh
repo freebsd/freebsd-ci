@@ -14,7 +14,7 @@ make -j ${JFLAG} \
 	-DNO_CLEAN \
 	-DTARGET=${TARGET} \
 	kernel-toolchain \
-        buildkernel \
+	buildkernel \
 	KERNCONF=LINT \
-        __MAKE_CONF=${MAKECONF} \
-        SRCCONF=${SRCCONF}
+	__MAKE_CONF=${MAKECONF} \
+	SRCCONF=${SRCCONF}

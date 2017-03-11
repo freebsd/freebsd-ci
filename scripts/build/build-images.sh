@@ -51,7 +51,7 @@ mkimg -s gpt -f raw \
 	-p freebsd-boot/bootfs:=ufs/boot/gptboot \
 	-p freebsd-swap/swapfs::1G \
 	-p freebsd-ufs/rootfs:=ufs.img \
-        -o ${OUTPUT_IMG_NAME}
+	-o ${OUTPUT_IMG_NAME}
 xz -0 ${OUTPUT_IMG_NAME}
 
 cd ${WORKSPACE}

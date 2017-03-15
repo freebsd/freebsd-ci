@@ -1,0 +1,20 @@
+- builder:
+    name: setup-jail
+    builders:
+      - shell: |
+          sh freebsd-ci/scripts/jail/clean.sh
+          sh freebsd-ci/scripts/jail/setup.sh
+
+- builder:
+    name: execute-in-jail
+    builders:
+      - shell: sh freebsd-ci/scripts/jail/execute.sh
+
+- publisher:
+    name: clean-jail
+    publishers:
+      - postbuildscript:
+          builders:
+            - shell: sh freebsd-ci/scripts/jail/clean.sh
+          script-only-if-succeeded: False
+          script-only-if-failed: False

@@ -1,0 +1,71 @@
+- publisher:
+    name: mail-notify
+    publishers:
+      - email-ext:
+          disable-publisher: true
+          recipients: lwhsu.jenkins@lwhsu.org
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          body: |
+            $PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS:
+            
+            Build information: ${BUILD_URL}
+            Full change log: ${BUILD_URL}changes
+            Full build log: ${BUILD_URL}console
+            
+            Change summaries:
+            
+            ${CHANGES, format="%r by %a:\\n%m\\n"}
+            
+            The end of the build log:
+            
+            ${BUILD_LOG}
+          failure: true
+          unstable: false
+          fixed: false
+          send-to:
+            - culprits
+            - recipients
+      - email-ext:
+          disable-publisher: true
+          recipients: lwhsu.jenkins@lwhsu.org
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          body: |
+            $PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS:
+            
+            Build information: ${BUILD_URL}
+            Full change log: ${BUILD_URL}changes
+            Full build log: ${BUILD_URL}console
+            
+            Change summaries:
+            
+            ${CHANGES, format="%r by %a:\\n%m\\n"}
+            
+            The failed test cases:
+            
+            ${FAILED_TESTS, showStack="false", showMessage="true", maxTests=100}
+          failure: false
+          unstable: true
+          fixed: false
+          send-to:
+            - culprits
+            - recipients
+      - email-ext:
+          disable-publisher: true
+          recipients: lwhsu.jenkins@lwhsu.org
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          body: |
+            $PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS:
+            
+            Build information: ${BUILD_URL}
+            Full change log: ${BUILD_URL}changes
+            Full build log: ${BUILD_URL}console
+            
+            Change summaries:
+            
+            ${CHANGES, format="%r by %a:\\n%m\\n"}
+          failure: false
+          unstable: false
+          fixed: true
+          send-to:
+            - culprits
+            - recipients

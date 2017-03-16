@@ -54,7 +54,7 @@
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-LINT'
     disabled: '{disable_job_LINT}'
-    node: jailer_slow
+    node: jailer_fast
     scm:
       - 'FreeBSD-src-{branch}'
     parameters:

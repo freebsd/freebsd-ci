@@ -1,0 +1,76 @@
+- builder:
+    name: checkout-scripts
+    builders:
+      - shell: |
+          rm -fr freebsd-ci
+          git config --global http.proxy ${BUILDER_HTTP_PROXY}
+          git clone --depth=1 --single-branch https://github.com/lwhsu/freebsd-ci.git
+
+- builder:
+    name: execute-job-build-script
+    builders:
+      - shell: |
+          sh -ex freebsd-ci/jobs/${JOB_NAME}/build.sh
+
+- builder:
+    name: add-svn-revision-description
+    builders:
+      - system-groovy:
+          command: build.setDescription("r" + build.envVars.SVN_REVISION)
+
+- publisher:
+    name: scan-clang-warnings
+    publishers:
+      - warnings:
+          console-log-parsers:
+            - Clang (LLVM based)
+
+- publisher:
+    name: scan-gcc4-warnings
+    publishers:
+      - warnings:
+          console-log-parsers:
+            - GNU C Compiler 4 (gcc)
+
+- publisher:
+    name: scan-gcc-warnings
+    publishers:
+      - warnings:
+          console-log-parsers:
+            - GNU Make + GNU C Compiler (gcc)
+
+- publisher:
+    name: publish-junit-results
+    publishers:
+      - junit:
+          results: test-report.xml
+
+- publisher:
+    name: publish-checkstyle-results
+    publishers:
+      - checkstyle:
+          pattern: checkstyle-result.xml
+
+- publisher:
+    name: publish-clang-scan-build-results
+    publishers:
+      - scan-build
+
+- wrapper:
+    name: bind-artifact-credential
+    wrappers:
+      - credentials-binding:
+          - username-password-separated:
+              credential-id: artifact-credential
+              username: ARTIFACT_CRED_USER
+              password: ARTIFACT_CRED_PASS
+
+- publisher:
+    name: make-symlink
+    publishers:
+      - postbuildscript:
+          builders:
+            - shell: ./freebsd-ci/artifact/post-link.py
+          script-only-if-succeeded: True
+          script-only-if-failed: False
+          mark-unstable-if-failed: True

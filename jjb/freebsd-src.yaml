@@ -1,0 +1,77 @@
+- project:
+    name: FreeBSD-amd64
+    target_arch:
+      - amd64
+    branch:
+      - head
+      - stable-11
+      - stable-10
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-ci':
+          target: amd64
+          warnscanner: clang
+
+- project:
+    name: FreeBSD-i386
+    target_arch:
+      - i386
+    branch:
+      - head
+      - stable-11
+      - stable-10
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-ci':
+          target: i386
+          warnscanner: clang
+
+- project:
+    name: FreeBSD-aarch64
+    target_arch:
+      - aarch64
+    branch:
+      - head
+      - stable-11
+    jobs:
+      - 'FreeBSD-{branch}-aarch64-ci':
+          target: arm64
+          warnscanner: clang
+
+- project:
+    name: FreeBSD-riscv64
+    target_arch:
+      - riscv64
+    branch:
+      - head
+      - stable-11
+    jobs:
+      - 'FreeBSD-{branch}-riscv64-ci':
+          target: riscv
+          warnscanner: gcc
+          disable_job_images: true
+          disable_job_LINT: true
+          artifact_path: artifact
+          node_job_build: jailer_slow
+
+- job:
+    name: FreeBSD-head-scan_build
+    defaults: global
+    node: jailer_slow
+    scm:
+      - FreeBSD-src-head
+    triggers:
+      - timed: '@daily'
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - clean-jail
+      - publish-clang-scan-build-results
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 240
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute

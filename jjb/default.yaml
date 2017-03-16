@@ -1,0 +1,6 @@
+- defaults:
+    name: global
+    project-type: freestyle
+    concurrent: false
+    block-downstream: false
+    block-upstream: false

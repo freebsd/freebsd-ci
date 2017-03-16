@@ -1,0 +1,13 @@
+include		GENERIC
+ident		SPIKETEST
+
+options		MD_ROOT
+options		MD_ROOT_SIZE=32768 # 32MB ram disk
+makeoptions	MFS_IMAGE=%%MFS_IMAGE%%
+
+
+device		rcons
+options 	ROOTDEVNAME=\"ufs:/dev/md0\"
+
+options 	FDT_DTB_STATIC
+makeoptions	FDT_DTS_FILE=spike.dts

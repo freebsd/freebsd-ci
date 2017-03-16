@@ -1,15 +1,11 @@
 #!/bin/sh
 
-export PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin"
-
-JNAME="${JOB_NAME}"
-
-ZFS_PARENT=zroot/j/jails
-
-JHOME=/j/jails
-JPATH=${JHOME}/${JNAME}
+. freebsd-ci/scripts/jail/jail.conf
 
 echo "clean jail ${JNAME}"
+
+sudo jexec ${JNAME} sh -c "find ${WORKSPACE_IN_JAIL} -d -not -user jenkins -flags +schg -exec chflags noschg {} \;" || true
+sudo jexec ${JNAME} sh -c "find ${WORKSPACE_IN_JAIL} -d -not -user jenkins -exec rm -rf {} \;" || true
 
 sudo jail -r ${JNAME} || true
 
@@ -20,7 +16,10 @@ if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP4} ]; then
 	sudo ifconfig ${BUILDER_NETIF} inet ${BUILDER_JAIL_IP4} -alias || true
 fi
 
-sudo umount ${JPATH}/workspace || true
+if [ -n "${MOUNT_REPO}" ]; then
+	sudo umount ${JPATH}/usr/${MOUNT_REPO} || true
+fi
+sudo umount ${JPATH}/${WORKSPACE_IN_JAIL} || true
 sudo umount ${JPATH}/dev || true
 
 sudo zfs destroy ${ZFS_PARENT}/${JNAME} || true

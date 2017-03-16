@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin"
+. freebsd-ci/scripts/jail/jail.conf
 
 JNAME=${JOB_NAME}
 
@@ -8,4 +8,4 @@ echo "--------------------------------------------------------------"
 echo "start build in jail ${JNAME}"
 echo "--------------------------------------------------------------"
 
-sudo jexec ${JNAME} sh -c "cd /workspace && sh -x freebsd-ci/jobs/${JOB_NAME}/build.sh"
+sudo jexec -U jenkins ${JNAME} sh -c "cd ${WORKSPACE_IN_JAIL} && env HOME=${WORKSPACE_IN_JAIL} WORKSPACE=${WORKSPACE_IN_JAIL} sh -ex freebsd-ci/jobs/${JOB_NAME}/build.sh"

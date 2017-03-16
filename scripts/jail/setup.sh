@@ -1,28 +1,14 @@
 #!/bin/sh
 
-export PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin"
+. freebsd-ci/scripts/jail/jail.conf
 
-JNAME="${JOB_NAME}"
+eval BUILDER_JAIL_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
+eval BUILDER_JAIL_IP4="\$BUILDER_${EXECUTOR_NUMBER}_IP4"
 
-ZFS_PARENT=zroot/j/jails
-
-JHOME=/j/jails
-JPATH=${JHOME}/${JNAME}
-
-JOB_CONF=freebsd-ci/jobs/${JOB_NAME}/job.conf
-
-TARGET=amd64
-TARGET_ARCH=amd64
-WITH_32BIT=1
-OSRELEASE=10.3-RELEASE
-
-echo "env:"
-/usr/bin/env
-
-if [ -f ${JOB_CONF} ]; then
-	. ${JOB_CONF}
+if [ -f ${JAIL_CONF} ]; then
+	. ${JAIL_CONF}
 else
-	echo "warning: job configuration file not found, use default settings."
+	echo "Warning: jail configuration file not found, use default settings."
 fi
 
 echo "setup jail ${JNAME} using following parameters:"
@@ -30,6 +16,8 @@ echo "TARGET=${TARGET}"
 echo "TARGET_ARCH=${TARGET_ARCH}"
 echo "WITH_32BIT=${WITH_32BIT}"
 echo "OSRELEASE=${OSRELEASE}"
+echo "BUILDER_JAIL_IP6=${BUILDER_JAIL_IP6}"
+echo "BUILDER_JAIL_IP4=${BUILDER_JAIL_IP4}"
 
 RELEASE_TYPE=`echo ${OSRELEASE} | cut -f 2 -d '-' | tr -d [:digit:]`
 case ${RELEASE_TYPE} in
@@ -61,8 +49,13 @@ fi
 sudo mount -t devfs devfs ${JPATH}/dev
 sudo devfs -m ${JPATH}/dev rule -s 4 applyset
 
-sudo mkdir ${JPATH}/workspace
-sudo mount -t nullfs ${WORKSPACE} ${JPATH}/workspace
+sudo mkdir -p ${JPATH}/${WORKSPACE_IN_JAIL}
+sudo mount -t nullfs ${WORKSPACE} ${JPATH}/${WORKSPACE_IN_JAIL}
+
+if [ -n "${MOUNT_REPO}" ]; then
+	sudo mkdir -p ${JPATH}/usr/${MOUNT_REPO}
+	sudo mount -t nullfs ${WORKSPACE}/${MOUNT_REPO} ${JPATH}/usr/${MOUNT_REPO}
+fi
 
 printf "${BUILDER_RESOLV_CONF}" | sudo tee ${JPATH}/etc/resolv.conf
 
@@ -90,9 +83,11 @@ sudo jail -c persist \
 
 echo "setup build environment"
 
+sudo jexec ${JNAME} sh -c "sed -i.bak -e 's,pkg+http://pkg.FreeBSD.org/\${ABI}/quarterly,pkg+http://pkg.FreeBSD.org/\${ABI}/latest,' /etc/pkg/FreeBSD.conf"
 sudo jexec ${JNAME} sh -c "env ASSUME_ALWAYS_YES=yes pkg update"
+sudo jexec ${JNAME} sh -c "env pkg install -y `cat freebsd-ci/scripts/jail/default-pkg-list | paste -d ' ' -s -`"
 if [ -s freebsd-ci/jobs/${JOB_NAME}/pkg-list ]; then
-	sudo jexec ${JNAME} sh -c "pkg install -y `cat freebsd-ci/jobs/${JOB_NAME}/pkg-list`"
+	sudo jexec ${JNAME} sh -c "pkg install -y `cat freebsd-ci/jobs/${JOB_NAME}/pkg-list | paste -d ' ' -s -`"
 fi
 
 # remove network for quarantine env
@@ -107,7 +102,15 @@ if [ "$QUARANTINE" ]; then
 	fi
 fi
 
+sudo jexec ${JNAME} sh -c "/usr/sbin/pw groupadd jenkins -g 5213"
+sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default -c \"Jenkins CI\" -d ${WORKSPACE_IN_JAIL} /bin/sh"
+sudo jexec ${JNAME} sh -c "umask 7337; echo 'jenkins ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/jenkins"
+
 echo "build environment:"
 
+echo "uname:"
 sudo jexec ${JNAME} sh -c "uname -a"
+echo "packages:"
 sudo jexec ${JNAME} sh -c "pkg info -q"
+echo "environment variables:"
+sudo jexec -U jenkins ${JNAME} sh -c "env WORKSPACE=${WORKSPACE_IN_JAIL} env"

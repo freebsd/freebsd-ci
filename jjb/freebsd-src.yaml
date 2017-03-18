@@ -75,3 +75,29 @@
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
+
+- job:
+    name: FreeBSD-head-amd64-gcc
+    defaults: global
+    node: jailer
+    scm:
+      - FreeBSD-src-head
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - scan-gcc-warnings
+      - clean-jail
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 90
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute

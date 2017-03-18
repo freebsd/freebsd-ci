@@ -37,6 +37,7 @@
             - 'FreeBSD-{branch}-{target_arch}-images'
             - 'FreeBSD-{branch}-{target_arch}-testvm'
             - 'FreeBSD-{branch}-{target_arch}-LINT'
+            - 'FreeBSD-{branch}-{target_arch}-gcc'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property

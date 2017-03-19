@@ -37,6 +37,18 @@
           warnscanner: clang
 
 - project:
+    name: FreeBSD-sparc64
+    target_arch:
+      - sparc64
+    branch:
+      - head
+      - stable-11
+    jobs:
+      - 'FreeBSD-{branch}-sparc64-ci':
+          target: sparc64
+          warnscanner: gcc4
+
+- project:
     name: FreeBSD-riscv64
     target_arch:
       - riscv64

@@ -43,6 +43,7 @@
     branch:
       - head
       - stable-11
+      - stable-10
     jobs:
       - 'FreeBSD-{branch}-sparc64-ci':
           target: sparc64

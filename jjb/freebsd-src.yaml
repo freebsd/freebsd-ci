@@ -55,7 +55,6 @@
       - riscv64
     branch:
       - head
-      - stable-11
     jobs:
       - 'FreeBSD-{branch}-riscv64-ci':
           target: riscv

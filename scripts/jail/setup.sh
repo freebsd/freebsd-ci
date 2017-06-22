@@ -23,12 +23,18 @@ RELEASE_TYPE=`echo ${OSRELEASE} | cut -f 2 -d '-' | tr -d [:digit:]`
 case ${RELEASE_TYPE} in
 "RELEASE"|"BETA"|"RC")
 	SUBDIR=releases
+	BASE_URL=https://download.FreeBSD.org/ftp/${SUBDIR}/${TARGET}/${TARGET_ARCH}/${OSRELEASE}
 	;;
 *)
-	SUBDIR=snapshots
+	SUBDIR=snapshot
+	FBSD_BRANCH=`echo ${OSRELEASE} | cut -f 1 -d '-'`
+	SVN_REVISION=`echo ${OSRELEASE} | cut -f 2 -d '-'`
+	if [ ${FBSD_BRANCH} != "head" ]; then
+		FBSD_BRANCH="stable-${FBSD_BRANCH}"
+	fi
+	BASE_URL=https://artifact.ci.FreeBSD.org/${SUBDIR}/${FBSD_BRANCH}/${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 	;;
 esac
-BASE_URL=https://download.FreeBSD.org/ftp/${SUBDIR}/${TARGET}/${TARGET_ARCH}/${OSRELEASE}
 
 fetch -m ${BASE_URL}/base.txz
 if [ ${WITH_32BIT} -eq 1 ]; then

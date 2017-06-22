@@ -27,12 +27,12 @@ case ${RELEASE_TYPE} in
 	;;
 *)
 	SUBDIR=snapshot
-	FBSD_BRANCH=`echo ${OSRELEASE} | cut -f 1 -d '-'`
-	SVN_REVISION=`echo ${OSRELEASE} | cut -f 2 -d '-'`
-	if [ ${FBSD_BRANCH} != "head" ]; then
-		FBSD_BRANCH="stable-${FBSD_BRANCH}"
+	JAIL_FBSD_BRANCH=`echo ${OSRELEASE} | cut -f 1 -d '-'`
+	JAIL_SVN_REVISION=`echo ${OSRELEASE} | cut -f 2 -d '-'`
+	if [ ${JAIL_FBSD_BRANCH} != "head" ]; then
+		JAIL_FBSD_BRANCH="stable-${FBSD_BRANCH}"
 	fi
-	BASE_URL=https://artifact.ci.FreeBSD.org/${SUBDIR}/${FBSD_BRANCH}/${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+	BASE_URL=https://artifact.ci.FreeBSD.org/${SUBDIR}/${JAIL_FBSD_BRANCH}/${JAIL_SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 	;;
 esac
 

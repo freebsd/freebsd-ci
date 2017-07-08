@@ -50,6 +50,39 @@
           warnscanner: gcc4
 
 - project:
+    name: FreeBSD-powerpc
+    target_arch:
+      - powerpc
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-powerpc-ci':
+          target: powerpc
+          warnscanner: gcc4
+
+- project:
+    name: FreeBSD-powerpc64
+    target_arch:
+      - powerpc64
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-powerpc64-ci':
+          target: powerpc
+          warnscanner: gcc4
+
+- project:
+    name: FreeBSD-powerpcspe
+    target_arch:
+      - powerpcspe
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-powerpcspe-ci':
+          target: powerpc
+          warnscanner: gcc4
+
+- project:
     name: FreeBSD-riscv64
     target_arch:
       - riscv64

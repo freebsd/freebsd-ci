@@ -5,7 +5,7 @@
 eval BUILDER_JAIL_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
 eval BUILDER_JAIL_IP4="\$BUILDER_${EXECUTOR_NUMBER}_IP4"
 
-if [ -f ${JAIL_CONF} ]; then
+if [ -f "${JAIL_CONF}" ]; then
 	. ${JAIL_CONF}
 else
 	echo "Warning: jail configuration file not found, use default settings."
@@ -37,18 +37,18 @@ case ${RELEASE_TYPE} in
 esac
 
 fetch -m ${BASE_URL}/base.txz
-if [ ${WITH_32BIT} -eq 1 ]; then
+if [ "${WITH_32BIT}" -eq 1 ]; then
 	fetch -m ${BASE_URL}/lib32.txz
 fi
 
 sudo zfs create ${ZFS_PARENT}/${JNAME}
 
 sudo tar Jxf base.txz -C ${JPATH}
-if [ ${WITH_32BIT} -eq 1 ]; then
+if [ "${WITH_32BIT}" -eq 1 ]; then
 	sudo tar Jxf lib32.txz -C ${JPATH}
 fi
 
-if [ -x ${JPATH}/bin/freebsd-version ]; then
+if [ -x "${JPATH}/bin/freebsd-version" ]; then
 	OSRELEASE=`${JPATH}/bin/freebsd-version -u`
 fi
 
@@ -65,13 +65,13 @@ fi
 
 printf "${BUILDER_RESOLV_CONF}" | sudo tee ${JPATH}/etc/resolv.conf
 
-if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP6} ]; then
+if [ "${BUILDER_NETIF}" -a "${BUILDER_JAIL_IP6}" ]; then
 	sudo ifconfig ${BUILDER_NETIF} inet6 ${BUILDER_JAIL_IP6} alias
 	JAIL_ARG_IP6="ip6.addr=${BUILDER_JAIL_IP6}"
 else
 	JAIL_ARG_IP6="ip6=disable"
 fi
-if [ ${BUILDER_NETIF} -a ${BUILDER_JAIL_IP4} ]; then
+if [ "${BUILDER_NETIF}" -a "${BUILDER_JAIL_IP4}" ]; then
 	sudo ifconfig ${BUILDER_NETIF} inet ${BUILDER_JAIL_IP4} alias
 	JAIL_ARG_IP4="ip4.addr=${BUILDER_JAIL_IP4}"
 else
@@ -92,7 +92,7 @@ echo "setup build environment"
 sudo jexec ${JNAME} sh -c "sed -i.bak -e 's,pkg+http://pkg.FreeBSD.org/\${ABI}/quarterly,pkg+http://pkg.FreeBSD.org/\${ABI}/latest,' /etc/pkg/FreeBSD.conf"
 sudo jexec ${JNAME} sh -c "env ASSUME_ALWAYS_YES=yes pkg update"
 sudo jexec ${JNAME} sh -c "env pkg install -y `cat freebsd-ci/scripts/jail/default-pkg-list | paste -d ' ' -s -`"
-if [ -s freebsd-ci/jobs/${JOB_NAME}/pkg-list ]; then
+if [ -s "freebsd-ci/jobs/${JOB_NAME}/pkg-list" ]; then
 	sudo jexec ${JNAME} sh -c "pkg install -y `cat freebsd-ci/jobs/${JOB_NAME}/pkg-list | paste -d ' ' -s -`"
 fi
 

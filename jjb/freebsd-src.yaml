@@ -153,6 +153,14 @@
     node: jailer_fast
     scm:
       - FreeBSD-src-head
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH=head
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+            LINK_TYPE=latest
+            MOUNT_REPO=src
     builders:
       - add-svn-revision-description
       - checkout-scripts

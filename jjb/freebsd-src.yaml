@@ -165,7 +165,7 @@
     publishers:
       - ftp:
           site: 'artifact.ci.freebsd.org'
-          target: 'snapshot'
+          target: 'dtrace-test'
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
       - clean-jail

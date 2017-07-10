@@ -150,7 +150,7 @@
 - job:
     name: FreeBSD-head-amd64-dtrace_build
     defaults: global
-    node: jailer
+    node: jailer_fast
     scm:
       - FreeBSD-src-head
     parameters:

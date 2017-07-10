@@ -170,8 +170,8 @@
       - ftp:
           site: 'artifact.ci.freebsd.org'
           target: 'dtrace-test'
-          source: '{artifact_path}/**'
-          remove-prefix: '{artifact_path}'
+          source: 'src/release/artifact/**'
+          remove-prefix: 'src/release/artifact'
       - clean-jail
     wrappers:
       - timestamps

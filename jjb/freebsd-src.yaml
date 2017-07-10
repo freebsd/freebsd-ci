@@ -173,6 +173,83 @@
           source: 'src/release/artifact/**'
           remove-prefix: 'src/release/artifact'
       - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-head-amd64-dtrace_testvm'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 90
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
+- job:
+    defaults: global
+    name: FreeBSD-head-amd64-dtrace_testvm
+    node: jailer_fast
+    scm:
+      - FreeBSD-src-head-empty
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH=head
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: 'dtrace-test'
+          source: 'artifact/**'
+          remove-prefix: 'artifact'
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-head-amd64-dtrace_test'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job:
+    name: FreeBSD-head-amd64-dtrace_test
+    node: bhyve_host
+    scm:
+      - FreeBSD-src-head-empty
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH=head
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+            LINK_TYPE=latest_tested
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - publish-junit-results
     wrappers:
       - timestamps
       - timeout:

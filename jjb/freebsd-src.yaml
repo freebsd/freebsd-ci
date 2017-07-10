@@ -153,10 +153,6 @@
     node: jailer_fast
     scm:
       - FreeBSD-src-head
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     builders:
       - add-svn-revision-description
       - checkout-scripts

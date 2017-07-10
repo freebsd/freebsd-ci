@@ -146,3 +146,34 @@
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
+
+- job:
+    name: FreeBSD-head-amd64-dtrace_build
+    defaults: global
+    node: jailer
+    scm:
+      - FreeBSD-src-head
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: 'snapshot'
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - clean-jail
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 90
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential

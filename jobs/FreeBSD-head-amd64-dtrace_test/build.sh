@@ -21,7 +21,7 @@ TEST_VM_NAME=test_vm_${EXECUTOR_NUMBER}
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
 sudo /usr/sbin/bhyveload -c stdio -m 4096m -d ${IMG_NAME} ${TEST_VM_NAME}
 set +e
-expect -c "set timeout 7020; \
+expect -c "set timeout 3420; \
 	spawn sudo /usr/sbin/bhyve -c 2 -m 4096m -A -H -P -g 0 \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \

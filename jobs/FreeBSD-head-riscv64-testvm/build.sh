@@ -22,38 +22,19 @@ cd riscv-pk
 git rev-parse HEAD
 
 cd ${WORKSPACE}
-rm -f kernel-qemu.xz kernel-qemu
-fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/kernel-qemu.xz
-xz -d kernel-qemu.xz
+rm -f kernel.xz kernel
+fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/kernel.xz
+xz -d kernel.xz
 
-rm -fr riscv-pk/build/
 mkdir riscv-pk/build/
 cd riscv-pk/build/
 
 export CFLAGS="-nostdlib"
-../configure --host=riscv64-unknown-freebsd11.0 --with-payload=${WORKSPACE}/kernel-qemu
+../configure --host=riscv64-unknown-freebsd11.0 --with-payload=${WORKSPACE}/kernel
 gmake LIBS=''
 
-mv bbl bbl-qemu
-xz bbl-qemu
-mv bbl-qemu.xz ${ARTIFACT_DEST}
-
-cd ${WORKSPACE}
-rm -f kernel-spike.xz kernel-spike
-fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/kernel-spike.xz
-xz -d kernel-spike.xz
-
-rm -fr riscv-pk/build/
-mkdir riscv-pk/build/
-cd riscv-pk/build/
-
-export CFLAGS="-nostdlib"
-../configure --host=riscv64-unknown-freebsd11.0 --with-payload=${WORKSPACE}/kernel-spike
-gmake LIBS=''
-
-mv bbl bbl-spike
-xz bbl-spike
-mv bbl-spike.xz ${ARTIFACT_DEST}
+xz bbl
+mv bbl.xz ${ARTIFACT_DEST}
 
 cd ${WORKSPACE}
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

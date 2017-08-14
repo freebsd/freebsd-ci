@@ -30,7 +30,7 @@ mkdir riscv-pk/build/
 cd riscv-pk/build/
 
 export CFLAGS="-nostdlib"
-../configure --host=riscv64-unknown-freebsd11.0 --with-payload=${WORKSPACE}/kernel
+../configure --enable-logo --host=riscv64-unknown-freebsd11.0 --with-payload=${WORKSPACE}/kernel
 gmake LIBS=''
 
 xz bbl

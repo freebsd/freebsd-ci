@@ -14,8 +14,8 @@ fi
 
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
-rm -f bbl-qemu.xz bbl-qemu
-fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/bbl-qemu.xz
-xz -d bbl-qemu.xz
+rm -f bbl.xz
+fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/bbl.xz
+xz -d bbl.xz
 
-python ${JOB_BASE}/test-in-qemu.py
+python ${JOB_BASE}/test-in-spike.py

@@ -14,8 +14,7 @@ fi
 
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
-rm -f bbl.xz
 fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/bbl.xz
-xz -d bbl.xz
+xz -df bbl.xz
 
 python ${JOB_BASE}/test-in-spike.py

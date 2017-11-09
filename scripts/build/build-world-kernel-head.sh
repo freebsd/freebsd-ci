@@ -31,6 +31,7 @@ sudo make -DNOPORTS -DNOSRC -DNODOC ftp \
 
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 sudo mkdir -p ${ARTIFACT_DEST}
-sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/dist/* ${ARTIFACT_DEST}
+sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/dist/*.txz ${ARTIFACT_DEST}
+sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/dist/MANIFEST ${ARTIFACT_DEST}
 
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

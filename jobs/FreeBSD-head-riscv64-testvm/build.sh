@@ -29,6 +29,7 @@ xz -d kernel.xz
 mkdir riscv-pk/build/
 cd riscv-pk/build/
 
+export CC=riscv64-unknown-freebsd11.1-gcc
 export CFLAGS="-nostdlib"
 export RANLIB=riscv64-freebsd-ranlib
 export READELF=riscv64-freebsd-readelf

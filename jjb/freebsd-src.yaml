@@ -50,6 +50,30 @@
           warnscanner: gcc4
 
 - project:
+    name: FreeBSD-mips
+    target_arch:
+      - mips
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-mips-ci':
+          target: mips
+          warnscanner: gcc4
+          disable_job_LINT: true
+
+- project:
+    name: FreeBSD-mips64
+    target_arch:
+      - mips64
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-mips64-ci':
+          target: mips64
+          warnscanner: gcc4
+          disable_job_LINT: true
+
+- project:
     name: FreeBSD-powerpc
     target_arch:
       - powerpc

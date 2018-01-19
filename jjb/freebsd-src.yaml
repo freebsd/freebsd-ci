@@ -69,7 +69,7 @@
       - head
     jobs:
       - 'FreeBSD-{branch}-mips64-ci':
-          target: mips64
+          target: mips
           warnscanner: gcc4
           disable_job_LINT: true
 

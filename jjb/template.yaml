@@ -254,6 +254,21 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
 
 - job-group:
+    name: 'FreeBSD-{branch}-mips-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
+    name: 'FreeBSD-{branch}-mipsn32-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
+    name: 'FreeBSD-{branch}-mips64-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
     name: 'FreeBSD-{branch}-powerpc-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'

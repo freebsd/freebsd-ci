@@ -249,11 +249,6 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
 
 - job-group:
-    name: 'FreeBSD-{branch}-sparc64-ci'
-    jobs:
-       - 'FreeBSD-{branch}-{target_arch}-build'
-
-- job-group:
     name: 'FreeBSD-{branch}-mips-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
@@ -280,6 +275,11 @@
 
 - job-group:
     name: 'FreeBSD-{branch}-powerpcspe-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
+    name: 'FreeBSD-{branch}-sparc64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
 

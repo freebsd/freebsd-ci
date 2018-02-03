@@ -12,19 +12,6 @@
           warnscanner: clang
 
 - project:
-    name: FreeBSD-i386
-    target_arch:
-      - i386
-    branch:
-      - head
-      - stable-11
-      - stable-10
-    jobs:
-      - 'FreeBSD-{branch}-{target_arch}-ci':
-          target: i386
-          warnscanner: clang
-
-- project:
     name: FreeBSD-aarch64
     target_arch:
       - aarch64
@@ -37,17 +24,17 @@
           warnscanner: clang
 
 - project:
-    name: FreeBSD-sparc64
+    name: FreeBSD-i386
     target_arch:
-      - sparc64
+      - i386
     branch:
       - head
       - stable-11
       - stable-10
     jobs:
-      - 'FreeBSD-{branch}-sparc64-ci':
-          target: sparc64
-          warnscanner: gcc4
+      - 'FreeBSD-{branch}-{target_arch}-ci':
+          target: i386
+          warnscanner: clang
 
 - project:
     name: FreeBSD-mips
@@ -120,6 +107,19 @@
           disable_job_LINT: true
           artifact_path: artifact
           node_job_build: jailer_slow
+
+- project:
+    name: FreeBSD-sparc64
+    target_arch:
+      - sparc64
+    branch:
+      - head
+      - stable-11
+      - stable-10
+    jobs:
+      - 'FreeBSD-{branch}-sparc64-ci':
+          target: sparc64
+          warnscanner: gcc4
 
 - job:
     name: FreeBSD-head-scan_build

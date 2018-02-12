@@ -31,10 +31,10 @@ cd riscv-pk/build/
 
 export CC=riscv64-unknown-freebsd11.1-gcc
 export CFLAGS="-nostdlib"
-export RANLIB=riscv64-freebsd-ranlib
-export READELF=riscv64-freebsd-readelf
-export OBJCOPY=riscv64-freebsd-objcopy
-../configure --enable-logo --host=riscv64-unknown-freebsd11.0 --with-payload=${WORKSPACE}/kernel
+export RANLIB=riscv64-unknown-freebsd11.1-ranlib
+export READELF=riscv64-unknown-freebsd11.1-readelf
+export OBJCOPY=riscv64-unknown-freebsd11.1-objcopy
+../configure --enable-logo --host=riscv64-unknown-freebsd11.1 --with-payload=${WORKSPACE}/kernel
 gmake
 
 xz bbl

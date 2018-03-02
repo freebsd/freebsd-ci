@@ -8,7 +8,13 @@ rm -fr ${MAKEOBJDIRPREFIX}
 MAKECONF=${MAKECONF:-/dev/null}
 SRCCONF=${SRCCONF:-/dev/null}
 
-cd /usr/src
+# Mount source readonly
+mkdir -p /usr/src.ro
+mount -o ro -t nullfs /usr/src /usr/src.ro
+# Set cleanup trap
+trap "umount /usr/src.ro" exit
+
+cd /usr/src.ro
 
 sudo make -j ${JFLAG} -DNO_CLEAN \
 	buildworld \

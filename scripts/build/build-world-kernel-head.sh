@@ -23,8 +23,9 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF}
 
-cd /usr/src/release
+cd release
 
+_RELOBJDIR=$(make -V .OBJDIR)
 sudo make clean
 sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 	TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \
@@ -32,7 +33,7 @@ sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 sudo mkdir -p ${ARTIFACT_DEST}
-sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/*.txz ${ARTIFACT_DEST}
-sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/MANIFEST ${ARTIFACT_DEST}
+sudo mv ${_RELOBJDIR}/*.txz ${ARTIFACT_DEST}
+sudo mv ${_RELOBJDIR}/MANIFEST ${ARTIFACT_DEST}
 
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

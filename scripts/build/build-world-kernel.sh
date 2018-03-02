@@ -23,8 +23,8 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF}
 
-cd /usr/src/release
-
+cd release
+# Do note that release scripts on stable/11 are *not* RO-friendly
 sudo make clean
 sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 	TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \

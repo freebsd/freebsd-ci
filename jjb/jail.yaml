@@ -14,7 +14,13 @@
     name: clean-jail
     publishers:
       - postbuildscript:
+          mark-unstable-if-failed: false
           builders:
-            - shell: sh freebsd-ci/scripts/jail/clean.sh
-          script-only-if-succeeded: False
-          script-only-if-failed: False
+            - build-on:
+                - SUCCESS
+                - NOT_BUILT
+                - ABORTED
+                - FAILURE
+                - UNSTABLE
+              build-steps:
+                - shell: sh freebsd-ci/scripts/jail/clean.sh

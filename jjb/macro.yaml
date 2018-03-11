@@ -69,8 +69,9 @@
     name: make-symlink
     publishers:
       - postbuildscript:
+          mark-unstable-if-failed: true
           builders:
-            - shell: ./freebsd-ci/artifact/post-link.py
-          script-only-if-succeeded: True
-          script-only-if-failed: False
-          mark-unstable-if-failed: True
+            - build-on:
+                - SUCCESS
+              build-steps:
+                - shell: ./freebsd-ci/artifact/post-link.py

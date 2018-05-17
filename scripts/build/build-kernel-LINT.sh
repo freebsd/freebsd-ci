@@ -17,4 +17,5 @@ make -j ${JFLAG} \
 	buildkernel \
 	KERNCONF=LINT \
 	__MAKE_CONF=${MAKECONF} \
-	SRCCONF=${SRCCONF}
+	SRCCONF=${SRCCONF} \
+	${EXTRA_FLAGS}

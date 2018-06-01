@@ -26,6 +26,30 @@
           warnscanner: clang
 
 - project:
+    name: FreeBSD-armv6
+    target_arch:
+      - armv6
+    branch:
+      - head
+      - stable-11
+      - releng-11_2
+    jobs:
+      - 'FreeBSD-{branch}-armv6-ci':
+          target: arm
+          warnscanner: gcc4
+
+- project:
+    name: FreeBSD-armv7
+    target_arch:
+      - armv7
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-armv6-ci':
+          target: arm
+          warnscanner: gcc4
+
+- project:
     name: FreeBSD-i386
     target_arch:
       - i386

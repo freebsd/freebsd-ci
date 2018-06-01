@@ -249,6 +249,16 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
 
 - job-group:
+    name: 'FreeBSD-{branch}-armv6-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
+    name: 'FreeBSD-{branch}-armv7-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
     name: 'FreeBSD-{branch}-mips-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'

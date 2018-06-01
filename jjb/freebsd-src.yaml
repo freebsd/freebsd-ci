@@ -93,6 +93,8 @@
       - powerpc
     branch:
       - head
+      - stable-11
+      - releng-11_2
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
           target: powerpc
@@ -104,6 +106,8 @@
       - powerpc64
     branch:
       - head
+      - stable-11
+      - releng-11_2
     jobs:
       - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc

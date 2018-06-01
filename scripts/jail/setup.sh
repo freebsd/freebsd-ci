@@ -30,7 +30,8 @@ case ${RELEASE_TYPE} in
 	JAIL_FBSD_BRANCH=`echo ${OSRELEASE} | cut -f 1 -d '-'`
 	JAIL_SVN_REVISION=`echo ${OSRELEASE} | cut -f 2 -d '-'`
 	if [ ${JAIL_FBSD_BRANCH} != "head" ]; then
-		JAIL_FBSD_BRANCH="stable-${FBSD_BRANCH}"
+		JAIL_FBSD_BRANCH="${JAIL_FBSD_BRANCH}-${JAIL_SVN_REVISION}"
+		JAIL_SVN_REVISION=`echo ${OSRELEASE} | cut -f 3 -d '-'`
 	fi
 	BASE_URL=https://artifact.ci.FreeBSD.org/${SUBDIR}/${JAIL_FBSD_BRANCH}/${JAIL_SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 	;;

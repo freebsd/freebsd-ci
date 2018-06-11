@@ -41,7 +41,7 @@ done
 
 sudo cp /etc/resolv.conf ufs/etc/
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-sudo chroot ufs pkg install -y kyua perl5 scapy
+sudo chroot ufs pkg install -y kyua perl5 scapy ksh93
 
 cat <<EOF | sudo tee ufs/etc/fstab
 # Device        Mountpoint      FStype  Options Dump    Pass#

@@ -7,5 +7,5 @@ env \
 	WITH_LIB32=0 \
 	WITH_DEBUG=0 \
 	WITH_DOC=1 \
-	WITH_TESTS=0 \
+	WITH_TESTS=1 \
 	sh -x freebsd-ci/scripts/build/build-test_image.sh

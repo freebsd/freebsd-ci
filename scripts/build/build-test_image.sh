@@ -60,7 +60,7 @@ fdesc           /dev/fd         fdescfs rw      0       0
 EOF
 
 cat <<EOF | sudo tee -a ufs/etc/rc.conf
-kld_list="mac_bsdextended mac_portacl mqueuefs"
+kld_list="mac_bsdextended mac_portacl mqueuefs pf"
 auditd_enable="YES"
 EOF
 
@@ -68,7 +68,6 @@ cat <<EOF | sudo tee ufs/etc/rc.local
 #!/bin/sh -ex
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 export PATH
-kldload pf
 echo
 echo "--------------------------------------------------------------"
 echo "start kyua tests!"

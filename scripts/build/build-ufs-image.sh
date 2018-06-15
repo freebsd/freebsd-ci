@@ -146,5 +146,5 @@ fi
 sudo rm -fr ${IMAGE_ROOT}
 sudo mkdir -p ${IMAGE_ROOT}
 sudo rm -fr ${IMAGE_ROOT}/test.img
-sudo makefs ${BFLAG} -d 6144 -t ffs -f 200000 -s 2g -o version=2,bsize=32768,fsize=4096,label=TESTROOT ${IMAGE_ROOT}/test.img $PACKAGE_ROOT
+sudo makefs ${BFLAG} -d 6144 -t ffs -f 200000 -s 4g -o version=2,bsize=32768,fsize=4096,label=TESTROOT ${IMAGE_ROOT}/test.img $PACKAGE_ROOT
 sudo chmod a+w $IMAGE_ROOT/test.img

@@ -41,13 +41,27 @@ done
 
 sudo cp /etc/resolv.conf ufs/etc/
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-sudo chroot ufs pkg install -y kyua perl5 scapy
+sudo chroot ufs pkg install -y kyua perl5 scapy ksh93 python
+
+cat <<EOF | sudo tee -a ufs/boot/loader.conf
+net.fibs=3
+EOF
+
+cat <<EOF | sudo tee -a ufs/usr/local/etc/kyua/kyua.conf
+test_suites.FreeBSD.fibs = '1 2'
+test_suites.FreeBSD.allow_sysctl_side_effects = '1'
+EOF
 
 cat <<EOF | sudo tee ufs/etc/fstab
 # Device        Mountpoint      FStype  Options Dump    Pass#
 /dev/gpt/swapfs none            swap    sw      0       0
 /dev/gpt/rootfs /               ufs     rw      1       1
 fdesc           /dev/fd         fdescfs rw      0       0
+EOF
+
+cat <<EOF | sudo tee -a ufs/etc/rc.conf
+kld_list="mac_bsdextended mac_portacl mqueuefs"
+auditd_enable="YES"
 EOF
 
 cat <<EOF | sudo tee ufs/etc/rc.local
@@ -64,6 +78,10 @@ cd /usr/tests
 /usr/local/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
 /usr/local/bin/kyua report-junit --output=test-report.xml
 shutdown -p now
+EOF
+
+cat <<EOF | sudo tee ufs/etc/sysctl.conf
+vfs.aio.enable_unsafe=1
 EOF
 
 sudo rm -f ufs/etc/resolv.conf

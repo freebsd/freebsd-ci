@@ -53,6 +53,7 @@ test_suites.FreeBSD.allow_sysctl_side_effects = '1'
 EOF
 
 # disable zfs tests because them need more complex environment setup
+chmod 644 ufs/usr/tests/sys/cddl/Kyuafile
 sed -i .bak -e 's,include("zfs/Kyuafile"),-- include("zfs/Kyuafile"),' ufs/usr/tests/sys/cddl/Kyuafile
 
 cat <<EOF | sudo tee ufs/etc/fstab

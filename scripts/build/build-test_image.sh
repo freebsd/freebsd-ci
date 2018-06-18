@@ -50,6 +50,8 @@ EOF
 cat <<EOF | sudo tee -a ufs/usr/local/etc/kyua/kyua.conf
 test_suites.FreeBSD.fibs = '1 2'
 test_suites.FreeBSD.allow_sysctl_side_effects = '1'
+test_suites.FreeBSD.disks = '/dev/ada1 /dev/ada2 /dev/ada3 /dev/ada4 /dev/ada5'
+test_suites.FreeBSD.cam_test_device = '/dev/ada1'
 EOF
 
 # disable zfs tests because them need more complex environment setup

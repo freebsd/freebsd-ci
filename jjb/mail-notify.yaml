@@ -21,6 +21,7 @@
           failure: true
           unstable: false
           fixed: false
+          presend-script: ${DEFAULT_PRESEND_SCRIPT}
           send-to:
             #- culprits
             - recipients
@@ -48,6 +49,7 @@
           failure: false
           unstable: true
           fixed: false
+          presend-script: ${DEFAULT_PRESEND_SCRIPT}
           send-to:
             #- culprits
             - recipients
@@ -71,6 +73,7 @@
           failure: false
           unstable: false
           fixed: true
+          presend-script: ${DEFAULT_PRESEND_SCRIPT}
           send-to:
             #- culprits
             - recipients

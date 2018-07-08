@@ -31,7 +31,8 @@
           remove-prefix: '{artifact_path}'
       - make-symlink
       - clean-jail
-      - mail-notify
+      - mail-notify-failure
+      - mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-{branch}-{target_arch}-images'
@@ -75,7 +76,8 @@
     publishers:
       - scan-clang-warnings
       - clean-jail
-      - mail-notify
+      - mail-notify-failure
+      - mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:
@@ -191,7 +193,9 @@
     publishers:
       - make-symlink
       - publish-junit-results
-#      - mail-notify
+      - mail-notify-failure
+      - mail-notify-unstable
+      - mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:

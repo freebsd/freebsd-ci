@@ -1,12 +1,11 @@
 - publisher:
-    name: mail-notify
+    name: mail-notify-failure
     publishers:
       - email-ext:
-          disable-publisher: true
           recipients: lwhsu.jenkins@lwhsu.org
-          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS:
+            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS
             
             Build information: ${BUILD_URL}
             Full change log: ${BUILD_URL}changes
@@ -23,14 +22,17 @@
           unstable: false
           fixed: false
           send-to:
-            - culprits
+            #- culprits
             - recipients
+- publisher:
+    name: mail-notify-unstable
+    publishers:
       - email-ext:
           disable-publisher: true
           recipients: lwhsu.jenkins@lwhsu.org
-          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS:
+            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS
             
             Build information: ${BUILD_URL}
             Full change log: ${BUILD_URL}changes
@@ -47,14 +49,17 @@
           unstable: true
           fixed: false
           send-to:
-            - culprits
+            #- culprits
             - recipients
+- publisher:
+    name: mail-notify-fixed
+    publishers:
       - email-ext:
           disable-publisher: true
           recipients: lwhsu.jenkins@lwhsu.org
-          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS:
+            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS
             
             Build information: ${BUILD_URL}
             Full change log: ${BUILD_URL}changes
@@ -67,5 +72,5 @@
           unstable: false
           fixed: true
           send-to:
-            - culprits
+            #- culprits
             - recipients

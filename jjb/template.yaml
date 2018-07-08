@@ -193,9 +193,9 @@
     publishers:
       - make-symlink
       - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
-      - mail-notify-fixed
+      #- mail-notify-failure
+      #- mail-notify-unstable
+      #- mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:

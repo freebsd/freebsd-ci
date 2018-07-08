@@ -5,7 +5,7 @@
           recipients: ${DEFAULT_RECIPIENTS}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS
+            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var="SVN_REVISION"})- $BUILD_STATUS
             
             Build information: ${BUILD_URL}
             Full change log: ${BUILD_URL}changes
@@ -33,7 +33,7 @@
           recipients: ${DEFAULT_RECIPIENTS}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS
+            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var="SVN_REVISION"})- $BUILD_STATUS
             
             Build information: ${BUILD_URL}
             Full change log: ${BUILD_URL}changes
@@ -61,7 +61,7 @@
           recipients: ${DEFAULT_RECIPIENTS}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS
+            $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var="SVN_REVISION"})- $BUILD_STATUS
             
             Build information: ${BUILD_URL}
             Full change log: ${BUILD_URL}changes

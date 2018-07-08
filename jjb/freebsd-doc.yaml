@@ -14,6 +14,8 @@
       - execute-in-jail
     publishers:
       - clean-jail
+      - mail-notify-failure
+      - mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-doc-head-igor'

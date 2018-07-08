@@ -2,7 +2,7 @@
     name: mail-notify-failure
     publishers:
       - email-ext:
-          recipients: ${$DEFAULT_RECIPIENTS}
+          recipients: ${DEFAULT_RECIPIENTS}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
             $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS
@@ -30,7 +30,7 @@
     publishers:
       - email-ext:
           disable-publisher: true
-          recipients: ${$DEFAULT_RECIPIENTS}
+          recipients: ${DEFAULT_RECIPIENTS}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
             $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS
@@ -58,7 +58,7 @@
     publishers:
       - email-ext:
           disable-publisher: true
-          recipients: ${$DEFAULT_RECIPIENTS}
+          recipients: ${DEFAULT_RECIPIENTS}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS"
           body: |
             $PROJECT_NAME - Build #$BUILD_NUMBER (r${ENV, var=\"SVN_REVISION\"})- $BUILD_STATUS

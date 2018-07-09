@@ -3,7 +3,6 @@
     builders:
       - shell: |
           rm -fr freebsd-ci
-          git config --global http.proxy ${BUILDER_HTTP_PROXY}
           git clone --depth=1 --single-branch https://github.com/freebsd/freebsd-ci.git
 
 - builder:

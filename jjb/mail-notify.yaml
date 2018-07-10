@@ -23,7 +23,7 @@
           fixed: false
           presend-script: ${DEFAULT_PRESEND_SCRIPT}
           send-to:
-            - culprits
+            - developers
             - recipients
 - publisher:
     name: mail-notify-unstable
@@ -50,7 +50,7 @@
           fixed: false
           presend-script: ${DEFAULT_PRESEND_SCRIPT}
           send-to:
-            - culprits
+            - developers
             - recipients
 - publisher:
     name: mail-notify-fixed

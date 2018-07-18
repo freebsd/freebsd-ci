@@ -170,6 +170,47 @@
           type: absolute
 
 - job-template:
+    artifact_path: artifact
+    defaults: global
+    name: 'FreeBSD-{branch}-riscv64-testvm'
+    node: jailer_slow
+    scm:
+      - 'FreeBSD-src-{branch}-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: 'snapshot'
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-{branch}-riscv64-test'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-test'
     node: bhyve_host
@@ -301,5 +342,5 @@
     name: 'FreeBSD-{branch}-riscv64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
-       - 'FreeBSD-{branch}-{target_arch}-testvm'
+       - 'FreeBSD-{branch}-riscv64-testvm'
        - 'FreeBSD-{branch}-riscv64-test'

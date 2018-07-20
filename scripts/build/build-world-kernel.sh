@@ -28,7 +28,7 @@ cd /usr/src/release
 sudo make clean
 sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 	TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \
-	MAKE="make -DDB_FROM_SRC __MAKE_CONF=${MAKECONF} SRCCONF=${SRCCONF}"
+	MAKE="make __MAKE_CONF=${MAKECONF} SRCCONF=${SRCCONF}"
 
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 sudo mkdir -p ${ARTIFACT_DEST}

@@ -29,6 +29,7 @@ make CROSS_TOOLCHAIN=riscv64-gcc \
 	-DNO_CLEAN \
 	-DNO_ROOT \
 	-DWITHOUT_TESTS \
+	-DDB_FROM_SRC \
 	DESTDIR=${DESTDIR} \
 	installworld
 make CROSS_TOOLCHAIN=riscv64-gcc \

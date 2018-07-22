@@ -87,6 +87,7 @@ shutdown -p now
 EOF
 
 cat <<EOF | sudo tee ufs/etc/sysctl.conf
+net.add_addr_allfibs=0
 vfs.aio.enable_unsafe=1
 EOF
 

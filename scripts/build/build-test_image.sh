@@ -41,7 +41,16 @@ done
 
 sudo cp /etc/resolv.conf ufs/etc/
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-sudo chroot ufs pkg install -y kyua perl5 scapy ksh93 python
+# Install packages needed by tests:
+# gdb: local/kyua/utils/stacktrace_test
+# kyua: everything
+# ksh93: tests/sys/cddl/zfs/...
+# nist-kat: sys/opencrypto/runtests
+# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
+# perl5: lots of stuff
+# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
+# python: sys/opencrypto
+sudo chroot ufs pkg install -y gdb kyua ksh93 nist-kat nmap perl5 scapy python
 
 cat <<EOF | sudo tee -a ufs/boot/loader.conf
 net.fibs=3
@@ -66,8 +75,15 @@ cat <<EOF | sudo tee ufs/etc/fstab
 fdesc           /dev/fd         fdescfs rw      0       0
 EOF
 
+# Load modules needed by tests
+# blake2:		sys/opencrypto
+# cryptodev:		sys/opencrypto
+# mac_bsdextended:	sys/mac/bsdextended
+# mac_portacl:		sys/mac/portacl
+# mqueuefs:		sys/kern/mqueue_test
+# pf:			sys/netpfil/pf
 cat <<EOF | sudo tee -a ufs/etc/rc.conf
-kld_list="mac_bsdextended mac_portacl mqueuefs pf"
+kld_list="blake2 cryptodev mac_bsdextended mac_portacl mqueuefs pf"
 auditd_enable="YES"
 EOF
 

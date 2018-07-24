@@ -3,12 +3,22 @@
     target_arch:
       - amd64
     branch:
-      - head
       - stable-11
       - releng-11_2
       - stable-10
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-ci':
+          target: amd64
+          warnscanner: clang
+
+- project:
+    name: FreeBSD-head-amd64
+    target_arch:
+      - amd64
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-head-amd64-ci':
           target: amd64
           warnscanner: clang
 

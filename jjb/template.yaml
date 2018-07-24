@@ -248,6 +248,42 @@
 
 - job-template:
     defaults: global
+    name: 'FreeBSD-head-amd64-test'
+    node: bhyve_host
+    scm:
+      - 'FreeBSD-src-head-empty'
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH=head
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+            LINK_TYPE=latest_tested
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - make-symlink
+      - publish-junit-results
+      - mail-notify-failure
+      - mail-notify-unstable
+      - mail-notify-fixed
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 90
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
+- job-template:
+    defaults: global
     name: 'FreeBSD-{branch}-riscv64-test'
     node: jailer_slow
     scm:
@@ -287,6 +323,15 @@
        - 'FreeBSD-{branch}-{target_arch}-LINT'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
        - 'FreeBSD-{branch}-{target_arch}-test'
+
+- job-group:
+    name: 'FreeBSD-head-amd64-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-images'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
+       - 'FreeBSD-{branch}-{target_arch}-testvm'
+       - 'FreeBSD-head-amd64-test'
 
 - job-group:
     name: 'FreeBSD-{branch}-aarch64-ci'

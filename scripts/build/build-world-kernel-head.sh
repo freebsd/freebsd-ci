@@ -35,4 +35,6 @@ sudo mkdir -p ${ARTIFACT_DEST}
 sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/*.txz ${ARTIFACT_DEST}
 sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/MANIFEST ${ARTIFACT_DEST}
 
+echo "r${SVN_REVISION}" > ${ARTIFACT_DEST}/revision.txt
+
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

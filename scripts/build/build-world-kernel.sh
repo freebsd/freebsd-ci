@@ -34,6 +34,6 @@ ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 sudo mkdir -p ${ARTIFACT_DEST}
 sudo mv *.txz MANIFEST ${ARTIFACT_DEST}
 
-echo "r${SVN_REVISION}" > ${ARTIFACT_DEST}/revision.txt
+echo "r${SVN_REVISION}" | sudo tee ${ARTIFACT_DEST}/revision.txt
 
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

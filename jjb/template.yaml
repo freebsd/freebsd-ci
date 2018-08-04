@@ -351,11 +351,13 @@
     name: 'FreeBSD-{branch}-armv6-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-armv7-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-mips-ci'
@@ -376,21 +378,25 @@
     name: 'FreeBSD-{branch}-powerpc-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-powerpc64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-powerpcspe-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-sparc64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-riscv64-ci'

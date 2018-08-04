@@ -14,8 +14,8 @@
             Status explanation:
             "Failure" - the build is suspected being broken by the following changes
             "Still Failing" - the build has not been fixed by the following changes and
-                              this is a notification note that these changes have not been
-                              fully tested by the CI system
+                              this is a notification to note that these changes have
+                              not been fully tested by the CI system
             
             Change summaries:
             (Those commits are likely but not certainly responsible)
@@ -47,8 +47,8 @@
 
             Status explanation:
             "Unstable" - some tests are suspected being broken by the following changes
-            "Still Unstable" - the failing test caseshave has not been fixed by these
-                               following changes and this is a notification note that
+            "Still Unstable" - the failing test cases have not been fixed by these
+                               following changes and this is a notification to note that
                                these changes have not been fully tested by the CI system
             
             Change summaries:

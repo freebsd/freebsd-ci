@@ -1,7 +1,9 @@
 #!/usr/local/bin/python
 
-import pexpect
+import re
 import sys
+
+import pexpect
 
 def forsend(child, s):
     for c in s:
@@ -13,7 +15,7 @@ child = pexpect.spawn(cmd)
 child.logfile = sys.stdout
 child.delaybeforesend = 0.5
 
-child.expect("login:", timeout=600)
+child.expect(re.compile("^login:", re.MULTILINE), timeout=600)
 forsend(child, "root")
 
 child.expect("#", timeout=300)

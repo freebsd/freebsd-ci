@@ -85,6 +85,8 @@ EOF
 cat <<EOF | sudo tee -a ufs/etc/rc.conf
 kld_list="blake2 cryptodev mac_bsdextended mac_portacl mqueuefs pf"
 auditd_enable="YES"
+background_fsck="NO"
+sendmail_enable="NONE"
 EOF
 
 cat <<EOF | sudo tee ufs/etc/rc.local

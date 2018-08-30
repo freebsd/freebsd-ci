@@ -10,7 +10,7 @@ if [ -z "${SVN_REVISION}" ]; then
 fi
 
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
-CONFIG_BASE=`dirname $0`/config
+CONFIG_BASE=`dirname $0 | xargs realpath`/config
 OUTPUT_IMG_NAME=disk-test.img
 
 sudo rm -fr work

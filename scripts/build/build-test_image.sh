@@ -63,7 +63,7 @@ for i in `find ${FROM} -type f`
 do
 	f=${i#${FROM}}
 	mkdir -p ${TO}/`dirname $f`
-	cat ${FROM}$d >> ${TO}/$f
+	cat ${FROM}$f | sudo tee -a ${TO}/$f > /dev/null
 done
 
 sudo makefs -d 6144 -t ffs -f 200000 -s 8g -o version=2,bsize=32768,fsize=4096 -Z ufs.img ufs

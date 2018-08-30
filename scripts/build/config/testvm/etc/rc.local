@@ -1,0 +1,28 @@
+#!/bin/sh -ex
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+export PATH
+
+echo
+echo "--------------------------------------------------------------"
+echo "rc.local start!"
+echo "--------------------------------------------------------------"
+
+TARDEV=/dev/ada1
+METADIR=meta
+
+ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)
+
+if [ ${ISTAR} -eq 1 ]; then
+        rm -fr /tmp/${METADIR}
+        tar xvf ${TARDEV} -C /tmp
+        sh -ex /tmp/${METADIR}/run.sh
+        tar cvf ${TARDEV} -C /tmp ${METADIR}
+else
+	echo "ERROR: ${TARDEV} is not a POSIX tar archive."
+	exit 1
+fi
+
+if [ -f /tmp/meta/auto-shutdown ]; then
+        shutdown -p now
+fi

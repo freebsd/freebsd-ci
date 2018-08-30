@@ -9,6 +9,8 @@ fi
 
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 IMG_NAME=disk-test.img
+JOB_DIR=freebsd-ci/jobs/${JOB_NAME}
+TEST_BASE=`dirname $0`
 
 EXTRA_DISK_NUM=5
 BHYVE_EXTRA_DISK_PARAM=""
@@ -18,8 +20,18 @@ xz -fd ${IMG_NAME}.xz
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	truncate -s 128m disk${i}
-	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 2)):0,ahci-hd,disk${i}"
+	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,ahci-hd,disk${i}"
 done
+
+# prepare meta disk to pass information to testvm
+rm -fr meta
+mkdir meta
+cp -R ${JOB_DIR}/meta/ meta/
+for i in ${USE_TEST_SUBR}; do
+	cp ${TEST_BASE}/subr/${i} meta/
+done
+touch meta/auto-shutdown
+sh -ex ${TEST_BASE}/create-meta.sh
 
 # run test VM image with bhyve
 FBSD_BRANCH_SHORT=`echo ${FBSD_BRANCH} | sed -e 's,.*-,,'`
@@ -33,6 +45,7 @@ expect -c "set timeout 5340; \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
 	-s 2:0,ahci-hd,${IMG_NAME} \
+	-s 3:0,ahci-hd,meta.tar \
 	${BHYVE_EXTRA_DISK_PARAM} \
 	-l com1,stdio \
 	${TEST_VM_NAME}; \
@@ -42,17 +55,9 @@ echo "bhyve return code = $rc"
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
 
 # extract test result
-TMP_DIR=`mktemp -d`
-MD_UNIT=`sudo mdconfig -a -t vnode -f ${IMG_NAME}`
-sudo mount /dev/${MD_UNIT}p3 ${TMP_DIR}
-
+sh -ex ${TEST_BASE}/extract-meta.sh
 rm -f test-report.*
-cp ${TMP_DIR}/usr/tests/test-report.* . || true
-
-sudo umount ${TMP_DIR}
-sudo mdconfig -d -u ${MD_UNIT}
-rm -fr ${TMP_DIR}
-rm -f ${IMG_NAME}
+cp meta-out/test-report.* .
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	rm -f disk${i}

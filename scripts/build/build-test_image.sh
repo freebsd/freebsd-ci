@@ -54,8 +54,17 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 sudo chroot ufs pkg install -y gdb kyua ksh93 nist-kat nmap perl5 scapy python
 sudo rm -f ufs/etc/resolv.conf
 
-# copy default configs, existing files will be replaced
-sudo cp -Rf ${CONFIG_BASE}/testvm/ ufs/
+# copy default configs, existing files will be override
+sudo cp -Rf ${CONFIG_BASE}/testvm/override/ ufs/
+
+FROM=${CONFIG_BASE}/testvm/append/
+TO=ufs
+for i in `find ${FROM} -type f`
+do
+	f=${i#${FROM}}
+	mkdir -p ${TO}/`dirname $f`
+	cat ${FROM}$d >> ${TO}/$f
+done
 
 sudo makefs -d 6144 -t ffs -f 200000 -s 8g -o version=2,bsize=32768,fsize=4096 -Z ufs.img ufs
 mkimg -s gpt -f raw \

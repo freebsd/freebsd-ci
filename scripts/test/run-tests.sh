@@ -7,7 +7,8 @@ if [ -z "${SVN_REVISION}" ]; then
 	exit 1
 fi
 
-ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
+ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 IMG_NAME=disk-test.img
 JOB_DIR=freebsd-ci/jobs/${JOB_NAME}
 TEST_BASE=`dirname $0`
@@ -15,7 +16,7 @@ TEST_BASE=`dirname $0`
 EXTRA_DISK_NUM=5
 BHYVE_EXTRA_DISK_PARAM=""
 
-fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
+fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
 for i in `jot ${EXTRA_DISK_NUM}`; do

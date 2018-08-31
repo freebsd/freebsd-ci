@@ -58,7 +58,7 @@ sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
 # extract test result
 sh -ex ${TEST_BASE}/extract-meta.sh
 rm -f test-report.*
-cp meta-out/test-report.* .
+mv meta-out/meta/test-report.* .
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	rm -f disk${i}

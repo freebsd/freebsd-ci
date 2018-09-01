@@ -2,6 +2,10 @@
 
 METADIR=/tmp/meta
 
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+PATH=${PATH}:/usr/tests/sys/cddl/zfs/bin
+export PATH
+
 cat <<EOF >> /usr/local/etc/kyua/kyua.conf
 test_suites.FreeBSD.disks = '/dev/ada2 /dev/ada3 /dev/ada4 /dev/ada5 /dev/ada6'
 EOF

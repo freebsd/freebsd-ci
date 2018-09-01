@@ -3,7 +3,7 @@
 METADIR=/tmp/meta
 
 cat <<EOF >> /usr/local/etc/kyua/kyua.conf
-test_suites.FreeBSD.disks = '/dev/ada1 /dev/ada2 /dev/ada3 /dev/ada4 /dev/ada5'
+test_suites.FreeBSD.disks = '/dev/ada2 /dev/ada3 /dev/ada4 /dev/ada5 /dev/ada6'
 EOF
 
 cd /usr/tests/sys/cddl/zfs

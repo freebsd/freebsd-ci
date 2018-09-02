@@ -13,6 +13,11 @@ IMG_NAME=disk-test.img
 JOB_DIR=freebsd-ci/jobs/${JOB_NAME}
 TEST_BASE=`dirname $0`
 
+TIMEOUT_MS=${BUILD_TIMEOUT:-5400000}
+TIMEOUT=$((${TIMEOUT_MS} / 1000))
+TIMEOUT_EXPECT=$((${TIMEOUT} - 60))
+TIMEOUT_VM=$((${TIMEOUT_EXPECT} - 120))
+
 EXTRA_DISK_NUM=5
 BHYVE_EXTRA_DISK_PARAM=""
 
@@ -40,8 +45,8 @@ TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
 sudo /usr/sbin/bhyveload -c stdio -m 4096m -d ${IMG_NAME} ${TEST_VM_NAME}
 set +e
-expect -c "set timeout 5340; \
-	spawn sudo /usr/bin/timeout -k 60 5220 /usr/sbin/bhyve \
+expect -c "set timeout ${TIMEOUT_EXPECT}; \
+	spawn sudo /usr/bin/timeout -k 60 ${TIMEOUT_VM} /usr/sbin/bhyve \
 	-c 2 -m 4096m -A -H -P -g 0 \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \

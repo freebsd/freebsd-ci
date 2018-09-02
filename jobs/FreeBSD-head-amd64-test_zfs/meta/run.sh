@@ -10,6 +10,9 @@ cat <<EOF >> /usr/local/etc/kyua/kyua.conf
 test_suites.FreeBSD.disks = '/dev/ada2 /dev/ada3 /dev/ada4 /dev/ada5 /dev/ada6'
 EOF
 
+newfs /dev/ada7
+mount /dev/ada7 /tmp
+
 cd /usr/tests/sys/cddl/zfs
 set +e
 /usr/local/bin/kyua test

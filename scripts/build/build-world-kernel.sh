@@ -8,7 +8,13 @@ rm -fr ${MAKEOBJDIRPREFIX}
 MAKECONF=${MAKECONF:-/dev/null}
 SRCCONF=${SRCCONF:-/dev/null}
 
-cd /usr/src
+# Mount source readonly
+mkdir -p /usr/src.ro
+mount -o ro -t nullfs /usr/src /usr/src.ro
+# Set cleanup trap
+trap "umount /usr/src.ro" exit
+
+cd /usr/src.ro
 
 sudo make -j ${JFLAG} -DNO_CLEAN \
 	buildworld \
@@ -23,7 +29,11 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF}
 
-cd /usr/src/release
+# Re-mount it read/write to work around release scripts polluting src
+cd /usr
+umount /usr/src.ro
+mount -t nullfs /usr/src /usr/src.ro
+cd /usr/src.ro/release
 
 sudo make clean
 sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \

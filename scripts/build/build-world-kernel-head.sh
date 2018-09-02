@@ -8,7 +8,13 @@ rm -fr ${MAKEOBJDIRPREFIX}
 MAKECONF=${MAKECONF:-/dev/null}
 SRCCONF=${SRCCONF:-/dev/null}
 
-cd /usr/src
+# Mount source readonly
+mkdir -p /usr/src.ro
+mount -o ro -t nullfs /usr/src /usr/src.ro
+# Set cleanup trap
+trap "umount /usr/src.ro" exit
+
+cd /usr/src.ro
 
 sudo make -j ${JFLAG} -DNO_CLEAN \
 	buildworld \
@@ -23,8 +29,9 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF}
 
-cd /usr/src/release
+cd release
 
+_RELOBJDIR=$(make -V .OBJDIR)
 sudo make clean
 sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 	TARGET=${TARGET} TARGET_ARCH=${TARGET_ARCH} \
@@ -32,8 +39,8 @@ sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 sudo mkdir -p ${ARTIFACT_DEST}
-sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/*.txz ${ARTIFACT_DEST}
-sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/MANIFEST ${ARTIFACT_DEST}
+sudo mv ${_RELOBJDIR}/*.txz ${ARTIFACT_DEST}
+sudo mv ${_RELOBJDIR}/MANIFEST ${ARTIFACT_DEST}
 
 echo "r${SVN_REVISION}" | sudo tee ${ARTIFACT_DEST}/revision.txt
 

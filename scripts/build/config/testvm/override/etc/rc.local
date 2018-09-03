@@ -1,12 +1,14 @@
-#!/bin/sh -ex
-
-PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
-export PATH
+#!/bin/sh
 
 echo
 echo "--------------------------------------------------------------"
 echo "rc.local start!"
 echo "--------------------------------------------------------------"
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+export PATH
+
+set -ex
 
 ddb script kdb.enter.panic="show pcpu;bt"
 

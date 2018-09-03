@@ -8,6 +8,8 @@ echo "--------------------------------------------------------------"
 echo "rc.local start!"
 echo "--------------------------------------------------------------"
 
+ddb script kdb.enter.panic="show pcpu;bt"
+
 TARDEV=/dev/ada1
 METADIR=meta
 

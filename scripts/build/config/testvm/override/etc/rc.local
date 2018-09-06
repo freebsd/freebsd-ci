@@ -10,7 +10,7 @@ export PATH
 
 set -ex
 
-ddb script kdb.enter.panic="show pcpu;bt;dump;reset"
+ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
 
 TARDEV=/dev/ada1
 METADIR=meta

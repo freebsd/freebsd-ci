@@ -13,20 +13,21 @@ set -ex
 ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
 
 TARDEV=/dev/ada1
-METADIR=meta
+METADIR=/meta
 
 ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)
 
 if [ ${ISTAR} -eq 1 ]; then
-        rm -fr /tmp/${METADIR}
-        tar xvf ${TARDEV} -C /tmp
-        sh -ex /tmp/${METADIR}/run.sh
-        tar cvf ${TARDEV} -C /tmp ${METADIR}
+        rm -fr ${METADIR}
+        mkdir -p ${METADIR}
+        tar xvf ${TARDEV} -C ${METADIR}
+        sh -ex ${METADIR}/run.sh
+        tar cvf ${TARDEV} -C ${METADIR} .
 else
 	echo "ERROR: ${TARDEV} is not a POSIX tar archive."
 	exit 1
 fi
 
-if [ -f /tmp/meta/auto-shutdown ]; then
+if [ -f ${METADIR}/auto-shutdown ]; then
         shutdown -p now
 fi

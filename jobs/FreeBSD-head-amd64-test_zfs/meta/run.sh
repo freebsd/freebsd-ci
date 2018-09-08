@@ -1,6 +1,6 @@
 #!/bin/sh
 
-METADIR=/tmp/meta
+METADIR=/meta
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 PATH=${PATH}:/usr/tests/sys/cddl/zfs/bin

@@ -42,6 +42,7 @@ done
 sudo cp /etc/resolv.conf ufs/etc/
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # Install packages needed by tests:
+# coreutils: bin/date
 # gdb: local/kyua/utils/stacktrace_test
 # kyua: everything
 # ksh93: tests/sys/cddl/zfs/...
@@ -50,7 +51,7 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # perl5: lots of stuff
 # pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 # python: sys/opencrypto
-sudo chroot ufs pkg install -y gdb kyua ksh93 nist-kat nmap perl5 scapy python
+sudo chroot ufs pkg install -y coreutils gdb kyua ksh93 nist-kat nmap perl5 scapy python
 
 cat <<EOF | sudo tee -a ufs/boot/loader.conf
 net.fibs=3

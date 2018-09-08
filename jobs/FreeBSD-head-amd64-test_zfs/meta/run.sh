@@ -17,12 +17,12 @@ cd /usr/tests/sys/cddl/zfs
 set +e
 /usr/local/bin/kyua test
 rc=$?
-set -e
 if [ ${rc} -ne 0 ] && [ ${rc} -ne 1 ]; then
 	exit ${rc}
 fi
 
 umount /tmp
+set -e
 
 /usr/local/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
 /usr/local/bin/kyua report-junit --output=test-report.xml

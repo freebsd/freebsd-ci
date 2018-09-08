@@ -8,7 +8,7 @@ echo "--------------------------------------------------------------"
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 export PATH
 
-set -ex
+set -x
 
 ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
 
@@ -25,6 +25,7 @@ if [ ${ISTAR} -eq 1 ]; then
         tar cvf ${TARDEV} -C ${METADIR} .
 else
 	echo "ERROR: ${TARDEV} is not a POSIX tar archive."
+	# Don't shutdown because this is not run in unattended mode
 	exit 1
 fi
 

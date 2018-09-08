@@ -21,6 +21,9 @@ TIMEOUT_VM=$((${TIMEOUT_EXPECT} - 120))
 EXTRA_DISK_NUM=5
 BHYVE_EXTRA_DISK_PARAM=""
 
+METADIR=meta
+METAOUTDIR=meta-out
+
 fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
@@ -30,13 +33,13 @@ for i in `jot ${EXTRA_DISK_NUM}`; do
 done
 
 # prepare meta disk to pass information to testvm
-rm -fr meta
-mkdir meta
-cp -R ${JOB_DIR}/meta/ meta/
+rm -fr ${METADIR}
+mkdir ${METADIR}
+cp -R ${JOB_DIR}/${METADIR}/ ${METADIR}/
 for i in ${USE_TEST_SUBR}; do
-	cp ${TEST_BASE}/subr/${i} meta/
+	cp ${TEST_BASE}/subr/${i} ${METADIR}/
 done
-touch meta/auto-shutdown
+touch ${METADIR}/auto-shutdown
 sh -ex ${TEST_BASE}/create-meta.sh
 
 # run test VM image with bhyve
@@ -63,7 +66,7 @@ sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
 # extract test result
 sh -ex ${TEST_BASE}/extract-meta.sh
 rm -f test-report.*
-mv meta-out/meta/test-report.* .
+mv ${METAOUTDIR}/test-report.* .
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	rm -f disk${i}

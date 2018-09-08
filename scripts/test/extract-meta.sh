@@ -1,5 +1,7 @@
 #!/bin/sh
 
-rm -fr meta-out
-mkdir meta-out
-tar xvf meta.tar -C meta-out
+METAOUTDIR=meta-out
+
+rm -fr ${METAOUTDIR}
+mkdir ${METAOUTDIR}
+tar xvf meta.tar -C ${METAOUTDIR}

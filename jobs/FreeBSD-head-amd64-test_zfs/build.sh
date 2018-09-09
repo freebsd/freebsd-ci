@@ -33,7 +33,7 @@ fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
-	truncate -s 128m disk${i}
+	truncate -s 1G disk${i}
 	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,ahci-hd,disk${i}"
 done
 

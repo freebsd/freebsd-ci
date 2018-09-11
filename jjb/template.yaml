@@ -151,13 +151,14 @@
     publishers:
       - ftp:
           site: 'artifact.ci.freebsd.org'
-          target: 'snapshot'
+          target: ''
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
       - clean-jail
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-{branch}-{target_arch}-test'
+            - 'FreeBSD-{branch}-{target_arch}-test_zfs'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property

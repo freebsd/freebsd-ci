@@ -13,7 +13,7 @@
     scm:
       - svn:
           repos:
-            - url: svn://svn.freebsd.org/base/head/
+            - url: svn://svn.freebsd.org/base/head/@${SVN_REVISION}
               basedir: src
               repo-depth: empty
           workspaceupdater: update
@@ -34,7 +34,7 @@
     scm:
       - svn:
           repos:
-            - url: svn://svn.freebsd.org/base/stable/11/
+            - url: svn://svn.freebsd.org/base/stable/11/@${SVN_REVISION}
               basedir: src
               repo-depth: empty
           workspaceupdater: update
@@ -55,7 +55,7 @@
     scm:
       - svn:
           repos:
-            - url: svn://svn.freebsd.org/base/releng/11.2/
+            - url: svn://svn.freebsd.org/base/releng/11.2/@${SVN_REVISION}
               basedir: src
               repo-depth: empty
           workspaceupdater: update
@@ -76,7 +76,7 @@
     scm:
       - svn:
           repos:
-            - url: svn://svn.freebsd.org/base/stable/10/
+            - url: svn://svn.freebsd.org/base/stable/10/@${SVN_REVISION}
               basedir: src
               repo-depth: empty
           workspaceupdater: update

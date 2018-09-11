@@ -1,5 +1,10 @@
 #!/bin/sh
 
+export TARGET=amd64
+export TARGET_ARCH=amd64
+
+# modified freebsd-ci/scripts/test/run-tests.sh:
+
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 
 if [ -z "${SVN_REVISION}" ]; then
@@ -11,7 +16,7 @@ ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 IMG_NAME=disk-test.img
 JOB_DIR=freebsd-ci/jobs/${JOB_NAME}
-TEST_BASE=`dirname $0`
+TEST_BASE=freebsd-ci/scripts/test
 
 TIMEOUT_MS=${BUILD_TIMEOUT:-5400000}
 TIMEOUT=$((${TIMEOUT_MS} / 1000))
@@ -24,13 +29,19 @@ BHYVE_EXTRA_DISK_PARAM=""
 METADIR=meta
 METAOUTDIR=meta-out
 
+TEST_VM_MEMORY=8192m
+
 fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
-	truncate -s 128m disk${i}
+	truncate -s 2G disk${i}
 	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,ahci-hd,disk${i}"
 done
+
+DISK_TMP=disktmp
+truncate -s 32G ${DISK_TMP}
+BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((${EXTRA_DISK_NUM} + 4)):0,ahci-hd,${DISK_TMP}"
 
 # prepare meta disk to pass information to testvm
 rm -fr ${METADIR}
@@ -46,11 +57,11 @@ sh -ex ${TEST_BASE}/create-meta.sh
 FBSD_BRANCH_SHORT=`echo ${FBSD_BRANCH} | sed -e 's,.*-,,'`
 TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
-sudo /usr/sbin/bhyveload -c stdio -m 4096m -d ${IMG_NAME} ${TEST_VM_NAME}
+sudo /usr/sbin/bhyveload -c stdio -m ${TEST_VM_MEMORY} -d ${IMG_NAME} ${TEST_VM_NAME}
 set +e
 expect -c "set timeout ${TIMEOUT_EXPECT}; \
 	spawn sudo /usr/bin/timeout -k 60 ${TIMEOUT_VM} /usr/sbin/bhyve \
-	-c 2 -m 4096m -A -H -P -g 0 \
+	-c 2 -m ${TEST_VM_MEMORY} -A -H -P -g 0 \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
 	-s 2:0,ahci-hd,${IMG_NAME} \
@@ -71,3 +82,4 @@ mv ${METAOUTDIR}/test-report.* .
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	rm -f disk${i}
 done
+rm -f ${DISK_TMP}

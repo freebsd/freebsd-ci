@@ -24,6 +24,7 @@ TIMEOUT_EXPECT=$((${TIMEOUT} - 60))
 TIMEOUT_VM=$((${TIMEOUT_EXPECT} - 120))
 
 EXTRA_DISK_NUM=5
+EXTRA_DISK_SIZE=4G
 BHYVE_EXTRA_DISK_PARAM=""
 
 METADIR=meta
@@ -35,7 +36,7 @@ fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
-	truncate -s 2G disk${i}
+	truncate -s ${EXTRA_DISK_SIZE} disk${i}
 	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,ahci-hd,disk${i}"
 done
 

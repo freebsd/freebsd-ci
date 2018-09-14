@@ -84,3 +84,4 @@ for i in `jot ${EXTRA_DISK_NUM}`; do
 	rm -f disk${i}
 done
 rm -f ${DISK_TMP}
+rm -f ${IMG_NAME}

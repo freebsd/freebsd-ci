@@ -71,3 +71,4 @@ mv ${METAOUTDIR}/test-report.* .
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	rm -f disk${i}
 done
+rm -f ${IMG_NAME}

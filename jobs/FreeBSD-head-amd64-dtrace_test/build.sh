@@ -45,3 +45,5 @@ cp ${TMP_DIR}/usr/tests/cddl/usr.sbin/dtrace/test-report.* . || true
 sudo umount ${TMP_DIR}
 sudo mdconfig -d -u ${MD_UNIT}
 rm -fr ${TMP_DIR}
+
+rm -f ${IMG_NAME}

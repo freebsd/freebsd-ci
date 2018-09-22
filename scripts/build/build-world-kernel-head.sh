@@ -33,7 +33,7 @@ sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 sudo mkdir -p ${ARTIFACT_DEST}
 tar -cf - /usr/src | xz -T0 > ${ARTIFACT_DEST}/src.tar
-tar -cf - /usr/ojb | xz -T0 > ${ARTIFACT_DEST}/obj.tar
+tar -cf - /usr/obj | xz -T0 > ${ARTIFACT_DEST}/obj.tar
 sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/*.txz ${ARTIFACT_DEST}
 sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/MANIFEST ${ARTIFACT_DEST}
 

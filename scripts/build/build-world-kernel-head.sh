@@ -32,8 +32,8 @@ sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 sudo mkdir -p ${ARTIFACT_DEST}
-sudo sh -c "tar -cf - --exclude .svn /usr/src | xz -T0 > ${ARTIFACT_DEST}/src.tar"
-sudo sh -c "tar -cf - /usr/obj | xz -T0 > ${ARTIFACT_DEST}/obj.tar"
+sudo sh -c "tar -cf - --exclude .svn /usr/src | xz -T0 > ${ARTIFACT_DEST}/src.txz"
+sudo sh -c "tar -cf - /usr/obj | xz -T0 > ${ARTIFACT_DEST}/obj.txz"
 sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/*.txz ${ARTIFACT_DEST}
 sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/MANIFEST ${ARTIFACT_DEST}
 

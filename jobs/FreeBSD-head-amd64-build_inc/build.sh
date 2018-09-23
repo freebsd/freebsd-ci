@@ -10,14 +10,13 @@ SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
-set -ex
-
-LAST_SVN_REVISION=$(fetch -q -o - https://ci-dev.freebsd.org/job/FreeBSD-head-amd64-build_inc/lastStableBuild/api/json 2>/dev/null | jq  '.changeSet.revisions[0].revision')
-
+set +e
+LAST_SVN_REVISION=$(fetch -q -o - https://ci-dev.freebsd.org/job/FreeBSD-head-amd64-build_inc/lastStableBuild/api/json | jq  '.changeSet.revisions[0].revision')
 if [ -n "${LAST_SVN_REVISION}" ]; then
-	fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/obj.txz
-	sudo tar xJf obj.txz -C /
+	fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/obj.tar.zst
+	zstd -d -c obj.tar.zst | sudo tar xf -C /
 fi
+set -e
 
 MAKECONF=${MAKECONF:-/dev/null}
 SRCCONF=${SRCCONF:-/dev/null}
@@ -46,9 +45,9 @@ sudo make -DNOPORTS -DNOSRC -DNODOC packagesystem \
 
 ARTIFACT_DEST=artifact/${ARTIFACT_SUBDIR}
 sudo mkdir -p ${ARTIFACT_DEST}
-sudo sh -c "tar -cf - --exclude .svn /usr/src | xz -T${JFLAG} > ${ARTIFACT_DEST}/src.txz"
+sudo sh -c "tar -cf - --exclude .svn /usr/src | zstd -T${JFLAG} -c > ${ARTIFACT_DEST}/src.tar.zst"
 # TODO: cleanup unneeded obj
-sudo sh -c "tar -cf - /usr/obj | xz -T${JFLAG} > ${ARTIFACT_DEST}/obj.txz"
+sudo sh -c "tar -cf - /usr/obj | zstd -T${JFLAG} -c > ${ARTIFACT_DEST}/obj.tar.zst"
 sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/*.txz ${ARTIFACT_DEST}
 sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/MANIFEST ${ARTIFACT_DEST}
 

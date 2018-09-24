@@ -13,7 +13,8 @@ ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH
 set +e
 LAST_SVN_REVISION=$(fetch -q -o - https://ci-dev.freebsd.org/job/FreeBSD-head-amd64-build_inc/lastStableBuild/api/json | jq  '.changeSet.revisions[0].revision')
 if [ -n "${LAST_SVN_REVISION}" ]; then
-	fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/obj.tar.zst
+	LAST_ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${LAST_SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+	fetch ${ARTIFACT_SERVER}/${LAST_ARTIFACT_SUBDIR}/obj.tar.zst
 	zstd -d -c obj.tar.zst | sudo tar xf -C /
 fi
 set -e

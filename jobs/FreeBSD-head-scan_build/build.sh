@@ -3,7 +3,7 @@
 SRCCONF=${WORKSPACE}/`dirname $0`/src.conf
 MAKECONF=${WORKSPACE}/`dirname $0`/make.conf
 
-export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
+export MAKEOBJDIRPREFIX=/tmp/obj
 rm -fr ${MAKEOBJDIRPREFIX}
 
 CLANG_ANALYZE_OUTPUT_DIR=${WORKSPACE}/clangScanBuildReports

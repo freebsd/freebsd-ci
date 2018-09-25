@@ -6,9 +6,9 @@ JOB_BASE=${WORKSPACE}/freebsd-ci/jobs/${JOB_NAME}
 TARGET=riscv
 TARGET_ARCH=riscv64
 
-export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
+export MAKEOBJDIRPREFIX=/tmp/obj
 rm -fr ${MAKEOBJDIRPREFIX}
-export DESTDIR=${WORKSPACE}/dest
+export DESTDIR=/tmp/dest
 rm -fr ${DESTDIR}
 
 MAKECONF=${MAKECONF:-/dev/null}

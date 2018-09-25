@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
+export MAKEOBJDIRPREFIX=/tmp/obj
 rm -fr ${MAKEOBJDIRPREFIX}
 
 MAKECONF=/dev/null

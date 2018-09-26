@@ -3,7 +3,7 @@
     builders:
       - shell: |
           rm -fr freebsd-ci
-          git clone --depth=1 --single-branch https://github.com/freebsd/freebsd-ci.git
+          git clone --depth=1 --single-branch -b staging https://github.com/freebsd/freebsd-ci.git
 
 - builder:
     name: execute-job-build-script

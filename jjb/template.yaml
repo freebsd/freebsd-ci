@@ -392,17 +392,17 @@
        - 'FreeBSD-{branch}-riscv64-test'
 
 - job-group:
-    name: 'FreeBSD-srcproj-{project}-ci'
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-ci'
     jobs:
-       - 'FreeBSD-srcproj-{project}-build'
-       - 'FreeBSD-srcproj-{project}-testvm'
-       - 'FreeBSD-srcproj-{project}-test'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-build'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-test'
 
 - job-template:
     artifact_path: src/release/artifact
     defaults: global
     node_job_build: jailer_fast
-    name: 'FreeBSD-srcproj-{project}-build'
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-build'
     node: '{node_job_build}'
     scm:
       - 'FreeBSD-src-project'
@@ -453,7 +453,7 @@
 - job-template:
     artifact_path: artifact
     defaults: global
-    name: 'FreeBSD-srcproj-{project}-testvm'
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
     node: jailer_fast
     scm:
       - 'FreeBSD-src-project-empty'
@@ -495,7 +495,7 @@
 
 - job-template:
     defaults: global
-    name: 'FreeBSD-srcproj-{project}-test'
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-test'
     node: bhyve_host
     scm:
       - 'FreeBSD-src-project-empty'

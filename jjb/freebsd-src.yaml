@@ -170,7 +170,7 @@
     project:
       - openssl111
     jobs:
-      - 'FreeBSD-srcproj-{project}-ci':
+      - 'FreeBSD-srcproj-{project}-{target_arch}-ci':
           target: amd64
           warnscanner: clang
 

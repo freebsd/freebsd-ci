@@ -166,7 +166,9 @@
 - project:
     name: FreeBSD-srcproj
     target_arch:
+      - aarch64
       - amd64
+      - i386
     project:
       - openssl111
     jobs:

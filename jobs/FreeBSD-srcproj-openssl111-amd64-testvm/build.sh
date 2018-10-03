@@ -21,7 +21,7 @@ fi
 
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
-CONFIG_BASE=`dirname $0 | xargs realpath`/config
+CONFIG_BASE=${WORKSPACE}/freebsd-ci/scripts/build/config
 OUTPUT_IMG_NAME=disk-test.img
 
 sudo rm -fr work

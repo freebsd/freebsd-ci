@@ -436,7 +436,7 @@
       - mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
-            - 'FreeBSD-srcproj-{project}-testvm'
+            - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property
@@ -480,7 +480,7 @@
       - clean-jail
       - trigger-parameterized-builds:
         - project:
-            - 'FreeBSD-srcproj-{project}-test'
+            - 'FreeBSD-srcproj-{project}-{target_arch}-test'
             #- 'FreeBSD-srcproj-{project}-test_zfs'
           condition: SUCCESS
           svn-revision: true

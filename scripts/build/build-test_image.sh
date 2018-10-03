@@ -64,7 +64,7 @@ TO=ufs
 for i in `find ${FROM} -type f`
 do
 	f=${i#${FROM}}
-	mkdir -p ${TO}/`dirname $f`
+	sudo mkdir -p ${TO}/`dirname $f`
 	cat ${FROM}$f | sudo tee -a ${TO}/$f > /dev/null
 done
 

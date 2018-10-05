@@ -29,13 +29,16 @@ xz -d kernel.xz
 mkdir riscv-pk/build/
 cd riscv-pk/build/
 
-export CC=riscv64-unknown-freebsd11.1-gcc
+PREFIX=riscv64-unknown-freebsd11.2
+export CC=${PREFIX}-gcc
 export CFLAGS="-nostdlib"
-export RANLIB=riscv64-unknown-freebsd11.1-ranlib
-export READELF=riscv64-unknown-freebsd11.1-readelf
-export OBJCOPY=riscv64-unknown-freebsd11.1-objcopy
-../configure --enable-logo --host=riscv64-unknown-freebsd11.1 --with-payload=${WORKSPACE}/kernel
-gmake
+export OBJCOPY=${PREFIX}-objcopy
+export RANLIB=${PREFIX}-ranlib
+export READELF=${PREFIX}-readelf
+export WITH_ARCH=rv64imafdc
+
+../configure --enable-logo --host=${PREFIX} --with-payload=${WORKSPACE}/kernel
+gmake bbl
 
 xz bbl
 mv bbl.xz ${ARTIFACT_DEST}

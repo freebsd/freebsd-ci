@@ -14,3 +14,9 @@ zfs set compression=lz4 tank
 zfs create tank/ports
 
 svnlite co -q svn://svn.freebsd.org/ports/head /tank/ports
+
+mkdir -p /usr/ports
+sudo mount_nullfs /tank/ports /usr/ports
+
+cd /usr/ports/ports-mgmt/poudriere
+make -DBATCH install clean

@@ -21,6 +21,9 @@ TIMEOUT=$((${TIMEOUT_MS} / 1000))
 TIMEOUT_EXPECT=$((${TIMEOUT} - 60))
 TIMEOUT_VM=$((${TIMEOUT_EXPECT} - 120))
 
+VM_CPU_COUNT=16
+VM_MEM_SIZE=32768m
+
 BHYVE_EXTRA_DISK_PARAM=""
 
 METADIR=meta
@@ -45,11 +48,11 @@ sh -ex ${TEST_BASE}/create-meta.sh
 FBSD_BRANCH_SHORT=`echo ${FBSD_BRANCH} | sed -e 's,.*-,,'`
 TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
-sudo /usr/sbin/bhyveload -c stdio -m 4096m -d ${IMG_NAME} ${TEST_VM_NAME}
+sudo /usr/sbin/bhyveload -c stdio -m ${VM_MEM_SIZE} -d ${IMG_NAME} ${TEST_VM_NAME}
 set +e
 expect -c "set timeout ${TIMEOUT_EXPECT}; \
 	spawn sudo /usr/bin/timeout -k 60 ${TIMEOUT_VM} /usr/sbin/bhyve \
-	-c 2 -m 4096m -A -H -P -g 0 \
+	-c ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -A -H -P -g 0 \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
 	-s 2:0,ahci-hd,${IMG_NAME} \

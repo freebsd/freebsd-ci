@@ -51,6 +51,23 @@ do
 	sudo tar Jxf ${f}.txz -C ufs
 done
 
+sudo cp /etc/resolv.conf ufs/etc/
+sudo mkdir -p ufs/usr/local/etc/pkg/repos
+cat ${WORKSPACE}/`dirname $0`/ci-pkg-repo.conf | sed -e "s,%%SVN_REVISION%%,${SVN_REVISION}," | sudo tee ufs/usr/local/etc/pkg/repos/ci.conf
+sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
+# Install packages needed by tests:
+# coreutils: bin/date
+# gdb: local/kyua/utils/stacktrace_test
+# kyua: everything
+# ksh93: tests/sys/cddl/zfs/...
+# nist-kat: sys/opencrypto/runtests
+# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
+# perl5: lots of stuff
+# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
+# python: sys/opencrypto
+sudo chroot ufs pkg install -y coreutils gdb kyua ksh93 nist-kat nmap perl5 scapy python
+sudo rm -f ufs/etc/resolv.conf
+
 # copy default configs, existing files will be override
 sudo cp -Rf ${CONFIG_BASE}/testvm/override/ ufs/
 

@@ -71,6 +71,7 @@ sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
 sh -ex ${TEST_BASE}/extract-meta.sh
 
 ARTIFACT_PKGS=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}/pkgs
+mkdir -p ${ARTIFACT_PKGS}
 tar xvf ${PKGS_TAR} -C ${ARTIFACT_PKGS}
 
 rm -f ${DISK_ZFS}

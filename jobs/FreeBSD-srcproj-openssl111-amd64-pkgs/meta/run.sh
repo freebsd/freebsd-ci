@@ -23,7 +23,7 @@ svnlite info
 cd ports-mgmt/poudriere
 make -DBATCH install clean
 
-echo "ZPOOL=tank" > /usr/local/etc/poudriere.conf
+echo "ZPOOL=tank" >> /usr/local/etc/poudriere.conf
 
 SVN_REVISION=`cat /svn_revision.txt`
 poudriere jail -c -j jail -m url=http://artifact.ci-dev.freebsd.org/snapshot/openssl111/${SVN_REVISION}/amd64/amd64/ -v `uname -r`

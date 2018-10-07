@@ -32,4 +32,4 @@ poudriere ports -c -f none -m null -M /tank/ports
 poudriere bulk -t -j jail devel/gdb devel/kyua lang/perl5.26 lang/python net/scapy security/nist-kat security/nmap shells/ksh93 sysutils/coreutils
 
 PKGS_TAR=/dev/ada3
-tar cvf ${PKGS_TAR} -C /usr/local/poudriere/data/packages/jail-default .
+tar cvf ${PKGS_TAR} -C /usr/local/poudriere/data/packages/jail-default/.latest .

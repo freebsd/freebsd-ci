@@ -67,10 +67,11 @@ rc=$?
 echo "bhyve return code = $rc"
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
 
-# extract test result
+# extract result
 sh -ex ${TEST_BASE}/extract-meta.sh
-rm -f test-report.*
-mv ${METAOUTDIR}/test-report.* .
+
+ARTIFACT_PKGS=artifact/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}/pkgs
+tar xvf ${PKGS_TAR} -C ${ARTIFACT_PKGS}
 
 rm -f ${DISK_ZFS}
 rm -f ${PKGS_TAR}

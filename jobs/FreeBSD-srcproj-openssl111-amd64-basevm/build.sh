@@ -45,6 +45,7 @@ if [ "${WITH_LIB32}" = 1 ]; then
 	fi
 fi
 mkdir -p ufs
+echo ${SVN_REVISION} | sudo tee ufs/svn_revision.txt
 for f in ${DIST_PACKAGES}
 do
 	fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${f}.txz

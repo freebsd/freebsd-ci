@@ -79,3 +79,5 @@ tar xvf ${PKGS_TAR} -C ${ARTIFACT_PKGSDIR}
 rm -f ${DISK_ZFS}
 rm -f ${PKGS_TAR}
 rm -f ${IMG_NAME}
+
+echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

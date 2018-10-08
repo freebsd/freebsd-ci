@@ -395,6 +395,8 @@
     name: 'FreeBSD-srcproj-{project}-{target_arch}-ci'
     jobs:
        - 'FreeBSD-srcproj-{project}-{target_arch}-build'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
        - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
        - 'FreeBSD-srcproj-{project}-{target_arch}-test'
 
@@ -436,7 +438,7 @@
       - mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
-            - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
+            - 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property
@@ -449,6 +451,88 @@
           fail: true
           type: absolute
       - bind-artifact-credential
+
+- job-template:
+    artifact_path: artifact
+    defaults: global
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
+    node: jailer_fast
+    scm:
+      - 'FreeBSD-src-project-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={project}
+            FBSD_SRC_PROJECT={project}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
+    artifact_path: artifact
+    defaults: global
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
+    node: bhyve_host
+    scm:
+      - 'FreeBSD-src-project-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={project}
+            FBSD_SRC_PROJECT={project}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 120
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
 
 - job-template:
     artifact_path: artifact

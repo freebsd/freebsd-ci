@@ -3,10 +3,9 @@
 METADIR=/meta
 
 # config network
-# XXX: need to be parameterized
-echo "nameserver 1.1.1.1" > /etc/resolv.conf
-ifconfig vtnet0 8.8.178.219/27
-route add default 8.8.178.193
+cp ${METADIR}/resolv.conf /etc/
+ifconfig vtnet0 inet6 `cat ${METADIR}/ip`
+route -6 add default fe80::1%vtnet0
 
 zpool create tank /dev/ada2
 zfs set atime=off tank
@@ -24,6 +23,7 @@ cd ports-mgmt/poudriere
 make -DBATCH install clean
 
 echo "ZPOOL=tank" >> /usr/local/etc/poudriere.conf
+echo "export HTTP_PROXY=`cat ${METADIR}/http_proxy`" >> /usr/local/etc/poudriere.conf
 
 SVN_REVISION=`cat /svn_revision.txt`
 poudriere jail -c -j jail -m url=http://artifact.ci-dev.freebsd.org/snapshot/openssl111/r${SVN_REVISION}/amd64/amd64 -v `uname -r`

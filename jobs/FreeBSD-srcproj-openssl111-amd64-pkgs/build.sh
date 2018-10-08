@@ -41,6 +41,10 @@ truncate -s 1G ${PKGS_TAR}
 rm -fr ${METADIR}
 mkdir ${METADIR}
 cp -R ${JOB_DIR}/${METADIR}/ ${METADIR}/
+printf "${BUILDER_RESOLV_CONF}" > ${METADIR}/resolv.conf
+eval BUILDER_JAIL_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
+echo "${BUILDER_JAIL_IP6}" > ${METADIR}/ip
+echo "${BUILDER_HTTP_PROXY}" > ${METADIR}/http_proxy
 touch ${METADIR}/auto-shutdown
 sh -ex ${TEST_BASE}/create-meta.sh
 

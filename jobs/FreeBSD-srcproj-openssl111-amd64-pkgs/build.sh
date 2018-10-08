@@ -31,8 +31,10 @@ fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
 
 DISK_ZFS=diskzfs
+rm -f ${DISK_ZFS}
 truncate -s 32G ${DISK_ZFS}
 PKGS_TAR=pkgs.tar
+rm -f ${PKGS_TAR}
 truncate -s 1G ${PKGS_TAR}
 
 # prepare meta disk to pass information to testvm

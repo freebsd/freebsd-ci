@@ -73,8 +73,7 @@ sh -ex ${TEST_BASE}/extract-meta.sh
 ARTIFACT_PKGSDIR=${ARTIFACT_SUBDIR}/pkgs
 rm -fr artifact
 mkdir -p artifact/${ARTIFACT_PKGSDIR}
-mkdir -p ${ARTIFACT_PKGSDIR}
-tar xvf ${PKGS_TAR} -C ${ARTIFACT_PKGSDIR}
+tar xvf ${PKGS_TAR} -C artifact/${ARTIFACT_PKGSDIR}
 
 rm -f ${DISK_ZFS}
 rm -f ${PKGS_TAR}

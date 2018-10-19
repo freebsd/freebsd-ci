@@ -154,7 +154,7 @@
           disable_job_images: true
           disable_job_LINT: true
           artifact_path: artifact
-          node_job_build: jailer_slow
+          node_job_build: jailer
 
 - project:
     name: FreeBSD-sparc64
@@ -174,7 +174,7 @@
 - job:
     name: FreeBSD-head-scan_build
     defaults: global
-    node: jailer_slow
+    node: jailer
     scm:
       - FreeBSD-src-head
     triggers:

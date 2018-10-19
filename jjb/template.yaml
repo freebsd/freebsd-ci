@@ -92,7 +92,7 @@
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-images'
     disabled: '{disable_job_images}'
-    node: jailer_slow
+    node: jailer
     scm:
       - 'FreeBSD-src-{branch}-empty'
     parameters:
@@ -174,7 +174,7 @@
     artifact_path: artifact
     defaults: global
     name: 'FreeBSD-{branch}-riscv64-testvm'
-    node: jailer_slow
+    node: jailer
     scm:
       - 'FreeBSD-src-{branch}-empty'
     parameters:
@@ -286,7 +286,7 @@
 - job-template:
     defaults: global
     name: 'FreeBSD-{branch}-riscv64-test'
-    node: jailer_slow
+    node: jailer
     scm:
       - 'FreeBSD-src-{branch}-empty'
     parameters:

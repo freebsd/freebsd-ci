@@ -84,6 +84,7 @@
       - mips
     branch:
       - head
+      - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips-ci':
           target: mips
@@ -96,6 +97,7 @@
       - mips64
     branch:
       - head
+      - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips64-ci':
           target: mips
@@ -136,6 +138,7 @@
       - powerpcspe
     branch:
       - head
+      - stable-12
     jobs:
       - 'FreeBSD-{branch}-powerpcspe-ci':
           target: powerpc

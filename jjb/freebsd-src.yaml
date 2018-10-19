@@ -3,6 +3,7 @@
     target_arch:
       - amd64
     branch:
+      - stable-12
       - stable-11
       - releng-11_2
       - stable-10
@@ -28,6 +29,7 @@
       - aarch64
     branch:
       - head
+      - stable-12
       - stable-11
       - releng-11_2
     jobs:
@@ -41,6 +43,7 @@
       - armv6
     branch:
       - head
+      - stable-12
       - stable-11
       - releng-11_2
     jobs:
@@ -54,6 +57,7 @@
       - armv7
     branch:
       - head
+      - stable-12
     jobs:
       - 'FreeBSD-{branch}-armv6-ci':
           target: arm
@@ -65,6 +69,7 @@
       - i386
     branch:
       - head
+      - stable-12
       - stable-11
       - releng-11_2
       - stable-10
@@ -103,6 +108,7 @@
       - powerpc
     branch:
       - head
+      - stable-12
       - stable-11
       - releng-11_2
     jobs:
@@ -116,6 +122,7 @@
       - powerpc64
     branch:
       - head
+      - stable-12
       - stable-11
       - releng-11_2
     jobs:
@@ -155,6 +162,7 @@
       - sparc64
     branch:
       - head
+      - stable-12
       - stable-11
       - releng-11_2
       - stable-10

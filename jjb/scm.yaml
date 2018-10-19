@@ -20,6 +20,27 @@
           viewvc-url: https://svnweb.FreeBSD.org/base/
 
 - scm:
+    name: FreeBSD-src-stable-12
+    scm:
+      - svn:
+          repos:
+            - url: svn://svn.freebsd.org/base/stable/12/
+              basedir: src
+          workspaceupdater: emulateclean
+          viewvc-url: https://svnweb.FreeBSD.org/base/
+
+- scm:
+    name: FreeBSD-src-stable-12-empty
+    scm:
+      - svn:
+          repos:
+            - url: svn://svn.freebsd.org/base/stable/12/@${SVN_REVISION}
+              basedir: src
+              repo-depth: empty
+          workspaceupdater: update
+          viewvc-url: https://svnweb.FreeBSD.org/base/
+
+- scm:
     name: FreeBSD-src-stable-11
     scm:
       - svn:

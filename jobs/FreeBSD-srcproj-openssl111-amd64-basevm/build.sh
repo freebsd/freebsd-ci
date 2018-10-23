@@ -1,5 +1,15 @@
 #!/bin/sh
 
+export JFLAG=${BUILDER_JFLAG}
+
+export TARGET=amd64
+export TARGET_ARCH=amd64
+
+export WITH_LIB32=1
+export WITH_DEBUG=0
+export WITH_DOC=0
+export WITH_TESTS=0
+
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 
 set -ex
@@ -11,8 +21,8 @@ fi
 
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
-CONFIG_BASE=`dirname $0 | xargs realpath`/config
-OUTPUT_IMG_NAME=disk-test.img
+CONFIG_BASE=${WORKSPACE}/freebsd-ci/scripts/build/config
+OUTPUT_IMG_NAME=disk-base.img
 
 sudo rm -fr work
 mkdir -p work
@@ -35,31 +45,17 @@ if [ "${WITH_LIB32}" = 1 ]; then
 	fi
 fi
 mkdir -p ufs
+echo ${SVN_REVISION} | sudo tee ufs/svn_revision.txt
 for f in ${DIST_PACKAGES}
 do
 	fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs
 done
 
-sudo cp /etc/resolv.conf ufs/etc/
-sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-# Install packages needed by tests:
-# coreutils: bin/date
-# gdb: local/kyua/utils/stacktrace_test
-# kyua: everything
-# ksh93: tests/sys/cddl/zfs/...
-# nist-kat: sys/opencrypto/runtests
-# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
-# perl5: lots of stuff
-# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
-# python: sys/opencrypto
-sudo chroot ufs pkg install -y coreutils gdb kyua ksh93 nist-kat nmap perl5 scapy python
-sudo rm -f ufs/etc/resolv.conf
-
 # copy default configs, existing files will be override
-sudo cp -Rf ${CONFIG_BASE}/testvm/override/ ufs/
+sudo cp -Rf ${CONFIG_BASE}/basevm/override/ ufs/
 
-FROM=${CONFIG_BASE}/testvm/append/
+FROM=${CONFIG_BASE}/basevm/append/
 TO=ufs
 for i in `find ${FROM} -type f`
 do
@@ -68,7 +64,7 @@ do
 	cat ${FROM}$f | sudo tee -a ${TO}/$f > /dev/null
 done
 
-sudo makefs -d 6144 -t ffs -f 200000 -s 8g -o version=2,bsize=32768,fsize=4096 -Z ufs.img ufs
+sudo makefs -d 6144 -t ffs -f 200000 -s 4g -o version=2,bsize=32768,fsize=4096 -Z ufs.img ufs
 mkimg -s gpt -f raw \
 	-b ufs/boot/pmbr \
 	-p freebsd-boot/bootfs:=ufs/boot/gptboot \

@@ -174,6 +174,19 @@
           target: sparc64
           warnscanner: gcc4
 
+- project:
+    name: FreeBSD-srcproj
+    target_arch:
+      - aarch64
+      - amd64
+      - i386
+    project:
+      - openssl111
+    jobs:
+      - 'FreeBSD-srcproj-{project}-{target_arch}-ci':
+          target: amd64
+          warnscanner: clang
+
 - job:
     name: FreeBSD-head-scan_build
     defaults: global
@@ -380,6 +393,7 @@
             FBSD_BRANCH=head
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
+            ARTIFACT_SERVER=http://artifact.ci-dev.freebsd.org
     parameters:
       - string:
           name: SVN_REVISION
@@ -393,7 +407,7 @@
     wrappers:
       - timestamps
       - timeout:
-          timeout: 120
+          timeout: 240
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

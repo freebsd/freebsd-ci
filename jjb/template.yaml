@@ -390,3 +390,226 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-riscv64-testvm'
        - 'FreeBSD-{branch}-riscv64-test'
+
+- job-group:
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-ci'
+    jobs:
+       - 'FreeBSD-srcproj-{project}-{target_arch}-build'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
+       - 'FreeBSD-srcproj-{project}-{target_arch}-test'
+
+- job-template:
+    artifact_path: src/release/artifact
+    defaults: global
+    node_job_build: jailer_fast
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-build'
+    node: '{node_job_build}'
+    scm:
+      - 'FreeBSD-src-project'
+    triggers:
+      - pollscm:
+          cron: "H/5 * * * *"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={project}
+            FBSD_SRC_PROJECT={project}
+            FBSD_TARGET={target}
+            FBSD_TARGET_ARCH={target_arch}
+            LINK_TYPE=latest
+            MOUNT_REPO=src
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - scan-{warnscanner}-warnings
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: 'snapshot'
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      #- make-symlink
+      - clean-jail
+      - mail-notify-failure
+      - mail-notify-fixed
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          #timeout: 90
+          timeout: 120
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
+- job-template:
+    artifact_path: artifact
+    defaults: global
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
+    node: jailer_fast
+    scm:
+      - 'FreeBSD-src-project-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={project}
+            FBSD_SRC_PROJECT={project}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
+    artifact_path: artifact
+    defaults: global
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
+    node: bhyve_host
+    scm:
+      - 'FreeBSD-src-project-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={project}
+            FBSD_SRC_PROJECT={project}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 120
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
+    artifact_path: artifact
+    defaults: global
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
+    node: jailer_fast
+    scm:
+      - 'FreeBSD-src-project-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={project}
+            FBSD_SRC_PROJECT={project}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-srcproj-{project}-{target_arch}-test'
+            #- 'FreeBSD-srcproj-{project}-test_zfs'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
+    defaults: global
+    name: 'FreeBSD-srcproj-{project}-{target_arch}-test'
+    node: bhyve_host
+    scm:
+      - 'FreeBSD-src-project-empty'
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={project}
+            FBSD_SRC_PROJECT={project}
+            FBSD_TARGET={target}
+            FBSD_TARGET_ARCH={target_arch}
+            LINK_TYPE=latest_tested
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      #- make-symlink
+      - publish-junit-results
+      #- mail-notify-failure
+      #- mail-notify-unstable
+      #- mail-notify-fixed
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 90
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential

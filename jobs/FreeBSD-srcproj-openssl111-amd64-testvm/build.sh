@@ -1,5 +1,15 @@
 #!/bin/sh
 
+export JFLAG=${BUILDER_JFLAG}
+
+export TARGET=amd64
+export TARGET_ARCH=amd64
+
+export WITH_LIB32=1
+export WITH_DEBUG=1
+export WITH_DOC=1
+export WITH_TESTS=1
+
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 
 set -ex
@@ -11,7 +21,7 @@ fi
 
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
-CONFIG_BASE=`dirname $0 | xargs realpath`/config
+CONFIG_BASE=${WORKSPACE}/freebsd-ci/scripts/build/config
 OUTPUT_IMG_NAME=disk-test.img
 
 sudo rm -fr work
@@ -42,6 +52,8 @@ do
 done
 
 sudo cp /etc/resolv.conf ufs/etc/
+sudo mkdir -p ufs/usr/local/etc/pkg/repos
+cat ${WORKSPACE}/`dirname $0`/ci-pkg-repo.conf | sed -e "s,%%SVN_REVISION%%,r${SVN_REVISION}," | sudo tee ufs/usr/local/etc/pkg/repos/ci.conf
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # Install packages needed by tests:
 # coreutils: bin/date

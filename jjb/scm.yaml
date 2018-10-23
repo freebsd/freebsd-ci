@@ -104,6 +104,29 @@
           viewvc-url: https://svnweb.FreeBSD.org/base/
 
 - scm:
+    project: project
+    name: FreeBSD-src-project
+    scm:
+      - svn:
+          repos:
+            - url: svn://svn.freebsd.org/base/projects/${FBSD_SRC_PROJECT}/
+              basedir: src
+          workspaceupdater: emulateclean
+          viewvc-url: https://svnweb.FreeBSD.org/base/
+
+- scm:
+    project: project
+    name: FreeBSD-src-project-empty
+    scm:
+      - svn:
+          repos:
+            - url: svn://svn.freebsd.org/base/projects/${FBSD_SRC_PROJECT}/@${SVN_REVISION}
+              basedir: src
+              repo-depth: empty
+          workspaceupdater: update
+          viewvc-url: https://svnweb.FreeBSD.org/base/
+
+- scm:
     name: FreeBSD-doc-head
     scm:
       - svn:

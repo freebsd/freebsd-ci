@@ -181,7 +181,7 @@
       - amd64
       - i386
     project:
-      - openssl111
+      - clang700-import
     jobs:
       - 'FreeBSD-srcproj-{project}-{target_arch}-ci':
           target: amd64

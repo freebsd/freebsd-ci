@@ -37,11 +37,10 @@
       - mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
+            - 'FreeBSD-{branch}-{target_arch}-basevm'
             - 'FreeBSD-{branch}-{target_arch}-images'
-            - 'FreeBSD-{branch}-{target_arch}-testvm'
             - 'FreeBSD-{branch}-{target_arch}-LINT'
             - 'FreeBSD-{branch}-{target_arch}-gcc'
-            - 'FreeBSD-{branch}-{target_arch}-dtrace_build'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property
@@ -53,6 +52,87 @@
           fail: true
           type: absolute
       - bind-artifact-credential
+
+- job-template:
+    artifact_path: artifact
+    defaults: global
+    name: 'FreeBSD-{branch}-{target_arch}-basevm'
+    node: jailer_fast
+    scm:
+      - 'FreeBSD-src-{branch}-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-{branch}-{target_arch}-pkgs'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
+    artifact_path: artifact
+    defaults: global
+    name: 'FreeBSD-{branch}-{target_arch}-pkgs'
+    node: bhyve_host
+    scm:
+      - 'FreeBSD-src-{branch}-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: '{artifact_path}/**'
+          remove-prefix: '{artifact_path}'
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-{branch}-{target_arch}-testvm'
+            - 'FreeBSD-{branch}-{target_arch}-dtrace_build'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 120
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
 
 - job-template:
     disable_job_LINT: false
@@ -337,8 +417,10 @@
     name: 'FreeBSD-head-amd64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-basevm'
        - 'FreeBSD-{branch}-{target_arch}-images'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
+       - 'FreeBSD-{branch}-{target_arch}-pkgs'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
        - 'FreeBSD-head-amd64-test'
 

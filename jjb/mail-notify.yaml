@@ -88,5 +88,5 @@
           fixed: true
           presend-script: ${DEFAULT_PRESEND_SCRIPT}
           send-to:
-            - culprits
+            #- culprits
             - recipients

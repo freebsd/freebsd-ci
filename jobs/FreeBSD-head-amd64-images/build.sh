@@ -18,7 +18,7 @@ mkdir -p work
 cd work
 
 mkdir -p ufs
-for f in base kernel lib32 base-dbg kernel-dbg lib32-dbg doc tests
+for f in base kernel lib32 base-dbg kernel-dbg lib32-dbg tests
 do
 	fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs

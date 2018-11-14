@@ -110,6 +110,7 @@ lib/libz.so.6
 libexec/ld-elf.so.1
 mnt
 root
+sbin/devd
 sbin/dhclient
 sbin/dhclient-script
 sbin/dmesg
@@ -146,6 +147,7 @@ usr/bin/basename
 usr/bin/bunzip2
 usr/bin/clear
 usr/bin/dirname
+usr/bin/find
 usr/bin/grep
 usr/bin/hd
 usr/bin/head

@@ -83,7 +83,6 @@ lib/casper/libcap_grp.so.1
 lib/casper/libcap_pwd.so.1
 lib/casper/libcap_syslog.so.1
 lib/lib80211.so.1
-lib/libblacklist.so.0
 lib/libbsdxml.so.4
 lib/libc.so.7
 lib/libcasper.so.1
@@ -181,6 +180,7 @@ usr/bin/uuencode
 usr/bin/vi
 usr/bin/vmstat
 usr/lib/libasn1.so.11
+usr/lib/libblacklist.so.0
 usr/lib/libbsm.so.3
 usr/lib/libbz2.so.4
 usr/lib/libcom_err.so.5

@@ -12,7 +12,8 @@ patterns = [
     'Connection aborted: org.jenkinsci.remoting',
     'Connection was broken: java.io.IOException',
     'Failed to connect to proxy',
-    'Test reports were found but none of them are new.'
+    'Test reports were found but none of them are new.',
+    'No space left on device'
 ]
 
 try {

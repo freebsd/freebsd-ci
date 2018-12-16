@@ -266,6 +266,8 @@
           target: 'dtrace-test'
           source: 'src/release/artifact/**'
           remove-prefix: 'src/release/artifact'
+          retries: 3
+          retry-delay: 10000
       - clean-jail
       - trigger-parameterized-builds:
         - project:
@@ -307,6 +309,8 @@
           target: 'dtrace-test'
           source: 'artifact/**'
           remove-prefix: 'artifact'
+          retries: 3
+          retry-delay: 10000
       - clean-jail
       - trigger-parameterized-builds:
         - project:

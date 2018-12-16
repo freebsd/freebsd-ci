@@ -29,6 +29,8 @@
           target: 'snapshot'
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
+          retries: 3
+          retry-delay: 10000
       - make-symlink
       - clean-jail
       - mail-notify-failure
@@ -117,6 +119,8 @@
           target: 'snapshot'
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
+          retries: 3
+          retry-delay: 10000
       - make-symlink
       - clean-jail
     wrappers:
@@ -154,6 +158,8 @@
           target: ''
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
+          retries: 3
+          retry-delay: 10000
       - clean-jail
       - trigger-parameterized-builds:
         - project:
@@ -196,6 +202,8 @@
           target: 'snapshot'
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
+          retries: 3
+          retry-delay: 10000
       - clean-jail
       - trigger-parameterized-builds:
         - project:
@@ -432,6 +440,8 @@
           target: 'snapshot'
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
+          retries: 3
+          retry-delay: 10000
       #- make-symlink
       - clean-jail
       - mail-notify-failure
@@ -479,6 +489,8 @@
           target: ''
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
+          retries: 3
+          retry-delay: 10000
       - clean-jail
       - trigger-parameterized-builds:
         - project:
@@ -520,6 +532,8 @@
           target: ''
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
+          retries: 3
+          retry-delay: 10000
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
@@ -561,6 +575,8 @@
           target: ''
           source: '{artifact_path}/**'
           remove-prefix: '{artifact_path}'
+          retries: 3
+          retry-delay: 10000
       - clean-jail
       - trigger-parameterized-builds:
         - project:

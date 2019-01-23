@@ -181,7 +181,7 @@
       - amd64
       - i386
     project:
-      - clang700-import
+      - clang800-import
     jobs:
       - 'FreeBSD-srcproj-{project}-{target_arch}-ci':
           target: amd64

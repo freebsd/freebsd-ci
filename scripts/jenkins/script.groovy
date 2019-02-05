@@ -1,7 +1,7 @@
 date_from = new java.util.GregorianCalendar()
-date_from.setTime(new Date().parse("yyyy-mm-dd HH:mm:ss", "2019-01-21 00:00:00"))
+date_from.setTime(new Date().parse("yyyy-MM-dd HH:mm:ss", "2019-01-28 00:00:00"))
 date_end = new java.util.GregorianCalendar()
-date_end.setTime(new Date().parse("yyyy-mm-dd HH:mm:ss", "2019-01-27 23:59:59"))
+date_end.setTime(new Date().parse("yyyy-MM-dd HH:mm:ss", "2019-02-03 23:59:59"))
 url_prefix = "https://ci.freebsd.org/"
 
 def calc_job_statistics(job) {

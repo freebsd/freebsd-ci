@@ -53,7 +53,10 @@ done
 
 sudo cp /etc/resolv.conf ufs/etc/
 sudo mkdir -p ufs/usr/local/etc/pkg/repos
-cat ${WORKSPACE}/`dirname $0`/ci-pkg-repo.conf | sed -e "s,%%SVN_REVISION%%,r${SVN_REVISION}," | sudo tee ufs/usr/local/etc/pkg/repos/ci.conf
+cat ${WORKSPACE}/`dirname $0`/ci-pkg-repo.conf \
+	| sed -e "s,%%ARTIFACT_SERVER%%,${ARTIFACT_SERVER}," \
+	-e "s,%%ARTIFACT_SUBDIR%%,${ARTIFACT_SUBDIR}," \
+	| sudo tee ufs/usr/local/etc/pkg/repos/ci.conf
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # Install packages needed by tests:
 # coreutils: bin/date

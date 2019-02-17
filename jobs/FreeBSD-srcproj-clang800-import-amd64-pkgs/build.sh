@@ -83,4 +83,9 @@ rm -f ${DISK_ZFS}
 rm -f ${PKGS_TAR}
 rm -f ${IMG_NAME}
 
-echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property
+IS_EMPTY_ARTIFACT=`find artifact/${ARTIFACT_PKGSDIR} -empty -type d | wc -l`
+if [ ${IS_EMPTY_ARTIFACT} -eq 1 ]; then
+	exit 1
+else
+	echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property
+fi

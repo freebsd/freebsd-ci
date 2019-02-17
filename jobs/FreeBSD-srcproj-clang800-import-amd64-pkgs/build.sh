@@ -45,6 +45,8 @@ printf "${BUILDER_RESOLV_CONF}" > ${METADIR}/resolv.conf
 eval BUILDER_JAIL_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
 echo "${BUILDER_JAIL_IP6}" > ${METADIR}/ip
 echo "${BUILDER_HTTP_PROXY}" > ${METADIR}/http_proxy
+echo "${ARTIFACT_SERVER}" > ${METADIR}/artifact_server
+echo "${ARTIFACT_SUBDIR}" > ${METADIR}/artifact_subdir
 touch ${METADIR}/auto-shutdown
 sh -ex ${TEST_BASE}/create-meta.sh
 

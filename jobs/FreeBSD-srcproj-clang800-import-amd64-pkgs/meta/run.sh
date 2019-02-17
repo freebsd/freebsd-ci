@@ -25,8 +25,9 @@ make -DBATCH install clean
 echo "ZPOOL=tank" >> /usr/local/etc/poudriere.conf
 echo "export HTTP_PROXY=`cat ${METADIR}/http_proxy`" >> /usr/local/etc/poudriere.conf
 
-SVN_REVISION=`cat /svn_revision.txt`
-poudriere jail -c -j jail -m url=http://artifact.ci-dev.freebsd.org/snapshot/openssl111/r${SVN_REVISION}/amd64/amd64 -v `uname -r`
+ARTIFACT_SERVER=`cat ${METADIR}/artifact_server`
+ARTIFACT_SUBDIR=`cat ${METADIR}/artifact_subdir`
+poudriere jail -c -j jail -m url=${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR} -v `uname -r`
 poudriere ports -c -f none -m null -M /tank/ports
 
 poudriere bulk -t -j jail devel/gdb devel/kyua lang/perl5.26 lang/python net/scapy security/nist-kat security/nmap shells/ksh93 sysutils/coreutils

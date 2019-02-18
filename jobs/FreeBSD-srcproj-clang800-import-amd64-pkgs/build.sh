@@ -65,7 +65,7 @@ expect -c "set timeout ${TIMEOUT_EXPECT}; \
 	-s 3:0,ahci-hd,meta.tar \
 	-s 4:0,ahci-hd,${DISK_ZFS} \
 	-s 5:0,ahci-hd,${PKGS_TAR} \
-	-s 6:0,virtio-net,tap0 \
+	-s 6:0,virtio-net,tap${EXECUTOR_NUMBER} \
 	-l com1,stdio \
 	${TEST_VM_NAME}; \
         expect { eof }"

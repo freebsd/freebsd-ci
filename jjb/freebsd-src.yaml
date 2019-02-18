@@ -397,7 +397,6 @@
             FBSD_BRANCH=head
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
-            ARTIFACT_SERVER=http://artifact.ci-dev.freebsd.org
     parameters:
       - string:
           name: SVN_REVISION

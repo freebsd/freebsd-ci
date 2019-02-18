@@ -7,7 +7,6 @@ export TARGET_ARCH=amd64
 
 export WITH_LIB32=1
 export WITH_DEBUG=1
-export WITH_DOC=1
 export WITH_TESTS=1
 
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
@@ -29,9 +28,6 @@ mkdir -p work
 cd work
 
 DIST_PACKAGES="base kernel"
-if [ "${WITH_DOC}" = 1 ]; then
-	DIST_PACKAGES="${DIST_PACKAGES} doc"
-fi
 if [ "${WITH_TESTS}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} tests"
 fi

@@ -7,7 +7,7 @@ cp ${METADIR}/resolv.conf /etc/
 ifconfig vtnet0 inet6 `cat ${METADIR}/ip`
 route -6 add default fe80::1%vtnet0
 
-SVN_REVISION=`cat /svn_revision.txt`
+SVN_REVISION=`cat /.svn_revision.txt`
 
 zpool create tank /dev/ada2
 zfs set atime=off tank

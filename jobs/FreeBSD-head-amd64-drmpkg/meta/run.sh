@@ -26,6 +26,7 @@ mount_nullfs /tank/ports /usr/ports
 cd /usr/ports
 svnlite info
 cd graphics/drm-current-kmod
+export HTTP_PROXY=${BUILDER_HTTP_PROXY}
 make -DBATCH package
 
 RESULT=$?

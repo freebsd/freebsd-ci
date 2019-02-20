@@ -26,6 +26,7 @@ VM_MEM_SIZE=${BUILDER_MEMORY}
 
 METADIR=meta
 METAOUTDIR=meta-out
+RUN_RESULT_FILE=${METAOUTDIR}/result
 
 fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
 xz -fd ${IMG_NAME}.xz
@@ -78,8 +79,11 @@ rm -f ${DISK_ZFS}
 rm -f ${PKGS_TAR}
 rm -f ${IMG_NAME}
 
-RESULT=`cat ${METAOUTDIR}/result`
-
-if [ ${RESULT} -ne 0 ]; then
-	exit ${RESULT}
+if [ -f ${RUN_RESULT_FILE} ]; then
+	RESULT=`cat ${RUN_RESULT_FILE}`
+	if [ ${RESULT} -ne 0 ]; then
+		exit ${RESULT}
+	fi
+else
+	exit 1
 fi

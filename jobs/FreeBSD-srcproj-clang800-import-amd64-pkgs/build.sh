@@ -4,6 +4,7 @@ export TARGET=amd64
 export TARGET_ARCH=amd64
 
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
+VM_MAXCPU=16
 
 if [ -z "${SVN_REVISION}" ]; then
 	echo "No subversion revision specified"
@@ -21,7 +22,11 @@ TIMEOUT=$((${TIMEOUT_MS} / 1000))
 TIMEOUT_EXPECT=$((${TIMEOUT} - 60))
 TIMEOUT_VM=$((${TIMEOUT_EXPECT} - 120))
 
-VM_CPU_COUNT=${BUILDER_JFLAG}
+if [ ${BUILDER_JFLAG} -le ${VM_MAXCPU} ]; then
+	VM_CPU_COUNT=${BUILDER_JFLAG}
+else
+	VM_CPU_COUNT=${VM_MAXCPU}
+fi
 VM_MEM_SIZE=${BUILDER_MEMORY}
 
 METADIR=meta

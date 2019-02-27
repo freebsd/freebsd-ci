@@ -25,8 +25,13 @@ mount_nullfs /tank/ports /usr/ports
 
 cd /usr/ports
 svnlite info
-cd graphics/drm-current-kmod
+
 export HTTP_PROXY=`cat ${METADIR}/http_proxy`
+
+cd /usr/ports/graphics/drm-current-kmod
+make -DBATCH package
+
+cd /usr/ports/graphics/drm-legacy-kmod
 make -DBATCH package
 
 RESULT=$?

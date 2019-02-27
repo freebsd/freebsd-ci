@@ -9,15 +9,14 @@ route -6 add default fe80::1%vtnet0
 
 SVN_REVISION=`cat /.svn_revision.txt`
 
-zpool create tank /dev/ada2
-zfs set atime=off tank
-zfs set compression=lz4 tank
-zfs create tank/src
-zfs create tank/ports
+newfs /dev/ada2
+mkdir /tank
+mount -o noatime /dev/ada2 /tank
 
 svnlite co -q svn://svn.freebsd.org/base/head@${SVN_REVISION} /tank/src
 #svnlite co -q svn://svn.freebsd.org/ports/head /tank/ports
 PORTS_REVISION=`svnlite info --show-item revision svn://svn.freebsd.org/ports/head`
+mkdir /tank/ports
 cd /tank/ports
 svnlite co -q svn://svn.freebsd.org/ports/head/Keywords@${PORTS_REVISION}
 svnlite co -q svn://svn.freebsd.org/ports/head/Mk@${PORTS_REVISION}

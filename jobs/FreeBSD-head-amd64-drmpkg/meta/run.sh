@@ -17,15 +17,16 @@ zfs create tank/ports
 
 svnlite co -q svn://svn.freebsd.org/base/head@${SVN_REVISION} /tank/src
 #svnlite co -q svn://svn.freebsd.org/ports/head /tank/ports
+PORTS_REVISION=`svnlite info --show-item revision svn://svn.freebsd.org/ports/head`
 cd /tank/ports
-svnlite co -q svn://svn.freebsd.org/ports/head/Keywords
-svnlite co -q svn://svn.freebsd.org/ports/head/Mk
-svnlite co -q svn://svn.freebsd.org/ports/head/Templates
+svnlite co -q svn://svn.freebsd.org/ports/head/Keywords@${PORTS_REVISION}
+svnlite co -q svn://svn.freebsd.org/ports/head/Mk@${PORTS_REVISION}
+svnlite co -q svn://svn.freebsd.org/ports/head/Templates@${PORTS_REVISION}
 mkdir graphics
 cd graphics
-svnlite co -q svn://svn.freebsd.org/ports/head/graphics/gpu-firmware-kmod
-svnlite co -q svn://svn.freebsd.org/ports/head/graphics/drm-current-kmod
-svnlite co -q svn://svn.freebsd.org/ports/head/graphics/drm-legacy-kmod
+svnlite co -q svn://svn.freebsd.org/ports/head/graphics/gpu-firmware-kmod@${PORTS_REVISION}
+svnlite co -q svn://svn.freebsd.org/ports/head/graphics/drm-current-kmod@${PORTS_REVISION}
+svnlite co -q svn://svn.freebsd.org/ports/head/graphics/drm-legacy-kmod@${PORTS_REVISION}
 
 mkdir -p /usr/src
 mkdir -p /usr/ports
@@ -33,7 +34,6 @@ mount_nullfs /tank/src /usr/src
 mount_nullfs /tank/ports /usr/ports
 
 cd /usr/ports
-svnlite info
 
 export HTTP_PROXY=`cat ${METADIR}/http_proxy`
 

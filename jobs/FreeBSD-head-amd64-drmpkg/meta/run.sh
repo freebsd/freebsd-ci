@@ -16,7 +16,17 @@ zfs create tank/src
 zfs create tank/ports
 
 svnlite co -q svn://svn.freebsd.org/base/head@${SVN_REVISION} /tank/src
-svnlite co -q svn://svn.freebsd.org/ports/head /tank/ports
+#svnlite co -q svn://svn.freebsd.org/ports/head /tank/ports
+mkdir /tank/ports
+cd /tank/ports
+svnlite co -q svn://svn.freebsd.org/ports/head/Keywords
+svnlite co -q svn://svn.freebsd.org/ports/head/Mk
+svnlite co -q svn://svn.freebsd.org/ports/head/Templates
+mkdir graphics
+cd graphics
+svnlite co -q svn://svn.freebsd.org/ports/head/graphics/gpu-firmware-kmod
+svnlite co -q svn://svn.freebsd.org/ports/head/graphics/drm-current-kmod
+svnlite co -q svn://svn.freebsd.org/ports/head/graphics/drm-legacy-kmod
 
 mkdir -p /usr/src
 mkdir -p /usr/ports
@@ -27,6 +37,8 @@ cd /usr/ports
 svnlite info
 
 export HTTP_PROXY=`cat ${METADIR}/http_proxy`
+
+env ASSUME_ALWAYS_YES=yes pkg update
 
 cd /usr/ports/graphics/drm-current-kmod
 make -DBATCH package

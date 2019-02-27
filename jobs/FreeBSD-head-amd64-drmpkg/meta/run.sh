@@ -17,7 +17,6 @@ zfs create tank/ports
 
 svnlite co -q svn://svn.freebsd.org/base/head@${SVN_REVISION} /tank/src
 #svnlite co -q svn://svn.freebsd.org/ports/head /tank/ports
-mkdir /tank/ports
 cd /tank/ports
 svnlite co -q svn://svn.freebsd.org/ports/head/Keywords
 svnlite co -q svn://svn.freebsd.org/ports/head/Mk

@@ -24,6 +24,7 @@ make -DBATCH install clean
 
 echo "ZPOOL=tank" >> /usr/local/etc/poudriere.conf
 echo "export HTTP_PROXY=`cat ${METADIR}/http_proxy`" >> /usr/local/etc/poudriere.conf
+mkdir -p /usr/local/poudriere
 
 ARTIFACT_SERVER=`cat ${METADIR}/artifact_server`
 ARTIFACT_SUBDIR=`cat ${METADIR}/artifact_subdir`

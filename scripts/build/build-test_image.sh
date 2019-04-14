@@ -53,7 +53,16 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # perl5: lots of stuff
 # pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 # python: sys/opencrypto
-sudo chroot ufs pkg install -y coreutils gdb kyua ksh93 nist-kat nmap perl5 py36-scapy python
+sudo chroot ufs pkg install -y	\
+	devel/gdb		\
+	devel/kyua		\
+	lang/perl5.28		\
+	lang/python		\
+	net/scapy		\
+	security/nist-kat	\
+	security/nmap		\
+	shells/ksh93		\
+	sysutils/coreutils
 sudo rm -f ufs/etc/resolv.conf
 
 # copy default configs, existing files will be override

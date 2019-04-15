@@ -20,6 +20,7 @@ bin/sh
 bin/sleep
 bin/stty
 bin/tcsh
+boot/entropy
 dev
 etc/defaults/rc.conf
 etc/devd.conf

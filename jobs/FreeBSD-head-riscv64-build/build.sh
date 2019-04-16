@@ -42,6 +42,7 @@ make CROSS_TOOLCHAIN=riscv64-gcc \
 	distribution
 
 cd ${WORKSPACE}
+dd if=/dev/random of=${DESTDIR}/boot/entropy bs=4k count=1
 src/tools/tools/makeroot/makeroot.sh -s 32m -f ${JOB_BASE}/basic.files ${IMAGE_NAME} ${DESTDIR}
 
 cd ${WORKSPACE}/src

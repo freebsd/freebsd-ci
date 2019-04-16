@@ -45,6 +45,7 @@ cat <<EOF | sudo tee ufs/etc/fstab
 /dev/gpt/rootfs /               ufs     rw      1       1
 EOF
 
+sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1
 sudo makefs -d 6144 -t ffs -s 16g -o version=2,bsize=32768,fsize=4096 -Z ufs.img ufs
 mkimg -s gpt -f raw \
 	-b ufs/boot/pmbr \

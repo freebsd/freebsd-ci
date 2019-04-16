@@ -77,6 +77,7 @@ do
 	cat ${FROM}$f | sudo tee -a ${TO}/$f > /dev/null
 done
 
+sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1
 sudo makefs -d 6144 -t ffs -f 200000 -s 8g -o version=2,bsize=32768,fsize=4096 -Z ufs.img ufs
 mkimg -s gpt -f raw \
 	-b ufs/boot/pmbr \

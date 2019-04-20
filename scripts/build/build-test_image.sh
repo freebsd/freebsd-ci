@@ -52,12 +52,12 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
 # perl5: lots of stuff
 # pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
-# python: sys/opencrypto
+# python2: sys/opencrypto
 sudo chroot ufs pkg install -y	\
 	devel/gdb		\
 	devel/kyua		\
 	lang/perl5.28		\
-	lang/python		\
+	lang/python2		\
 	net/scapy		\
 	security/nist-kat	\
 	security/nmap		\

@@ -32,6 +32,7 @@ make -DBATCH install clean
 
 echo "ZPOOL=tank" >> /usr/local/etc/poudriere.conf
 echo "export HTTP_PROXY=`cat ${METADIR}/http_proxy`" >> /usr/local/etc/poudriere.conf
+mkdir -p /usr/local/poudriere
 
 poudriere jail -c -j jail -m url=${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR} -v `uname -r`
 poudriere ports -c -f none -m null -M /tank/ports

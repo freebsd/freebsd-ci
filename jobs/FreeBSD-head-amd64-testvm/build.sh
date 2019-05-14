@@ -63,8 +63,19 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
 # perl5: lots of stuff
 # pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
-# python: sys/opencrypto
-sudo chroot ufs pkg install -y coreutils gdb kyua ksh93 nist-kat nmap perl5 scapy python
+# py-dpkt: sys/opencrypto/runtests
+# python2: sys/opencrypto/runtests
+sudo chroot ufs pkg install -y	\
+	devel/gdb		\
+	devel/kyua		\
+	lang/perl5.28		\
+	lang/python2		\
+	net/py-dpkt		\
+	net/scapy		\
+	security/nist-kat	\
+	security/nmap		\
+	shells/ksh93		\
+	sysutils/coreutils
 sudo rm -f ufs/etc/resolv.conf
 
 # copy default configs, existing files will be override
@@ -79,6 +90,7 @@ do
 	cat ${FROM}$f | sudo tee -a ${TO}/$f > /dev/null
 done
 
+sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1
 sudo makefs -d 6144 -t ffs -f 200000 -s 8g -o version=2,bsize=32768,fsize=4096 -Z ufs.img ufs
 mkimg -s gpt -f raw \
 	-b ufs/boot/pmbr \

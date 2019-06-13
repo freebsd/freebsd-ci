@@ -41,8 +41,6 @@ do
 	sudo tar Jxf ${f}.txz -C ufs
 done
 
-sudo cp /etc/resolv.conf ufs/etc/
-sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # Install packages needed by tests:
 # coreutils: bin/date
 # gdb: local/kyua/utils/stacktrace_test
@@ -54,7 +52,7 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 # py-dpkt: sys/opencrypto/runtests
 # python2: sys/opencrypto/runtests
-sudo chroot ufs pkg install -y	\
+sudo env ASSUME_ALWAYS_YES=yes pkg -c ufs install -y	\
 	devel/gdb		\
 	devel/kyua		\
 	lang/perl5.28		\
@@ -65,7 +63,6 @@ sudo chroot ufs pkg install -y	\
 	security/nmap		\
 	shells/ksh93		\
 	sysutils/coreutils
-sudo rm -f ufs/etc/resolv.conf
 
 # copy default configs, existing files will be override
 sudo cp -Rf ${CONFIG_BASE}/testvm/override/ ufs/

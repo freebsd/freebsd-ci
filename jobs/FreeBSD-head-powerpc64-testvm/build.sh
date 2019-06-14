@@ -33,6 +33,10 @@ cat <<EOF | sudo tee ufs/etc/fstab
 /dev/da0s2 /               ufs     rw      1       1
 EOF
 
+cat <<EOF | sudo tee ufs/etc/rc.conf
+ifconfig_llan0="DHCP"
+EOF
+
 cat <<EOF | sudo tee ufs/etc/rc.local
 #!/bin/sh -ex
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin

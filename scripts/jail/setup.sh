@@ -86,7 +86,9 @@ sudo jail -c persist \
 	host.hostname="${JNAME}.jail.ci.FreeBSD.org" \
 	${JAIL_ARG_IP6} \
 	${JAIL_ARG_IP4} \
-	allow.chflags
+	allow.chflags \
+	allow.mount \
+	allow.mount.devfs
 
 echo "setup build environment"
 

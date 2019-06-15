@@ -88,7 +88,9 @@ sudo jail -c persist \
 	${JAIL_ARG_IP4} \
 	allow.chflags \
 	allow.mount \
-	allow.mount.devfs
+	allow.mount.devfs \
+	enforce_statfs=1 \
+	devfs_ruleset=4
 
 echo "setup build environment"
 

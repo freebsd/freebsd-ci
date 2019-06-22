@@ -306,7 +306,6 @@
     publishers:
       - ftp:
           site: 'artifact.ci.freebsd.org'
-          target: 'dtrace-test'
           source: 'artifact/**'
           remove-prefix: 'artifact'
           retries: 3

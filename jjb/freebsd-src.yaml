@@ -216,7 +216,7 @@
     defaults: global
     node: jailer
     scm:
-      - FreeBSD-src-head
+      - FreeBSD-src-head-set_revision
     parameters:
       - string:
           name: SVN_REVISION
@@ -242,7 +242,7 @@
     defaults: global
     node: jailer_fast
     scm:
-      - FreeBSD-src-head
+      - FreeBSD-src-head-set_revision
     parameters:
       - string:
           name: SVN_REVISION

@@ -9,6 +9,16 @@
           viewvc-url: https://svnweb.FreeBSD.org/base/
 
 - scm:
+    name: FreeBSD-src-head-set_revision
+    scm:
+      - svn:
+          repos:
+            - url: svn://svn.freebsd.org/base/head/@${SVN_REVISION}
+              basedir: src
+          workspaceupdater: emulateclean
+          viewvc-url: https://svnweb.FreeBSD.org/base/
+
+- scm:
     name: FreeBSD-src-head-empty
     scm:
       - svn:

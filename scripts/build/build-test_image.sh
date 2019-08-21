@@ -58,7 +58,7 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 sudo chroot ufs pkg install -y	\
 	devel/gdb		\
 	devel/kyua		\
-	lang/perl5.28		\
+	lang/perl5.30		\
 	lang/python2		\
 	net/py-dpkt		\
 	net/scapy		\

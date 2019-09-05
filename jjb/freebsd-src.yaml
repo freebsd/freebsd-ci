@@ -229,6 +229,7 @@
     publishers:
       - scan-gcc-warnings
       - clean-jail
+      - mail-notify-failure
     wrappers:
       - timestamps
       - timeout:

@@ -14,7 +14,8 @@ patterns = [
     'Failed to connect to proxy',
     'Test reports were found but none of them are new.',
     'No space left on device',
-    'tar: Error opening archive: Failed to open'
+    'tar: Error opening archive: Failed to open',
+    'Build timed out'
 ]
 
 try {

@@ -59,7 +59,7 @@
       - head
       - stable-12
     jobs:
-      - 'FreeBSD-{branch}-armv6-ci':
+      - 'FreeBSD-{branch}-armv7-ci':
           target: arm
           warnscanner: gcc4
 

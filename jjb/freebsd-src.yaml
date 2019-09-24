@@ -307,6 +307,7 @@
     publishers:
       - ftp:
           site: 'artifact.ci.freebsd.org'
+          target: ''
           source: 'artifact/**'
           remove-prefix: 'artifact'
           retries: 3

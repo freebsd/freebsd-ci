@@ -6,6 +6,8 @@ rm -fr ${MAKEOBJDIRPREFIX}
 MAKECONF=/dev/null
 SRCCONF=/dev/null
 
+KERNCONF=${KERNCONF:-LINT}
+
 cd ${WORKSPACE}/src/sys/${TARGET}/conf
 make LINT
 
@@ -15,7 +17,7 @@ make -j ${JFLAG} \
 	-DNO_CLEAN \
 	-DTARGET=${TARGET} \
 	kernel-toolchain \
-	KERNCONF=LINT \
+	KERNCONF=${KERNCONF} \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF} \
 	${EXTRA_FLAGS}
@@ -24,7 +26,7 @@ make -j ${JFLAG} \
 	-DNO_CLEAN \
 	-DTARGET=${TARGET} \
 	buildkernel \
-	KERNCONF=LINT \
+	KERNCONF=${KERNCONF} \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF} \
 	${EXTRA_FLAGS}

@@ -15,7 +15,8 @@ cd ${WORKSPACE}/src
 
 make -j ${JFLAG} \
 	-DNO_CLEAN \
-	-DTARGET=${TARGET} \
+	TARGET=${TARGET} \
+	TARGET_ARCH=${TARGET_ARCH} \
 	kernel-toolchain \
 	KERNCONF=${KERNCONF} \
 	__MAKE_CONF=${MAKECONF} \
@@ -24,7 +25,8 @@ make -j ${JFLAG} \
 
 make -j ${JFLAG} \
 	-DNO_CLEAN \
-	-DTARGET=${TARGET} \
+	TARGET=${TARGET} \
+	TARGET_ARCH=${TARGET_ARCH} \
 	buildkernel \
 	KERNCONF=${KERNCONF} \
 	__MAKE_CONF=${MAKECONF} \

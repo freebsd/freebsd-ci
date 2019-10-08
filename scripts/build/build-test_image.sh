@@ -55,6 +55,7 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 # py-dpkt: sys/opencrypto/runtests
 # python2: sys/opencrypto/runtests
+# sudo: tests/sys/cddl/zfs/tests/delegate/...
 sudo chroot ufs pkg install -y	\
 	devel/gdb		\
 	devel/kyua		\
@@ -64,8 +65,10 @@ sudo chroot ufs pkg install -y	\
 	net/scapy		\
 	security/nist-kat	\
 	security/nmap		\
+	security/sudo		\
 	shells/ksh93		\
 	sysutils/coreutils
+
 sudo umount ufs/dev
 sudo rm -f ufs/etc/resolv.conf
 

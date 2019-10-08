@@ -315,6 +315,10 @@
       - execute-in-jail
     publishers:
       - clean-jail
+      - make-symlink
+      - mail-notify-failure
+      - mail-notify-unstable
+      - mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:

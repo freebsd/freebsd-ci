@@ -13,6 +13,10 @@ EOF
 newfs /dev/ada7
 mount /dev/ada7 /tmp
 
+# Enable services needed by tests
+sysrc zfsd_enable="YES"
+service zfsd start
+
 cd /usr/tests/sys/cddl/zfs
 set +e
 /usr/local/bin/kyua test

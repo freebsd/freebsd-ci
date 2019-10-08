@@ -66,8 +66,6 @@ sudo chroot ufs pkg install -y	\
 	security/nmap		\
 	shells/ksh93		\
 	sysutils/coreutils
-# Enable services needed by tests
-sudo chroot ufs sysrc zfsd_enable="YES"
 
 sudo umount ufs/dev
 sudo rm -f ufs/etc/resolv.conf

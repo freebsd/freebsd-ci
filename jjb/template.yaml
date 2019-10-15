@@ -334,6 +334,11 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
 
 - job-group:
+    name: 'FreeBSD-{branch}-mips_xtoolchain-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build_xtoolchain'
+
+- job-group:
     name: 'FreeBSD-{branch}-mipsn32-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
@@ -342,6 +347,11 @@
     name: 'FreeBSD-{branch}-mips64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
+    name: 'FreeBSD-{branch}-mips64_xtoolchain-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build_xtoolchain'
 
 - job-group:
     name: 'FreeBSD-{branch}-powerpc-ci'

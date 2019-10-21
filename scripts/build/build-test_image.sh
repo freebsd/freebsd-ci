@@ -57,18 +57,18 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # python2: sys/opencrypto/runtests
 # sudo: tests/sys/cddl/zfs/tests/delegate/...
 sudo chroot ufs pkg install -y	\
-	devel/gdb		\
-	devel/kyua		\
-	lang/perl5.30		\
-	lang/python		\
-	lang/python2		\
-	net/py-dpkt		\
-	net/scapy		\
-	security/nist-kat	\
-	security/nmap		\
-	security/sudo		\
-	shells/ksh93		\
-	sysutils/coreutils
+	coreutils	\
+	gdb		\
+	ksh93		\
+	kyua		\
+	nist-kat	\
+	nmap		\
+	perl5		\
+	python		\
+	python2		\
+	sudo		\
+	net/py-dpkt	\
+	net/scapy
 
 sudo umount ufs/dev
 sudo rm -f ufs/etc/resolv.conf

@@ -60,6 +60,7 @@ sudo chroot ufs pkg install -y	\
 	devel/gdb		\
 	devel/kyua		\
 	lang/perl5.30		\
+	lang/python		\
 	lang/python2		\
 	net/py-dpkt		\
 	net/scapy		\

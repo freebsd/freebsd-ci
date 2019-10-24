@@ -13,3 +13,10 @@ if [ -f ${F} ]; then
 		-e 's,include("frag6/Kyuafile"),-- include("frag6/Kyuafile"),' \
 		${F}
 fi
+
+F=/usr/local/tests/kyua/utils/signals/Kyuafile
+if [ -f ${F} ]; then
+	sed -i .bak \
+		-e 's,atf_test_program{name="timer_test"},-- atf_test_program{name="timer_test"},' \
+		${F}
+fi

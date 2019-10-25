@@ -7,13 +7,6 @@ if [ -f ${F} ]; then
 		${F}
 fi
 
-F=/usr/tests/sys/netinet6/Kyuafile
-if [ -f ${F} ]; then
-	sed -i .bak \
-		-e 's,include("frag6/Kyuafile"),-- include("frag6/Kyuafile"),' \
-		${F}
-fi
-
 F=/usr/local/tests/kyua/utils/signals/Kyuafile
 if [ -f ${F} ]; then
 	sed -i .bak \

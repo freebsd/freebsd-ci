@@ -8,7 +8,7 @@ if [ -f ${F} ]; then
 fi
 
 F=/usr/tests/sys/netinet6/Kyuafile
-if [ "${TARGET}" = "i386" ] && [ -f ${F} ]; then
+if [ "$(uname -m)" = "i386" ] && [ -f ${F} ]; then
 	sed -i .bak \
 		-e 's,include("frag6/Kyuafile"),-- include("frag6/Kyuafile"),' \
 		${F}

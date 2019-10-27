@@ -64,11 +64,11 @@ sudo chroot ufs pkg install -y	\
 	nist-kat	\
 	nmap		\
 	perl5		\
+	py36-dpkt	\
+	py36-scapy	\
 	python		\
 	python2		\
-	sudo		\
-	net/py-dpkt	\
-	net/scapy
+	sudo
 
 sudo umount ufs/dev
 sudo rm -f ufs/etc/resolv.conf

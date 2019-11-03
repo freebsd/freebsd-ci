@@ -10,7 +10,7 @@ def forsend(child, s):
         child.send(c)
     child.sendline()
 
-cmd = "qemu-system-riscv64 -machine virt -bios none -nographic -m 2048M -kernel ./bbl"
+cmd = "qemu-system-riscv64 --machine virt -bios none -nographic -smp 2 -m 2048M -kernel ./bbl"
 child = pexpect.spawn(cmd)
 child.logfile = sys.stdout
 child.delaybeforesend = 0.5

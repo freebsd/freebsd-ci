@@ -29,7 +29,7 @@ xz -d kernel.xz
 mkdir riscv-pk/build/
 cd riscv-pk/build/
 
-PREFIX=riscv64-unknown-freebsd12.0
+PREFIX=riscv64-unknown-freebsd12.1
 export CC=${PREFIX}-gcc
 export CFLAGS="-nostdlib"
 export OBJCOPY=${PREFIX}-objcopy

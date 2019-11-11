@@ -61,7 +61,6 @@ sudo chroot ufs pkg install -y	\
 	gdb		\
 	ksh93		\
 	kyua		\
-	nist-kat	\
 	nmap		\
 	perl5		\
 	py36-dpkt	\

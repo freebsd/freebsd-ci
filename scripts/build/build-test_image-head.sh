@@ -69,8 +69,10 @@ sudo chroot ufs pkg install -y	\
 	python2		\
 	sudo
 
-sudo chroot ufs pkg install -Iy	\
-	linux-c7-ltp
+if [ "${TARGET}" = "amd64" ]; then
+	sudo chroot ufs pkg install -Iy	\
+		linux-c7-ltp
+fi
 
 sudo umount ufs/dev
 sudo rm -f ufs/etc/resolv.conf

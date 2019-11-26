@@ -63,7 +63,10 @@ sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
 
 # extract test result
 #sh -ex ${TEST_BASE}/extract-meta.sh
-#rm -f test-report.*
-#mv ${METAOUTDIR}/test-report.* .
+rm -f test-report.*
+mv ${METAOUTDIR}/test-report.* .
 
 rm -f ${IMG_NAME}
+
+# Temporary hack until we have JUnit output.
+exit `cat test-report.*`

@@ -12,4 +12,6 @@ service linux start
 chroot /compat/linux /opt/ltp/runltp -Q
 
 # XXX: Missing report generation
-#mv test-report.* ${METADIR}
+echo $$ > test-report.xml
+
+mv test-report.* ${METADIR}

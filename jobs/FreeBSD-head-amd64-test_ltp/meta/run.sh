@@ -7,11 +7,21 @@ export PATH
 
 # Enable services needed by tests
 sysrc linux_enable="YES"
+mkdir -p /compat/linux/{proc,sys,tmp}
 service linux start
 
-chroot /compat/linux /opt/ltp/runltp -Q
+# Disable tests that hang undefinitely.
+cat > /compat/linux/ltp-skipfile.conf << END
+rt_sigtimedwait01 rt_sigtimedwait01
+sigtimedwait01 sigtimedwait01
+sigwaitinfo01 sigwaitinfo01
+inotify06 inotify06
+pidns05 pidns05
+utstest_unshare_3 utstest_unshare_3
+utstest_unshare_4 utstest_unshare_4
+END
 
-# XXX: Missing report generation
-echo $? > test-report.xml
+chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf -pl /ltp-results.log
 
-mv test-report.* ${METADIR}
+echo $? > ${METADIR}/runltp.error
+mv -v /compat/linux/ltp-results.log ${METADIR}

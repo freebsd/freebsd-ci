@@ -61,12 +61,8 @@ rc=$?
 echo "bhyve return code = $rc"
 sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
 
-# extract test result
-#sh -ex ${TEST_BASE}/extract-meta.sh
-rm -f test-report.*
-mv ${METAOUTDIR}/test-report.* .
-
+sh -ex ${TEST_BASE}/extract-meta.sh
+sh -ex ${TEST_BASE}/ltp2junit.sh ${METAOUTDIR}/ltp-results.log test-report.xml
 rm -f ${IMG_NAME}
 
-# Temporary hack until we have JUnit output.
-exit `cat test-report.*`
+exit `cat ${METAOUTDIR}/runltp.error`

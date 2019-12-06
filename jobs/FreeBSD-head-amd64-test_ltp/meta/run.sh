@@ -23,7 +23,5 @@ END
 
 chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf
 
-# XXX: Missing report generation
-echo $? > test-report.xml
-
-mv test-report.* ${METADIR}
+echo $? > ${METADIR}/runltp.error
+mv -v /compat/linux/opt/ltp/results/* ${METADIR}

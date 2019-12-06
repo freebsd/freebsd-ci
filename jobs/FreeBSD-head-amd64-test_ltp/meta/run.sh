@@ -7,6 +7,7 @@ export PATH
 
 # Enable services needed by tests
 sysrc linux_enable="YES"
+mkdir -p /compat/linux/{proc,sys,tmp}
 service linux start
 
 chroot /compat/linux /opt/ltp/runltp -Q

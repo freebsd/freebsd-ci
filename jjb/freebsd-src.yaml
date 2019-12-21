@@ -415,3 +415,32 @@
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
+
+- job:
+    name: FreeBSD-head-amd64-test_ltp
+    node: bhyve_host
+    scm:
+      - FreeBSD-src-head-empty
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH=head
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - publish-junit-results
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 240
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute

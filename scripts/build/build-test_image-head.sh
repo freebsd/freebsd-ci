@@ -63,8 +63,8 @@ sudo chroot ufs pkg install -y	\
 	kyua		\
 	nmap		\
 	perl5		\
-	py36-dpkt	\
-	py36-scapy	\
+	py37-dpkt	\
+	py37-scapy	\
 	python		\
 	python2		\
 	sudo

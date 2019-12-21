@@ -7,7 +7,9 @@ export PATH
 
 # Enable services needed by tests
 sysrc linux_enable="YES"
-mkdir -p /compat/linux/{proc,sys,tmp}
+for i in proc sys tmp; do
+	mkdir -p /compat/linux/$i
+done
 service linux start
 
 # Disable tests that hang undefinitely.

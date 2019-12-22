@@ -92,6 +92,19 @@
           disable_job_LINT: true
 
 - project:
+    name: FreeBSD-mips_xtoolchain
+    target_arch:
+      - mips
+    branch:
+      - head
+      - stable-12
+    jobs:
+      - 'FreeBSD-{branch}-mips_xtoolchain-ci':
+          target: mips
+          warnscanner: gcc
+          disable_job_LINT: true
+
+- project:
     name: FreeBSD-mips64
     target_arch:
       - mips64
@@ -102,6 +115,19 @@
       - 'FreeBSD-{branch}-mips64-ci':
           target: mips
           warnscanner: gcc4
+          disable_job_LINT: true
+
+- project:
+    name: FreeBSD-mips64_xtoolchain
+    target_arch:
+      - mips64
+    branch:
+      - head
+      - stable-12
+    jobs:
+      - 'FreeBSD-{branch}-mips64_xtoolchain-ci':
+          target: mips
+          warnscanner: gcc
           disable_job_LINT: true
 
 - project:

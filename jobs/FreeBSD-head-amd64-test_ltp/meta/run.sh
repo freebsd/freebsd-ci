@@ -23,7 +23,9 @@ utstest_unshare_3 utstest_unshare_3
 utstest_unshare_4 utstest_unshare_4
 END
 
+set +e
 yes | limits -n 1024 chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf -pl /ltp-results.log
-
 echo $? > ${METADIR}/runltp.error
+set -e
+
 mv -v /compat/linux/ltp-results.log ${METADIR}

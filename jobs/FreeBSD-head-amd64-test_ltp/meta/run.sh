@@ -21,7 +21,6 @@ inotify06 inotify06
 pidns05 pidns05
 utstest_unshare_3 utstest_unshare_3
 utstest_unshare_4 utstest_unshare_4
-fork09 fork09
 END
 
 yes | chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf -pl /ltp-results.log

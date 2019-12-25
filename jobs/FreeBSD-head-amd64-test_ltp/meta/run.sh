@@ -21,6 +21,7 @@ inotify06 inotify06
 pidns05 pidns05
 utstest_unshare_3 utstest_unshare_3
 utstest_unshare_4 utstest_unshare_4
+kill10 kill10
 END
 
 set +e

@@ -12,6 +12,9 @@ for i in proc sys tmp; do
 done
 service linux start
 
+# Workaround for https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=242955
+kldload ext2fs
+
 # Disable tests that hang undefinitely.
 cat > /compat/linux/ltp-skipfile.conf << END
 rt_sigtimedwait01 rt_sigtimedwait01

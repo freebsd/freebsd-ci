@@ -24,8 +24,10 @@ utstest_unshare_4 utstest_unshare_4
 kill10 kill10
 END
 
+mdconfig -s 262144k
+
 set +e
-yes | limits -n 1024 chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf -pl /ltp-results.log
+yes | limits -n 1024 chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf -b /dev/md0 -pl /ltp-results.log
 echo $? > ${METADIR}/runltp.error
 set -e
 

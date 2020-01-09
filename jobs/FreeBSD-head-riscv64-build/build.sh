@@ -18,12 +18,11 @@ cd ${WORKSPACE}/src
 
 make -j ${BUILDER_JFLAG} \
 	-DNO_CLEAN \
-	CROSS_TOOLCHAIN=riscv64-gcc \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	buildworld
 
-make CROSS_TOOLCHAIN=riscv64-gcc \
+make \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	-DNO_CLEAN \
@@ -32,7 +31,7 @@ make CROSS_TOOLCHAIN=riscv64-gcc \
 	-DDB_FROM_SRC \
 	DESTDIR=${DESTDIR} \
 	installworld
-make CROSS_TOOLCHAIN=riscv64-gcc \
+make \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	-DNO_CLEAN \
@@ -49,7 +48,6 @@ cd ${WORKSPACE}/src
 cat ${JOB_BASE}/RISCVTEST | sed -e "s,%%MFS_IMAGE%%,${WORKSPACE}/${IMAGE_NAME}," | tee sys/riscv/conf/RISCVTEST
 make -j ${BUILDER_JFLAG} \
 	-DNO_CLEAN \
-	CROSS_TOOLCHAIN=riscv64-gcc \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	KERNCONF=RISCVTEST \

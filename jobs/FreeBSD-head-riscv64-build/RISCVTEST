@@ -1,7 +1,0 @@
-include		GENERIC
-ident		RISCVTEST
-
-options		MD_ROOT
-options		MD_ROOT_SIZE=32768 # 32MB ram disk
-makeoptions	MFS_IMAGE=%%MFS_IMAGE%%
-options 	ROOTDEVNAME=\"ufs:/dev/md0\"

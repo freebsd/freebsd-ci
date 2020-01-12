@@ -14,7 +14,14 @@ fi
 
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
-fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/bbl.xz
-xz -df bbl.xz
+rm -f riscv.img.xz
+fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/riscv.img.xz
+rm -f kernel kernel.bin kernel.txz
+fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/kernel.txz
 
-/usr/local/bin/python2.7 ${JOB_BASE}/test-in-qemu.py
+xz -d riscv.img.xz
+
+tar Jxvf kernel.txz --strip-components 3 boot/kernel/kernel
+objcopy -S -O binary kernel kernel.bin
+
+/usr/local/bin/python ${JOB_BASE}/test-in-qemu.py

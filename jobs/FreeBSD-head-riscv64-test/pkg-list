@@ -1,3 +1,5 @@
-py27-pexpect
-python27
+binutils
+opensbi
+py37-pexpect
+python
 qemu-devel

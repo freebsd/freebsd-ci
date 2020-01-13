@@ -179,7 +179,7 @@
     jobs:
       - 'FreeBSD-{branch}-riscv64-ci':
           target: riscv
-          warnscanner: gcc
+          warnscanner: clang
           disable_job_images: true
           disable_job_LINT: true
           artifact_path: artifact

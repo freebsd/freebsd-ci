@@ -17,7 +17,7 @@ TARGET_ARCH=riscv64
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
-rm -f riscv.img.xz
+rm -f riscv.img riscv.img.xz
 fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/riscv.img.xz
 rm -f kernel kernel.bin kernel.txz
 fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/kernel.txz

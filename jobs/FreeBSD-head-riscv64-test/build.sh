@@ -2,22 +2,25 @@
 
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 
-JOB_BASE=${WORKSPACE}/freebsd-ci/jobs/${JOB_NAME}
+set -ex
 
-TARGET=riscv
-TARGET_ARCH=riscv64
+JOB_BASE=${WORKSPACE}/freebsd-ci/jobs/${JOB_NAME}
 
 if [ -z "${SVN_REVISION}" ]; then
 	echo "No subversion revision specified"
 	exit 1
 fi
 
-ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+TARGET=riscv
+TARGET_ARCH=riscv64
+
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
+ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
 rm -f riscv.img.xz
-fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/riscv.img.xz
+fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/riscv.img.xz
 rm -f kernel kernel.bin kernel.txz
-fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/kernel.txz
+fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/kernel.txz
 
 xz -d riscv.img.xz
 

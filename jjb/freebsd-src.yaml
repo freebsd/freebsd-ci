@@ -182,7 +182,6 @@
           warnscanner: clang
           disable_job_images: true
           disable_job_LINT: true
-          artifact_path: artifact
           node_job_build: jailer
 
 - project:

@@ -13,10 +13,10 @@ done
 service linux start
 
 # runltp creates nobody, bin, and daemon users, but not root
-echo 'root:x:0:0:root::' > /etc/passwd
+echo 'root:x:0:0:root::' > /compat/linux/etc/passwd
 
 # runltp creates nobody, bin, daemon, sys, and users groups, but not root
-echo 'root:x:0:' > /etc/group
+echo 'root:x:0:' > /compat/linux/etc/group
 
 # Workaround for https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=242955
 kldload ext2fs

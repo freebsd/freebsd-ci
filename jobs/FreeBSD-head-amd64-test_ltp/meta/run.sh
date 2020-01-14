@@ -31,7 +31,12 @@ pidns05 pidns05
 utstest_unshare_3 utstest_unshare_3
 utstest_unshare_4 utstest_unshare_4
 kill10 kill10
+mmap_24-1 mmap_24-1
+sigaction_16-1 sigaction_16-1
 END
+
+# Add Open POSIX to the default run.
+echo "openposix" >> /compat/linux/opt/ltp/scenario_groups/default
 
 mdconfig -s 262144k
 

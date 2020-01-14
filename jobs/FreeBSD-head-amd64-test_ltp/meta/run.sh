@@ -31,6 +31,7 @@ pidns05 pidns05
 utstest_unshare_3 utstest_unshare_3
 utstest_unshare_4 utstest_unshare_4
 kill10 kill10
+mmap_24-1 mmap_24-1
 END
 
 mdconfig -s 262144k

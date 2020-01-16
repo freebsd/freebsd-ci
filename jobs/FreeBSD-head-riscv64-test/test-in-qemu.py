@@ -15,10 +15,10 @@ child = pexpect.spawnu(cmd)
 child.logfile = sys.stdout
 child.delaybeforesend = 0.5
 
-child.expect(re.compile("^login:", re.MULTILINE), timeout=600)
+child.expect(re.compile("^login:", re.MULTILINE), timeout=900)
 forsend(child, "root")
 
 child.expect("root@freebsd:~ #", timeout=300)
 forsend(child, "shutdown -p now")
 
-child.expect("Uptime:.*", timeout=600)
+child.expect("Uptime:.*", timeout=300)

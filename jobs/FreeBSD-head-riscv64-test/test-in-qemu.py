@@ -21,4 +21,4 @@ forsend(child, "root")
 child.expect("root@freebsd:~ #", timeout=300)
 forsend(child, "shutdown -p now")
 
-child.expect("Uptime:.*", timeout=300)
+child.expect("Uptime:.*", timeout=600)

@@ -19,12 +19,11 @@ ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH
 
 rm -f riscv.img riscv.img.xz
 fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/riscv.img.xz
-rm -f kernel kernel.bin kernel.txz
+rm -f kernel kernel.txz
 fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/kernel.txz
 
 xz -d riscv.img.xz
 
 tar Jxvf kernel.txz --strip-components 3 boot/kernel/kernel
-objcopy -S -O binary kernel kernel.bin
 
 /usr/local/bin/python ${JOB_BASE}/test-in-qemu.py

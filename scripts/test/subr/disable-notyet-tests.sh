@@ -13,3 +13,8 @@ if [ -f ${F} ]; then
 		-e 's,atf_test_program{name="timer_test"},-- atf_test_program{name="timer_test"},' \
 		${F}
 fi
+
+F=/usr/tests/sys/fs/fusefs/Kyuafile
+if [ -f ${F} ]; then
+	mv ${F} ${F}.bak
+fi

@@ -14,7 +14,9 @@ if [ -f ${F} ]; then
 		${F}
 fi
 
-F=/usr/tests/sys/fs/fusefs/Kyuafile
+F=/usr/tests/sys/fs/Kyuafile
 if [ -f ${F} ]; then
-	mv ${F} ${F}.bak
+	sed -i .bak \
+		-e 's,include("fusefs/Kyuafile"),-- include("fusefs/Kyuafile"),' \
+		${F}
 fi

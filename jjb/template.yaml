@@ -40,7 +40,7 @@
             - 'FreeBSD-{branch}-{target_arch}-images'
             - 'FreeBSD-{branch}-{target_arch}-testvm'
             - 'FreeBSD-{branch}-{target_arch}-LINT'
-            - 'FreeBSD-{branch}-{target_arch}-gcc6'
+            - 'FreeBSD-{branch}-{target_arch}-gcc6_build'
             - 'FreeBSD-{branch}-{target_arch}-dtrace_build'
           condition: SUCCESS
           svn-revision: true

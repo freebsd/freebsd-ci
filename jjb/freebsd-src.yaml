@@ -237,7 +237,7 @@
           type: absolute
 
 - job:
-    name: FreeBSD-head-amd64-gcc
+    name: FreeBSD-head-amd64-gcc6_build
     defaults: global
     node: jailer
     scm:
@@ -258,7 +258,7 @@
     wrappers:
       - timestamps
       - timeout:
-          timeout: 180
+          timeout: 90
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

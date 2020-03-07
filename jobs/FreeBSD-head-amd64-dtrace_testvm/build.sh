@@ -15,6 +15,16 @@ if [ -z "${SVN_REVISION}" ]; then
 	exit 1
 fi
 
+cleanup () {
+	# check mount point inside jail
+	P=${WORKSPACE}/work/ufs/dev
+	if [ `mount | grep ${P} | wc -l` -gt 0 ]; then
+		sudo umount ${P}
+	fi
+}
+
+trap cleanup EXIT
+
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=dtrace-test/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 OUTPUT_IMG_NAME=disk-test.img

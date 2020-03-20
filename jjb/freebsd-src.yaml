@@ -229,6 +229,10 @@
       - clean-jail
       - publish-clang-scan-build-results
     wrappers:
+      - credentials-binding:
+          - text:
+              credential-id: backtrace_token
+              variable: BACKTRACE_TOKEN
       - timestamps
       - timeout:
           timeout: 240

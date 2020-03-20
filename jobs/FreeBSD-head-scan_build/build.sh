@@ -2,7 +2,7 @@
 
 JOB_BASE=${WORKSPACE}/`dirname $0`
 SRCCONF=${JOB_BASE}/src.conf
-MAKECONF=${JOB_BASE}make.conf
+MAKECONF=${JOB_BASE}/make.conf
 
 export MAKEOBJDIRPREFIX=/tmp/obj
 rm -fr ${MAKEOBJDIRPREFIX}

@@ -61,6 +61,7 @@ for i in `find ${BUILD}/archives -type f -name '*.tar.gz'`; do
 	echo "    + ${counter} [${CHUNK}]"
 	counter=`expr ${counter} + 1`
 
+	env ALL_PROXY=http://proxy.nyi.freebsd.org:3128 \
 	curl -v -X POST https://sca.backtrace.io/api/sca/submit/clang-analyzer?${QUERY_STRING}	\
 	  -H 'Content-Type: multipart/form-data'						\
 	  -F report="@${i}" 									\

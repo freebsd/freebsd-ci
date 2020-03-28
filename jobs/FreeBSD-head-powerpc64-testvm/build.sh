@@ -29,12 +29,12 @@ sudo cp /etc/resolv.conf ufs/etc/
 
 cat <<EOF | sudo tee ufs/etc/fstab
 # Device        Mountpoint      FStype  Options Dump    Pass#
-/dev/da0s3 none            swap    sw      0       0
-/dev/da0s2 /               ufs     rw      1       1
+/dev/vtbd0s3 none            swap    sw      0       0
+/dev/vtbd0s2 /               ufs     rw      1       1
 EOF
 
 cat <<EOF | sudo tee ufs/etc/rc.conf
-ifconfig_llan0="DHCP"
+ifconfig_vtnet0="DHCP"
 EOF
 
 cat <<EOF | sudo tee ufs/etc/rc.local
@@ -58,10 +58,21 @@ cd /usr/tests
 shutdown -p now
 EOF
 
+
+##############################
+### Temporary hack since there's no ELFv2 packages available
+cat <<EOF | sudo tee ufs/etc/pkg/FreeBSD.conf
+linimon: {
+        url: "pkg+http://69.55.238.58/FreeBSD/FreeBSD:13:powerpc64/latest/",
+        mirror_type: "srv",
+        enabled: yes
+}
+EOF
+
 sudo rm -f ufs/etc/resolv.conf
 
 sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1
-sudo makefs -B be -d 6144 -t ffs -f 200000 -s 2g -o version=2,bsize=32768,fsize=4096 ufs.img ufs
+sudo makefs -B be -d 6144 -t ffs -f 200000 -s 3g -o version=2,bsize=32768,fsize=4096 ufs.img ufs
 
 # Note: BSD slices container is not working when cross created from amd64.
 #       As workaround, add UFS image directly on MBR partition  #2

@@ -7,11 +7,11 @@ if [ -z "${SVN_REVISION}" ]; then
 	exit 1
 fi
 
-BRANCH=head
 TARGET=powerpc
 TARGET_ARCH=powerpc64
 
-ARTIFACT_SUBDIR=${BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
+ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 OUTPUT_IMG_NAME=disk-test.img
 
 sudo rm -fr work
@@ -21,7 +21,7 @@ cd work
 mkdir -p ufs
 for f in base kernel base-dbg kernel-dbg tests
 do
-	fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
+	fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs
 done
 

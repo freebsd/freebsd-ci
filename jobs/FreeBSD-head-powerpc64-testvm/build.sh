@@ -45,16 +45,15 @@ echo
 echo "--------------------------------------------------------------"
 echo "install kyua dependencies!"
 echo "--------------------------------------------------------------"
-env ASSUME_ALWAYS_YES=yes pkg update
-pkg install -y kyua
+#env ASSUME_ALWAYS_YES=yes pkg update
 echo
 echo "--------------------------------------------------------------"
 echo "start kyua tests!"
 echo "--------------------------------------------------------------"
 cd /usr/tests
-/usr/local/bin/kyua test
-/usr/local/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
-/usr/local/bin/kyua report-junit --output=test-report.xml
+/usr/bin/kyua test
+/usr/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
+/usr/bin/kyua report-junit --output=test-report.xml
 shutdown -p now
 EOF
 

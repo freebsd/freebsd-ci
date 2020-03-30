@@ -5,7 +5,7 @@ METADIR=/meta
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 export PATH
 
-cat <<EOF >> /usr/local/etc/kyua/kyua.conf
+cat <<EOF >> /etc/kyua/kyua.conf
 test_suites.FreeBSD.disks = '/dev/ada2 /dev/ada3 /dev/ada4 /dev/ada5 /dev/ada6'
 EOF
 
@@ -18,7 +18,7 @@ service zfsd start
 
 cd /usr/tests/sys/cddl/zfs
 set +e
-/usr/local/bin/kyua test
+/usr/bin/kyua test
 rc=$?
 if [ ${rc} -ne 0 ] && [ ${rc} -ne 1 ]; then
 	exit ${rc}
@@ -27,6 +27,6 @@ fi
 umount /tmp
 set -e
 
-/usr/local/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
-/usr/local/bin/kyua report-junit --output=test-report.xml
+/usr/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
+/usr/bin/kyua report-junit --output=test-report.xml
 mv test-report.* ${METADIR}

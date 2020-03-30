@@ -59,7 +59,7 @@ done
 sudo cp /etc/resolv.conf ufs/etc/
 sudo mount -t devfs devfs ufs/dev
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-sudo chroot ufs pkg install -y kyua perl5 pdksh nmap
+sudo chroot ufs pkg install -y perl5 pdksh nmap
 sudo umount ufs/dev
 
 cat <<EOF | sudo tee ufs/etc/fstab
@@ -78,9 +78,9 @@ echo "--------------------------------------------------------------"
 echo "start kyua tests!"
 echo "--------------------------------------------------------------"
 cd /usr/tests/cddl/usr.sbin/dtrace
-/usr/local/bin/kyua test
-/usr/local/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
-/usr/local/bin/kyua report-junit --output=test-report.xml
+/usr/bin/kyua test
+/usr/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
+/usr/bin/kyua report-junit --output=test-report.xml
 shutdown -p now
 EOF
 

@@ -1,0 +1,4 @@
+binutils
+opensbi
+python
+qemu-devel

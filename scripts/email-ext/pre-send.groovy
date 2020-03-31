@@ -15,7 +15,8 @@ patterns = [
     'Test reports were found but none of them are new.',
     'No space left on device',
     'tar: Error opening archive: Failed to open',
-    'Build timed out'
+    'Build timed out',
+    'fetch: INDEX.bz2 appears to be truncated'
 ]
 
 try {

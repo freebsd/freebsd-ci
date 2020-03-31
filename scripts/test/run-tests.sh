@@ -45,26 +45,39 @@ done
 touch ${METADIR}/auto-shutdown
 sh -ex ${TEST_BASE}/create-meta.sh
 
-# run test VM image with bhyve
 FBSD_BRANCH_SHORT=`echo ${FBSD_BRANCH} | sed -e 's,.*-,,'`
 TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
-sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
-sudo /usr/sbin/bhyveload -c stdio -m ${VM_MEM_SIZE} -d ${IMG_NAME} ${TEST_VM_NAME}
-set +e
-expect -c "set timeout ${TIMEOUT_EXPECT}; \
-	spawn sudo /usr/bin/timeout -k 60 ${TIMEOUT_VM} /usr/sbin/bhyve \
-	-c ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -A -H -P -g 0 \
-	-s 0:0,hostbridge \
-	-s 1:0,lpc \
-	-s 2:0,ahci-hd,${IMG_NAME} \
-	-s 3:0,ahci-hd,meta.tar \
-	${BHYVE_EXTRA_DISK_PARAM} \
-	-l com1,stdio \
-	${TEST_VM_NAME}; \
-        expect { eof }"
-rc=$?
-echo "bhyve return code = $rc"
-sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
+
+if [ "${USE_QEMU}" = 1 ]; then
+	# run test VM image with qemu
+	set +e
+	/usr/local/bin/qemu-system-${QEMU_ARCH} \
+		-machine ${QEMU_MACHINE} -smp ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -nographic \
+		${QEMU_EXTRA_PARAM} \
+		-drive file=${IMG_NAME},format=raw,id=hd0 \
+		-device virtio-blk-device,drive=hd0
+	rc=$?
+	echo "qemu return code = $rc"
+else
+	# run test VM image with bhyve
+	sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy || true
+	sudo /usr/sbin/bhyveload -c stdio -m ${VM_MEM_SIZE} -d ${IMG_NAME} ${TEST_VM_NAME}
+	set +e
+	expect -c "set timeout ${TIMEOUT_EXPECT}; \
+		spawn sudo /usr/bin/timeout -k 60 ${TIMEOUT_VM} /usr/sbin/bhyve \
+		-c ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -A -H -P -g 0 \
+		-s 0:0,hostbridge \
+		-s 1:0,lpc \
+		-s 2:0,ahci-hd,${IMG_NAME} \
+		-s 3:0,ahci-hd,meta.tar \
+		${BHYVE_EXTRA_DISK_PARAM} \
+		-l com1,stdio \
+		${TEST_VM_NAME}; \
+		expect { eof }"
+	rc=$?
+	echo "bhyve return code = $rc"
+	sudo /usr/sbin/bhyvectl --vm=${TEST_VM_NAME} --destroy
+fi
 
 # extract test result
 sh -ex ${TEST_BASE}/extract-meta.sh

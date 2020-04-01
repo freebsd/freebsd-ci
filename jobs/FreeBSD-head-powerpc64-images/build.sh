@@ -31,15 +31,15 @@ cat <<EOF | sudo tee ufs/etc/fstab
 EOF
 
 sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1
-sudo makefs -B be -d 6144 -t ffs -s 16g -o version=2,bsize=32768,fsize=4096 ufs.img ufs
-mkimg -a1 -s mbr -f raw \
+sudo makefs -B be -d 6144 -t ffs -s 16g -o version=2,bsize=32768,fsize=4096,density=16384 ufs.img ufs
+mkimg -a1 -s mbr -f qcow2 \
 	-p prepboot:=ufs/boot/boot1.elf \
 	-p freebsd::1G \
 	-p freebsd:=ufs.img \
-	-o disk.img
-xz -0 disk.img
+	-o disk.qcow2
+zstd --rm disk.qcow2
 
 cd ${WORKSPACE}
 rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
-mv work/disk.img.xz artifact/${ARTIFACT_SUBDIR}
+mv work/disk.qcow2.zst artifact/${ARTIFACT_SUBDIR}

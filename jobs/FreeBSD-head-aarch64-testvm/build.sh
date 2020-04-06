@@ -26,8 +26,7 @@ do
 done
 
 sudo cp /etc/resolv.conf ufs/etc/
-sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-sudo chroot ufs pkg install -y kyua
+#sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 
 cat <<EOF | sudo tee ufs/etc/fstab
 # Device        Mountpoint      FStype  Options Dump    Pass#
@@ -44,9 +43,9 @@ echo "--------------------------------------------------------------"
 echo "start kyua tests!"
 echo "--------------------------------------------------------------"
 cd /usr/tests
-/usr/local/bin/kyua test
-/usr/local/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
-/usr/local/bin/kyua report-junit --output=test-report.xml
+/usr/bin/kyua test
+/usr/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
+/usr/bin/kyua report-junit --output=test-report.xml
 shutdown -p now
 EOF
 

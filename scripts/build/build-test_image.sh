@@ -9,6 +9,16 @@ if [ -z "${SVN_REVISION}" ]; then
 	exit 1
 fi
 
+cleanup () {
+	# check mount point inside jail
+	P=${WORKSPACE}/work/ufs/dev
+	if [ `mount | grep ${P} | wc -l` -gt 0 ]; then
+		sudo umount ${P}
+	fi
+}
+
+trap cleanup EXIT
+
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 CONFIG_BASE=`dirname $0 | xargs realpath`/config
@@ -55,17 +65,21 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 # py-dpkt: sys/opencrypto/runtests
 # python2: sys/opencrypto/runtests
+# sudo: tests/sys/cddl/zfs/tests/delegate/...
 sudo chroot ufs pkg install -y	\
-	devel/gdb		\
-	devel/kyua		\
-	lang/perl5.30		\
-	lang/python2		\
-	net/py-dpkt		\
-	net/scapy		\
-	security/nist-kat	\
-	security/nmap		\
-	shells/ksh93		\
-	sysutils/coreutils
+	coreutils	\
+	gdb		\
+	ksh93		\
+	kyua		\
+	nist-kat	\
+	nmap		\
+	perl5		\
+	python		\
+	python2		\
+	sudo		\
+	net/py-dpkt	\
+	net/scapy
+
 sudo umount ufs/dev
 sudo rm -f ufs/etc/resolv.conf
 

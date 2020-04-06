@@ -1,7 +1,8 @@
 #!/bin/sh
 
-SRCCONF=${WORKSPACE}/`dirname $0`/src.conf
-MAKECONF=${WORKSPACE}/`dirname $0`/make.conf
+JOB_BASE=${WORKSPACE}/`dirname $0`
+SRCCONF=${JOB_BASE}/src.conf
+MAKECONF=${JOB_BASE}/make.conf
 
 export MAKEOBJDIRPREFIX=/tmp/obj
 rm -fr ${MAKEOBJDIRPREFIX}
@@ -22,5 +23,8 @@ for d in bin sbin usr.bin usr.sbin lib libexec sys; do
 		analyze
 	cd -
 done
+
+cd ${WORKSPACE}
+sh ${JOB_BASE}/backtrace-submit.sh ${CLANG_ANALYZE_OUTPUT_DIR}
 
 true

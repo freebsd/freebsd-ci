@@ -15,6 +15,16 @@ if [ -z "${SVN_REVISION}" ]; then
 	exit 1
 fi
 
+cleanup () {
+	# check mount point inside jail
+	P=${WORKSPACE}/work/ufs/dev
+	if [ `mount | grep ${P} | wc -l` -gt 0 ]; then
+		sudo umount ${P}
+	fi
+}
+
+trap cleanup EXIT
+
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=dtrace-test/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 OUTPUT_IMG_NAME=disk-test.img
@@ -49,7 +59,7 @@ done
 sudo cp /etc/resolv.conf ufs/etc/
 sudo mount -t devfs devfs ufs/dev
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-sudo chroot ufs pkg install -y kyua perl5 pdksh nmap
+sudo chroot ufs pkg install -y perl5 pdksh nmap
 sudo umount ufs/dev
 
 cat <<EOF | sudo tee ufs/etc/fstab
@@ -68,9 +78,9 @@ echo "--------------------------------------------------------------"
 echo "start kyua tests!"
 echo "--------------------------------------------------------------"
 cd /usr/tests/cddl/usr.sbin/dtrace
-/usr/local/bin/kyua test
-/usr/local/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
-/usr/local/bin/kyua report-junit --output=test-report.xml
+/usr/bin/kyua test
+/usr/bin/kyua report --verbose --results-filter passed,skipped,xfail,broken,failed --output test-report.txt
+/usr/bin/kyua report-junit --output=test-report.xml
 shutdown -p now
 EOF
 

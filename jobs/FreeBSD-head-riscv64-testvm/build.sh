@@ -2,46 +2,42 @@
 
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 
-TARGET=riscv
-TARGET_ARCH=riscv64
+set -ex
+
+JOB_BASE=${WORKSPACE}/freebsd-ci/jobs/${JOB_NAME}
 
 if [ -z "${SVN_REVISION}" ]; then
 	echo "No subversion revision specified"
 	exit 1
 fi
 
-ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
-ARTIFACT_DEST=${WORKSPACE}/artifact/${ARTIFACT_SUBDIR}
-rm -fr ${WORKSPACE}/artifact
+TARGET=riscv
+TARGET_ARCH=riscv64
+
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
+ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+ARTIFACT_DEST=artifact/${ARTIFACT_SUBDIR}
+
+cd ${WORKSPACE}
+
+sudo rm -fr base || true
+sudo chflags -R noschg base || true
+sudo rm -fr base
+fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/base.txz
+mkdir base
+sudo tar Jxf base.txz -C base
+
+sudo cp ${JOB_BASE}/files/fstab base/etc/
+sudo cp ${JOB_BASE}/files/rc.conf base/etc/
+sudo pwd_mkdb -d base/etc/ -p base/etc/master.passwd
+sudo dd if=/dev/random of=base/boot/entropy bs=4k count=1
+
+sudo rm -f riscv.img riscv.img.xz
+sudo makefs -D -f 200000 -s 2g -o version=2 -Z riscv.img base
+xz -0 riscv.img
+
+rm -fr artifact
 mkdir -p ${ARTIFACT_DEST}
+mv riscv.img.xz ${ARTIFACT_DEST}
 
-rm -fr riscv-pk
-git config --global http.proxy ${BUILDER_HTTP_PROXY}
-git clone --depth=1 --single-branch https://github.com/freebsd-riscv/riscv-pk
-cd riscv-pk
-git rev-parse HEAD
-
-cd ${WORKSPACE}
-rm -f kernel.xz kernel
-fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/kernel.xz
-xz -d kernel.xz
-
-mkdir riscv-pk/build/
-cd riscv-pk/build/
-
-PREFIX=riscv64-unknown-freebsd12.0
-export CC=${PREFIX}-gcc
-export CFLAGS="-nostdlib"
-export OBJCOPY=${PREFIX}-objcopy
-export RANLIB=${PREFIX}-ranlib
-export READELF=${PREFIX}-readelf
-export WITH_ARCH=rv64imafdc
-
-../configure --enable-logo --host=${PREFIX} --with-payload=${WORKSPACE}/kernel
-gmake bbl
-
-xz bbl
-mv bbl.xz ${ARTIFACT_DEST}
-
-cd ${WORKSPACE}
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

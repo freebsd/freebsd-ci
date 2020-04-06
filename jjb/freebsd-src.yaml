@@ -59,7 +59,7 @@
       - head
       - stable-12
     jobs:
-      - 'FreeBSD-{branch}-armv6-ci':
+      - 'FreeBSD-{branch}-armv7-ci':
           target: arm
           warnscanner: gcc4
 
@@ -92,6 +92,19 @@
           disable_job_LINT: true
 
 - project:
+    name: FreeBSD-mips_xtoolchain
+    target_arch:
+      - mips
+    branch:
+      - head
+      - stable-12
+    jobs:
+      - 'FreeBSD-{branch}-mips_xtoolchain-ci':
+          target: mips
+          warnscanner: gcc
+          disable_job_LINT: true
+
+- project:
     name: FreeBSD-mips64
     target_arch:
       - mips64
@@ -102,6 +115,19 @@
       - 'FreeBSD-{branch}-mips64-ci':
           target: mips
           warnscanner: gcc4
+          disable_job_LINT: true
+
+- project:
+    name: FreeBSD-mips64_xtoolchain
+    target_arch:
+      - mips64
+    branch:
+      - head
+      - stable-12
+    jobs:
+      - 'FreeBSD-{branch}-mips64_xtoolchain-ci':
+          target: mips
+          warnscanner: gcc
           disable_job_LINT: true
 
 - project:
@@ -153,10 +179,9 @@
     jobs:
       - 'FreeBSD-{branch}-riscv64-ci':
           target: riscv
-          warnscanner: gcc
+          warnscanner: clang
           disable_job_images: true
           disable_job_LINT: true
-          artifact_path: artifact
           node_job_build: jailer
 
 - project:
@@ -204,6 +229,10 @@
       - clean-jail
       - publish-clang-scan-build-results
     wrappers:
+      - credentials-binding:
+          - text:
+              credential-id: backtrace_token
+              variable: BACKTRACE_TOKEN
       - timestamps
       - timeout:
           timeout: 240
@@ -212,7 +241,7 @@
           type: absolute
 
 - job:
-    name: FreeBSD-head-amd64-gcc
+    name: FreeBSD-head-amd64-gcc6_build
     defaults: global
     node: jailer
     scm:
@@ -229,10 +258,11 @@
     publishers:
       - scan-gcc-warnings
       - clean-jail
+      - mail-notify-failure
     wrappers:
       - timestamps
       - timeout:
-          timeout: 180
+          timeout: 90
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
@@ -306,6 +336,7 @@
     publishers:
       - ftp:
           site: 'artifact.ci.freebsd.org'
+          target: ''
           source: 'artifact/**'
           remove-prefix: 'artifact'
           retries: 3
@@ -387,6 +418,35 @@
 
 - job:
     name: FreeBSD-head-amd64-test_zfs
+    node: bhyve_host
+    scm:
+      - FreeBSD-src-head-empty
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH=head
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - publish-junit-results
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 240
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job:
+    name: FreeBSD-head-amd64-test_ltp
     node: bhyve_host
     scm:
       - FreeBSD-src-head-empty

@@ -40,7 +40,7 @@
             - 'FreeBSD-{branch}-{target_arch}-images'
             - 'FreeBSD-{branch}-{target_arch}-testvm'
             - 'FreeBSD-{branch}-{target_arch}-LINT'
-            - 'FreeBSD-{branch}-{target_arch}-gcc'
+            - 'FreeBSD-{branch}-{target_arch}-gcc6_build'
             - 'FreeBSD-{branch}-{target_arch}-dtrace_build'
           condition: SUCCESS
           svn-revision: true
@@ -177,49 +177,6 @@
           type: absolute
 
 - job-template:
-    artifact_path: artifact
-    defaults: global
-    name: 'FreeBSD-{branch}-riscv64-testvm'
-    node: jailer
-    scm:
-      - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
-    properties:
-      - inject:
-          properties-content: |
-            FBSD_BRANCH={branch}
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - setup-jail
-      - execute-in-jail
-    publishers:
-      - ftp:
-          site: 'artifact.ci.freebsd.org'
-          target: 'snapshot'
-          source: '{artifact_path}/**'
-          remove-prefix: '{artifact_path}'
-          retries: 3
-          retry-delay: 10000
-      - clean-jail
-      - trigger-parameterized-builds:
-        - project:
-            - 'FreeBSD-{branch}-riscv64-test'
-          condition: SUCCESS
-          svn-revision: true
-          property-file: trigger.property
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 30
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-
-- job-template:
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-test'
     node: bhyve_host
@@ -243,49 +200,13 @@
     publishers:
       - make-symlink
       - publish-junit-results
-      #- mail-notify-failure
-      #- mail-notify-unstable
-      #- mail-notify-fixed
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 90
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-      - bind-artifact-credential
-
-- job-template:
-    defaults: global
-    name: 'FreeBSD-head-amd64-test'
-    node: bhyve_host
-    scm:
-      - 'FreeBSD-src-head-empty'
-    properties:
-      - inject:
-          properties-content: |
-            FBSD_BRANCH=head
-            FBSD_TARGET=amd64
-            FBSD_TARGET_ARCH=amd64
-            LINK_TYPE=latest_tested
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - execute-job-build-script
-    publishers:
-      - make-symlink
-      - publish-junit-results
       - mail-notify-failure
       - mail-notify-unstable
       - mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:
-          timeout: 90
+          timeout: 120
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
@@ -315,6 +236,10 @@
       - execute-in-jail
     publishers:
       - clean-jail
+      - make-symlink
+      - mail-notify-failure
+      - mail-notify-unstable
+      - mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:
@@ -352,16 +277,23 @@
     name: 'FreeBSD-{branch}-armv6-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-armv7-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-mips-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
+    name: 'FreeBSD-{branch}-mips_xtoolchain-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build_xtoolchain'
 
 - job-group:
     name: 'FreeBSD-{branch}-mipsn32-ci'
@@ -374,14 +306,23 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
 
 - job-group:
+    name: 'FreeBSD-{branch}-mips64_xtoolchain-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build_xtoolchain'
+
+- job-group:
     name: 'FreeBSD-{branch}-powerpc-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-powerpc64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-images'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
+       - 'FreeBSD-{branch}-{target_arch}-testvm'
 
 - job-group:
     name: 'FreeBSD-{branch}-powerpcspe-ci'
@@ -392,12 +333,13 @@
     name: 'FreeBSD-{branch}-sparc64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-riscv64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
-       - 'FreeBSD-{branch}-riscv64-testvm'
+       - 'FreeBSD-{branch}-{target_arch}-testvm'
        - 'FreeBSD-{branch}-riscv64-test'
 
 - job-group:
@@ -625,7 +567,7 @@
     wrappers:
       - timestamps
       - timeout:
-          timeout: 90
+          timeout: 120
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

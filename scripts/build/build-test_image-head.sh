@@ -51,41 +51,45 @@ do
 	sudo tar Jxf ${f}.txz -C ufs
 done
 
-sudo cp /etc/resolv.conf ufs/etc/
-sudo mount -t devfs devfs ufs/dev
-sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-# Install packages needed by tests:
-# coreutils: bin/date
-# gdb: local/kyua/utils/stacktrace_test
-# kyua: everything
-# ksh93: tests/sys/cddl/zfs/...
-# nist-kat: sys/opencrypto/runtests
-# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
-# perl5: lots of stuff
-# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
-# py-dpkt: sys/opencrypto/runtests
-# python2: sys/opencrypto/runtests
-# sudo: tests/sys/cddl/zfs/tests/delegate/...
-sudo chroot ufs pkg install -y	\
-	coreutils	\
-	gdb		\
-	ksh93		\
-	kyua		\
-	nmap		\
-	perl5		\
-	py37-dpkt	\
-	py37-scapy	\
-	python		\
-	python2		\
-	sudo
+# Install packages in the target image.  We can only do it
+# if we can execute target architecture binaries.
+if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
+	sudo cp /etc/resolv.conf ufs/etc/
+	sudo mount -t devfs devfs ufs/dev
+	sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
+	# Install packages needed by tests:
+	# coreutils: bin/date
+	# gdb: local/kyua/utils/stacktrace_test
+	# kyua: everything
+	# ksh93: tests/sys/cddl/zfs/...
+	# nist-kat: sys/opencrypto/runtests
+	# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
+	# perl5: lots of stuff
+	# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
+	# py-dpkt: sys/opencrypto/runtests
+	# python2: sys/opencrypto/runtests
+	# sudo: tests/sys/cddl/zfs/tests/delegate/...
+	sudo chroot ufs pkg install -y	\
+		coreutils	\
+		gdb		\
+		ksh93		\
+		kyua		\
+		nmap		\
+		perl5		\
+		py37-dpkt	\
+		py37-scapy	\
+		python		\
+		python2		\
+		sudo
 
-if [ "${TARGET}" = "amd64" ]; then
-	sudo chroot ufs pkg install -Iy	\
-		linux-c7-ltp
+	if [ "${TARGET}" = "amd64" ]; then
+		sudo chroot ufs pkg install -Iy	\
+			linux-c7-ltp
+	fi
+
+	sudo umount ufs/dev
+	sudo rm -f ufs/etc/resolv.conf
 fi
-
-sudo umount ufs/dev
-sudo rm -f ufs/etc/resolv.conf
 
 # copy default configs, existing files will be override
 sudo cp -Rf ${CONFIG_BASE}/testvm/override/ ufs/

@@ -51,7 +51,7 @@ TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
 if [ "${USE_QEMU}" = 1 ]; then
 	# run test VM image with qemu
 	set +e
-	/usr/local/bin/qemu-system-${QEMU_ARCH} \
+	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \
 		-machine ${QEMU_MACHINE} -smp ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -nographic \
 		${QEMU_EXTRA_PARAM} \
 		-drive if=none,file=${IMG_NAME},format=raw,id=hd0 \

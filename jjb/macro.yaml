@@ -4,6 +4,7 @@
       - shell: |
           rm -fr freebsd-ci
           git clone --depth=1 --single-branch -b master https://github.com/freebsd/freebsd-ci.git
+          cd freebsd-ci; git rev-parse HEAD; cd ..
 
 - builder:
     name: execute-job-build-script

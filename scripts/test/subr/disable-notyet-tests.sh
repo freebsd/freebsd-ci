@@ -20,3 +20,11 @@ if [ -f ${F} ]; then
 		-e 's,include("fusefs/Kyuafile"),-- include("fusefs/Kyuafile"),' \
 		${F}
 fi
+
+F=/usr/local/tests/kyua/integration/cmd_about_test
+if [ -f ${F} ]; then
+	sed -i .bak \
+		-e 's,atf_add_test_case topic__authors__installed,#atf_add_test_case topic__authors__installed,' \
+		${F}
+	rm -f ${F}.bak
+fi

@@ -49,6 +49,9 @@ FBSD_BRANCH_SHORT=`echo ${FBSD_BRANCH} | sed -e 's,.*-,,'`
 TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
 
 if [ "${USE_QEMU}" = 1 ]; then
+	#XXX: Workaround for qemu-system-arm hanging at boot with -m 4096m.
+	VM_MEM_SIZE=2048m
+
 	# run test VM image with qemu
 	set +e
 	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \

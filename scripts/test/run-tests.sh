@@ -59,7 +59,9 @@ if [ "${USE_QEMU}" = 1 ]; then
 		${QEMU_EXTRA_PARAM} \
 		-device ahci,id=ahci \
 		-drive if=none,file=${IMG_NAME},format=raw,id=hd0 \
-		-device ide-hd,drive=hd0,bus=ahci.0
+		-device ide-hd,drive=hd0,bus=ahci.0 \
+		-drive if=none,file=meta.tar,format=raw,id=hd1 \
+		-device ide-hd,drive=hd1,bus=ahci.1
 	rc=$?
 	echo "qemu return code = $rc"
 else

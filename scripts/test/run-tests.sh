@@ -57,8 +57,9 @@ if [ "${USE_QEMU}" = 1 ]; then
 	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \
 		-machine ${QEMU_MACHINE} -smp ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -nographic \
 		${QEMU_EXTRA_PARAM} \
+		-device ahci,id=ahci \
 		-drive if=none,file=${IMG_NAME},format=raw,id=hd0 \
-		-device virtio-blk-device,drive=hd0
+		-device ide-hd,drive=hd0,bus=ahci.0
 	rc=$?
 	echo "qemu return code = $rc"
 else

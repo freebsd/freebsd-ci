@@ -309,6 +309,7 @@
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
+       - 'FreeBSD-{branch}-{target_arch}-testvm'
 
 - job-group:
     name: 'FreeBSD-{branch}-armv6-ci'

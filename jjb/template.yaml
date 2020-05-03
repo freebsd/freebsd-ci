@@ -281,7 +281,7 @@
     wrappers:
       - timestamps
       - timeout:
-          timeout: 60
+          timeout: 180
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

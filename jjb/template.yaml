@@ -280,7 +280,7 @@
     wrappers:
       - timestamps
       - timeout:
-          timeout: 30
+          timeout: 60
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

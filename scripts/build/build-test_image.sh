@@ -57,6 +57,7 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 # Install packages needed by tests:
 # coreutils: bin/date
 # gdb: local/kyua/utils/stacktrace_test
+# jq: sys/net/if_bridge_test
 # kyua: everything
 # ksh93: tests/sys/cddl/zfs/...
 # nist-kat: sys/opencrypto/runtests
@@ -69,6 +70,7 @@ sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 sudo chroot ufs pkg install -y	\
 	coreutils	\
 	gdb		\
+	jq		\
 	ksh93		\
 	kyua		\
 	nist-kat	\

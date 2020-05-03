@@ -52,6 +52,9 @@ if [ "${USE_QEMU}" = 1 ]; then
 	#XXX: Workaround for qemu-system-arm hanging at boot with -m 4096m.
 	VM_MEM_SIZE=3072m
 
+	# Experiment to see if it's any faster than 2.
+	VM_CPU_COUNT=1
+
 	# run test VM image with qemu
 	set +e
 	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \

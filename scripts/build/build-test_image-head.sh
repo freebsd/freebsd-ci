@@ -76,6 +76,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		jq		\
 		ksh93		\
 		kyua		\
+		nist-kat	\
 		nmap		\
 		perl5		\
 		py37-dpkt	\

@@ -50,7 +50,7 @@ TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
 
 if [ "${USE_QEMU}" = 1 ]; then
 	#XXX: Workaround for qemu-system-arm hanging at boot with -m 4096m.
-	VM_MEM_SIZE=2048m
+	VM_MEM_SIZE=3072m
 
 	# run test VM image with qemu
 	set +e

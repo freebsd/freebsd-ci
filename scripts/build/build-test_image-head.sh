@@ -129,6 +129,12 @@ case "${TARGET}" in
 			-p freebsd-ufs/rootfs:=ufs.img \
 			-o ${OUTPUT_IMG_NAME}
 		;;
+	riscv)
+		mkimg -s gpt -f raw \
+			-p freebsd-swap/swapfs::1G \
+			-p freebsd-ufs/rootfs:=ufs.img \
+			-o ${OUTPUT_IMG_NAME}
+		;;
 	*)
 		mkimg -s gpt -f raw \
 			-b ufs/boot/pmbr \

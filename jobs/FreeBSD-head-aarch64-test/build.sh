@@ -16,6 +16,7 @@ disable-notyet-tests.sh
 run-kyua.sh
 "
 
+export HTTP_PROXY=${BUILDER_HTTP_PROXY}
 fetch http://snapshots.linaro.org/components/kernel/leg-virt-tianocore-edk2-upstream/latest/QEMU-AARCH64/RELEASE_CLANG35/QEMU_EFI.fd
 
 sh -x freebsd-ci/scripts/test/run-tests.sh

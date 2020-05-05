@@ -12,7 +12,16 @@ set -x
 
 ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
 
-TARDEV=/dev/ada1
+if [ -e /dev/ada1 ]; then
+	TARDEV=/dev/ada1
+elif [ -e /dev/vtbd1 ]; then
+	TARDEV=/dev/vtbd1
+else
+	echo "ERROR: neither /dev/ada1 nor /dev/vtbd1 exist."
+	# Don't shutdown because this is not run in unattended mode
+	exit 1
+fi
+
 METADIR=/meta
 
 ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)

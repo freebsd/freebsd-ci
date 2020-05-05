@@ -5,9 +5,8 @@ export TARGET_ARCH=aarch64
 export USE_QEMU=1
 export QEMU_ARCH="aarch64"
 export QEMU_MACHINE="virt"
-# XXX: The -drive below is to workaround the fact that QEMU_EFI.fd cannot handle ahci.
-#      This means we effectively pass root device twice.
-export QEMU_EXTRA_PARAM="-bios QEMU_EFI.fd -cpu cortex-a57 -drive if=virtio,file=disk-test.img,format=raw"
+export QEMU_EXTRA_PARAM="-bios QEMU_EFI.fd -cpu cortex-a57"
+export VM_USE_VIRTIO_BLK=1
 
 # XXX: Temporary, to compare performance results.
 export VM_CPU_COUNT=1

@@ -6,7 +6,7 @@ export USE_QEMU=1
 export QEMU_ARCH="riscv64"
 export QEMU_MACHINE="virt"
 # XXX: The -drive is a temporary workaround.
-export QEMU_EXTRA_PARAM="-bios /usr/local/share/opensbi/platform/qemu/virt/firmware/fw_jump.elf -kernel kernel -drive if=virtio,file=disk-test.img,format=raw"
+export QEMU_EXTRA_PARAM="-bios /usr/local/share/opensbi/platform/qemu/virt/firmware/fw_jump.elf -kernel kernel -drive file=disk-test.img,format=raw,id=hd2 -device virtio-blk-device,drive=hd2"
 
 export USE_TEST_SUBR="
 disable-dtrace-tests.sh

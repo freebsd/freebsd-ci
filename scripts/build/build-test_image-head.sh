@@ -129,7 +129,7 @@ case "${TARGET}" in
 			-p freebsd-ufs/rootfs:=ufs.img \
 			-o ${OUTPUT_IMG_NAME}
 		;;
-	riscv)
+	mips|riscv)
 		mv ufs.img ${OUTPUT_IMG_NAME}
 		;;
 	*)

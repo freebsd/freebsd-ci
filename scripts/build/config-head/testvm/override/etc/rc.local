@@ -21,8 +21,6 @@ done
 
 METADIR=/meta
 
-ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)
-
 if [ ${ISTAR} -eq 1 ]; then
         rm -fr ${METADIR}
         mkdir -p ${METADIR}

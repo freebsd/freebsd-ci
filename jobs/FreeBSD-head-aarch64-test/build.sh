@@ -9,6 +9,9 @@ export QEMU_MACHINE="virt"
 #      This means we effectively pass root device twice.
 export QEMU_EXTRA_PARAM="-bios QEMU_EFI.fd -cpu cortex-a57 -drive if=virtio,file=disk-test.img,format=raw"
 
+# XXX: Temporary, to compare performance results.
+export VM_CPU_COUNT=1
+
 export USE_TEST_SUBR="
 disable-dtrace-tests.sh
 disable-zfs-tests.sh

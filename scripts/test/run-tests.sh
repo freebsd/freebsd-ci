@@ -67,7 +67,7 @@ if [ "${USE_QEMU}" = 1 ]; then
 	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \
 		-machine ${QEMU_MACHINE} -smp ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -nographic \
 		${QEMU_EXTRA_PARAM} \
-		${QEMU_DRIVE_PARAM}
+		${QEMU_DISKS_PARAM}
 	rc=$?
 	echo "qemu return code = $rc"
 else

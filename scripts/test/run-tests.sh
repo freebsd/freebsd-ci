@@ -18,8 +18,8 @@ TIMEOUT=$((${TIMEOUT_MS} / 1000))
 TIMEOUT_EXPECT=$((${TIMEOUT} - 60))
 TIMEOUT_VM=$((${TIMEOUT_EXPECT} - 120))
 
-VM_CPU_COUNT=2
-VM_MEM_SIZE=4096m
+: ${VM_CPU_COUNT:=2}
+: ${VM_MEM_SIZE:=4096m}
 
 EXTRA_DISK_NUM=5
 BHYVE_EXTRA_DISK_PARAM=""
@@ -49,12 +49,6 @@ FBSD_BRANCH_SHORT=`echo ${FBSD_BRANCH} | sed -e 's,.*-,,'`
 TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
 
 if [ "${USE_QEMU}" = 1 ]; then
-	#XXX: Workaround for qemu-system-arm hanging at boot with -m 4096m.
-	VM_MEM_SIZE=3072m
-
-	# Experiment to see if it's any faster than 2.
-	VM_CPU_COUNT=1
-
 	# run test VM image with qemu
 	set +e
 	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \

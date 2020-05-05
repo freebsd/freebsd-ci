@@ -63,8 +63,7 @@ if [ "${USE_QEMU}" = 1 ]; then
 		    -device ide-hd,drive=hd0,bus=ahci.0 \
 		    -drive if=none,file=meta.tar,format=raw,id=hd1 \
 		    -device ide-hd,drive=hd1,bus=ahci.1"
-
-	elif
+	fi
 	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \
 		-machine ${QEMU_MACHINE} -smp ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -nographic \
 		${QEMU_EXTRA_PARAM} \

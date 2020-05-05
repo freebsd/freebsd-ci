@@ -1,29 +1,26 @@
 #!/bin/sh
 
+export TARGET=riscv
+export TARGET_ARCH=riscv64
+export USE_QEMU=1
+export QEMU_ARCH="riscv64"
+export QEMU_MACHINE="virt"
+# XXX: The -drive is a temporary workaround.
+export QEMU_EXTRA_PARAM="-bios /usr/local/share/opensbi/platform/qemu/virt/firmware/fw_jump.elf -kernel kernel -drive if=virtio,file=disk-test.img,format=raw"
+
+export USE_TEST_SUBR="
+disable-dtrace-tests.sh
+disable-zfs-tests.sh
+disable-notyet-tests.sh
+run-kyua.sh
+"
+
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
-
-set -ex
-
-JOB_BASE=${WORKSPACE}/freebsd-ci/jobs/${JOB_NAME}
-
-if [ -z "${SVN_REVISION}" ]; then
-	echo "No subversion revision specified"
-	exit 1
-fi
-
-TARGET=riscv
-TARGET_ARCH=riscv64
-
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
-rm -f riscv.img riscv.img.xz
-fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/riscv.img.xz
 rm -f kernel kernel.txz
 fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/kernel.txz
-
-xz -d riscv.img.xz
-
 tar Jxvf kernel.txz --strip-components 3 boot/kernel/kernel
 
-/usr/local/bin/python ${JOB_BASE}/test-in-qemu.py
+sh -x freebsd-ci/scripts/test/run-tests.sh

@@ -8,6 +8,9 @@ export QEMU_MACHINE="virt"
 export QEMU_EXTRA_PARAM="-bios /usr/local/share/opensbi/platform/qemu/virt/firmware/fw_jump.elf -kernel kernel"
 export VM_USE_VIRTIO_BLK=1
 
+# XXX: Eventually panics with SMP.
+export VM_CPU_COUNT=1
+
 export USE_TEST_SUBR="
 disable-dtrace-tests.sh
 disable-zfs-tests.sh

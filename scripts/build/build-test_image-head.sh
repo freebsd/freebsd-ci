@@ -130,10 +130,7 @@ case "${TARGET}" in
 			-o ${OUTPUT_IMG_NAME}
 		;;
 	riscv)
-		mkimg -s gpt -f raw \
-			-p freebsd-swap/swapfs::1G \
-			-p freebsd-ufs/rootfs:=ufs.img \
-			-o ${OUTPUT_IMG_NAME}
+		mv ufs.img ${OUTPUT_IMG_NAME}
 		;;
 	*)
 		mkimg -s gpt -f raw \

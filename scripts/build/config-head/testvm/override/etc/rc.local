@@ -37,7 +37,7 @@ if [ -f ${METADIR}/auto-shutdown ]; then
 	# XXX: Currently RISC-V kernel lacks the ability to make qemu
 	#      exit on shutdown.  Reboot instead; it makes qemu exit.
 	if [ $(uname -p) = "riscv64" ]; then
-		reboot
+		shutdown -r now
 	else
 		shutdown -p now
 	fi

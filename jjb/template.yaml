@@ -244,7 +244,7 @@
     wrappers:
       - timestamps
       - timeout:
-          timeout: 30
+          timeout: 480
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
@@ -282,7 +282,7 @@
     wrappers:
       - timestamps
       - timeout:
-          timeout: 180
+          timeout: 480
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
@@ -320,7 +320,7 @@
     wrappers:
       - timestamps
       - timeout:
-          timeout: 180
+          timeout: 480
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

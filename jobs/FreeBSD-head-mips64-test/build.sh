@@ -7,6 +7,9 @@ export QEMU_ARCH="mips64"
 export QEMU_MACHINE="malta"
 export QEMU_EXTRA_PARAM="-kernel kernel"
 
+# XXX: Temporary, to compare performance results.
+export VM_CPU_COUNT=1
+
 export USE_TEST_SUBR="
 disable-dtrace-tests.sh
 disable-zfs-tests.sh

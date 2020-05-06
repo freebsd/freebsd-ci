@@ -1,5 +1,2 @@
-binutils
 opensbi
-py37-pexpect
-python
 qemu-devel

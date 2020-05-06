@@ -5,6 +5,7 @@ export TARGET_ARCH=armv7
 export USE_QEMU=1
 export QEMU_ARCH="arm"
 export QEMU_MACHINE="virt"
+export QEMU_DEVICES="-device ahci,id=ahci -device ide-hd,drive=hd0,bus=ahci.0 -device ide-hd,drive=hd1,bus=ahci.1"
 export QEMU_EXTRA_PARAM="-bios /usr/local/share/u-boot/u-boot-qemu-arm/u-boot.bin"
 
 # U-Boot hangs with 4G.

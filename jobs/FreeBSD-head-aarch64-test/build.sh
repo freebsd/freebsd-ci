@@ -6,7 +6,6 @@ export USE_QEMU=1
 export QEMU_ARCH="aarch64"
 export QEMU_MACHINE="virt"
 export QEMU_EXTRA_PARAM="-bios QEMU_EFI.fd -cpu cortex-a57"
-export VM_USE_VIRTIO_BLK=1
 
 # XXX: Temporary, to compare performance results.
 export VM_CPU_COUNT=1

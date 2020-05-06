@@ -9,9 +9,6 @@ export QEMU_MACHINE="malta"
 # XXX: The MALTA64 config doesn't support neither AHCI nor virtio.
 export QEMU_EXTRA_PARAM="-kernel kernel -drive if=none,file=disk-test.img,format=raw,id=hd2 -device ide-hd,bus=ide.0,drive=hd2 -drive if=none,file=meta.tar,format=raw,id=hd3 -device ide-hd,bus=ide.1,drive=hd3"
 
-# The "malta" machine doesn't support more than 2G.
-export VM_MEM_SIZE="2g"
-
 # qemu-system-mips64: maximum 2048MB
 export VM_MEM_SIZE="2G"
 

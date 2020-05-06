@@ -363,6 +363,43 @@
           type: absolute
       - bind-artifact-credential
 
+- job-template:
+    defaults: global
+    name: 'FreeBSD-{branch}-powerpc64-test'
+    node: jailer
+    scm:
+      - 'FreeBSD-src-{branch}-empty'
+    parameters:
+      - string:
+          name: SVN_REVISION
+          description: "Subversion revision"
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+            FBSD_TARGET={target}
+            FBSD_TARGET_ARCH={target_arch}
+            LINK_TYPE=latest_tested
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - clean-jail
+      - make-symlink
+      - mail-notify-failure
+      - mail-notify-unstable
+      - mail-notify-fixed
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
 - job-group:
     name: 'FreeBSD-{branch}-{target_arch}-ci'
     jobs:
@@ -443,6 +480,7 @@
        - 'FreeBSD-{branch}-{target_arch}-images'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
+       - 'FreeBSD-{branch}-powerpc64-test'
 
 - job-group:
     name: 'FreeBSD-{branch}-powerpcspe-ci'

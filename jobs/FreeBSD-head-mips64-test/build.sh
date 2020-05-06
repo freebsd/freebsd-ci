@@ -5,7 +5,9 @@ export TARGET_ARCH=mips64
 export USE_QEMU=1
 export QEMU_ARCH="mips64"
 export QEMU_MACHINE="malta"
-export QEMU_EXTRA_PARAM="-kernel kernel"
+
+# XXX: The MALTA64 config doesn't support neither AHCI nor virtio.
+export QEMU_EXTRA_PARAM="-kernel kernel -drive 'if=none,file=disk-test.img,format=raw,id=hd2' -device 'ide-hd,bus=ide.0,drive=hd2' -drive 'if=none,file=meta.tar,format=raw,id=hd3' -device ide-hd,bus=ide.1,drive=hd3"
 
 # XXX: Temporary, to compare performance results.
 export VM_CPU_COUNT=1

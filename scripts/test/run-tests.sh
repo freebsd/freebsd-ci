@@ -54,9 +54,9 @@ if [ "${USE_QEMU}" = 1 ]; then
 	set +e
 	if [ "${VM_USE_VIRTIO_BLK}" = 1 ]; then
 		QEMU_DISKS_PARAM="-drive if=none,file=${IMG_NAME},format=raw,id=hd0 \
-		    -device virtio-blk-device,drive=hd0 \
+		    -device virtio-blk,drive=hd0 \
 		    -drive if=none,file=meta.tar,format=raw,id=hd1 \
-		    -device virtio-blk-device,drive=hd1"
+		    -device virtio-blk,drive=hd1"
 	else
 		QEMU_DISKS_PARAM="-device ahci,id=ahci \
 		    -drive if=none,file=${IMG_NAME},format=raw,id=hd0 \

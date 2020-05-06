@@ -7,6 +7,9 @@ export QEMU_ARCH="mips64"
 export QEMU_MACHINE="malta"
 export QEMU_EXTRA_PARAM="-kernel kernel"
 
+# qemu-system-mips64: maximum 2048MB
+export VM_MEM_SIZE="2G"
+
 # XXX: Temporary, to compare performance results.
 export VM_CPU_COUNT=1
 

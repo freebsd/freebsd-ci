@@ -389,13 +389,14 @@
     publishers:
       - clean-jail
       - make-symlink
+      - publish-junit-results
       - mail-notify-failure
       - mail-notify-unstable
       - mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:
-          timeout: 30
+          timeout: 480
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

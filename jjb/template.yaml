@@ -147,6 +147,9 @@
       - inject:
           properties-content: |
             FBSD_BRANCH={branch}
+            FBSD_TARGET={target}
+            FBSD_TARGET_ARCH={target_arch}
+            LINK_TYPE=latest_testvm
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -160,6 +163,7 @@
           remove-prefix: '{artifact_path}'
           retries: 3
           retry-delay: 10000
+      - make-symlink
       - clean-jail
       - trigger-parameterized-builds:
         - project:

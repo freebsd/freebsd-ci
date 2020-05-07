@@ -232,7 +232,7 @@
           properties-content: |
             FBSD_BRANCH={branch}
             FBSD_TARGET={target}
-            FBSD_TARGET_ARCH={target_arch}
+            FBSD_TARGET_ARCH=riscv64
             LINK_TYPE=latest_tested
     builders:
       - add-svn-revision-description
@@ -271,7 +271,7 @@
           properties-content: |
             FBSD_BRANCH={branch}
             FBSD_TARGET={target}
-            FBSD_TARGET_ARCH={target_arch}
+            FBSD_TARGET_ARCH=armv7
             LINK_TYPE=latest_tested
     builders:
       - add-svn-revision-description
@@ -309,7 +309,7 @@
           properties-content: |
             FBSD_BRANCH={branch}
             FBSD_TARGET={target}
-            FBSD_TARGET_ARCH={target_arch}
+            FBSD_TARGET_ARCH=aarch64
             LINK_TYPE=latest_tested
     builders:
       - add-svn-revision-description
@@ -347,7 +347,7 @@
           properties-content: |
             FBSD_BRANCH={branch}
             FBSD_TARGET={target}
-            FBSD_TARGET_ARCH={target_arch}
+            FBSD_TARGET_ARCH=mips64
             LINK_TYPE=latest_tested
     builders:
       - add-svn-revision-description
@@ -385,7 +385,7 @@
           properties-content: |
             FBSD_BRANCH={branch}
             FBSD_TARGET={target}
-            FBSD_TARGET_ARCH={target_arch}
+            FBSD_TARGET_ARCH=powerpc64
             LINK_TYPE=latest_tested
     builders:
       - add-svn-revision-description

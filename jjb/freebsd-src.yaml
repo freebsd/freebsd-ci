@@ -218,6 +218,9 @@
     node: jailer
     scm:
       - FreeBSD-src-head
+    properties:
+      - build-discarder:
+          num-to-keep: 60
     triggers:
       - timed: '@daily'
     builders:

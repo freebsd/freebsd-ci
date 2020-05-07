@@ -247,6 +247,7 @@
       - mail-notify-unstable
       - mail-notify-fixed
     wrappers:
+      - use-latest-testvm-revision
       - timestamps
       - timeout:
           timeout: 480

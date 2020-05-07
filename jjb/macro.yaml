@@ -75,3 +75,16 @@
                 - SUCCESS
               build-steps:
                 - shell: ./freebsd-ci/artifact/post-link.py
+
+- wrapper:
+    name: use-latest-testvm-revision
+    wrappers:
+      - pre-scm-buildstep:
+          failOnError: true
+          buildsteps:
+            - shell: |
+                ARTIFACT_SERVER=artifact.ci.freebsd.org
+                ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/latest_testvm/${FBSD_TARGET}/${FBSD_TARGET_ARCH}
+                SVN_REVISION=$(curl -s https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/revision.txt | cut -d 'r' -f 2)
+                rm -f ${WORKSPACE}/svn_revision.property
+                echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/svn_revision.property

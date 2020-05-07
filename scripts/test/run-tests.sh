@@ -20,7 +20,6 @@ TIMEOUT_VM=$((${TIMEOUT_EXPECT} - 120))
 
 : ${VM_CPU_COUNT:=2}
 : ${VM_MEM_SIZE:=4096m}
-: ${VM_USE_VIRTIO_BLK:=0}
 
 EXTRA_DISK_NUM=5
 BHYVE_EXTRA_DISK_PARAM=""
@@ -52,22 +51,14 @@ TEST_VM_NAME="testvm-${FBSD_BRANCH_SHORT}-${TARGET_ARCH}-${BUILD_NUMBER}"
 if [ "${USE_QEMU}" = 1 ]; then
 	# run test VM image with qemu
 	set +e
-	if [ "${VM_USE_VIRTIO_BLK}" = 1 ]; then
-		QEMU_DISKS_PARAM="-drive if=none,file=${IMG_NAME},format=raw,id=hd0 \
-		    -device virtio-blk-device,drive=hd0 \
-		    -drive if=none,file=meta.tar,format=raw,id=hd1 \
-		    -device virtio-blk-device,drive=hd1"
-	else
-		QEMU_DISKS_PARAM="-device ahci,id=ahci \
-		    -drive if=none,file=${IMG_NAME},format=raw,id=hd0 \
-		    -device ide-hd,drive=hd0,bus=ahci.0 \
-		    -drive if=none,file=meta.tar,format=raw,id=hd1 \
-		    -device ide-hd,drive=hd1,bus=ahci.1"
-	fi
+
+	: ${QEMU_DEVICES:="-device virtio-blk,drive=hd0 -device virtio-blk,drive=hd1"}
 	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \
 		-machine ${QEMU_MACHINE} -smp ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -nographic \
 		${QEMU_EXTRA_PARAM} \
-		${QEMU_DISKS_PARAM}
+		-drive if=none,file=${IMG_NAME},format=raw,id=hd0 \
+		-drive if=none,file=meta.tar,format=raw,id=hd1 \
+		${QEMU_DEVICES}
 	rc=$?
 	echo "qemu return code = $rc"
 else

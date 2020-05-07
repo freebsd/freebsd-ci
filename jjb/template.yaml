@@ -179,6 +179,7 @@
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
+      - bind-artifact-credential
 
 - job-template:
     defaults: global

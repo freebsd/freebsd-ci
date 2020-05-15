@@ -16,7 +16,8 @@ patterns = [
     'No space left on device',
     'tar: Error opening archive: Failed to open',
     'Build timed out',
-    'fetch: INDEX.bz2 appears to be truncated'
+    'fetch: INDEX.bz2 appears to be truncated',
+    'unable to access \'https://github.com/freebsd/freebsd-ci'
 ]
 
 try {

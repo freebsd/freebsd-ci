@@ -14,13 +14,6 @@ if [ -f ${F} ]; then
 		${F}
 fi
 
-F=/usr/tests/sys/fs/Kyuafile
-if [ -f ${F} ]; then
-	sed -i .bak \
-		-e 's,include("fusefs/Kyuafile"),-- include("fusefs/Kyuafile"),' \
-		${F}
-fi
-
 F=/usr/local/tests/kyua/integration/cmd_about_test
 if [ -f ${F} ]; then
 	sed -i .bak \

@@ -9,7 +9,8 @@ export QEMU_ARCH="ppc64"
 export QEMU_MACHINE="pseries,cap-hpt-max-page-size=16M"
 # XXX: Note the reversed order; otherwise the metadisk would end up as vtbd0
 export QEMU_DEVICES="-device virtio-blk,drive=hd1 -device virtio-blk,drive=hd0"
-export QEMU_EXTRA_PARAM="-vga none"
+# The -accel tcg,thread=multi is supposed to improve performance.
+export QEMU_EXTRA_PARAM="-vga none -accel tcg,thread=multi"
 
 # XXX: Temporary, to compare performance results.
 export VM_CPU_COUNT=1

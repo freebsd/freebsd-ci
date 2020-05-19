@@ -71,11 +71,11 @@ mkimg -s gpt -f raw \
 	-p freebsd-swap/swapfs::1G \
 	-p freebsd-ufs/rootfs:=ufs.img \
 	-o ${OUTPUT_IMG_NAME}
-xz -0 ${OUTPUT_IMG_NAME}
+zstd --rm ${OUTPUT_IMG_NAME}
 
 cd ${WORKSPACE}
 rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
-mv work/${OUTPUT_IMG_NAME}.xz artifact/${ARTIFACT_SUBDIR}
+mv work/${OUTPUT_IMG_NAME}.zst artifact/${ARTIFACT_SUBDIR}
 
 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property

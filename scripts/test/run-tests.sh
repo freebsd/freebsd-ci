@@ -27,8 +27,8 @@ BHYVE_EXTRA_DISK_PARAM=""
 METADIR=meta
 METAOUTDIR=meta-out
 
-fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
-xz -fd ${IMG_NAME}.xz
+fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
+zstd --rm -fd ${IMG_NAME}.zst
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	truncate -s 128m disk${i}

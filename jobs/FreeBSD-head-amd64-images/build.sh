@@ -38,9 +38,9 @@ mkimg -s gpt -f raw \
 	-p freebsd-swap/swapfs::1G \
 	-p freebsd-ufs/rootfs:=ufs.img \
 	-o disk.img
-xz -0 disk.img
+zstd --rm disk.img
 
 cd ${WORKSPACE}
 rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
-mv work/disk.img.xz artifact/${ARTIFACT_SUBDIR}
+mv work/disk.img.zst artifact/${ARTIFACT_SUBDIR}

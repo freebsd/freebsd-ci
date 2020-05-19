@@ -32,8 +32,8 @@ VM_MEM_SIZE=${BUILDER_MEMORY}
 METADIR=meta
 METAOUTDIR=meta-out
 
-fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
-xz -fd ${IMG_NAME}.xz
+fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
+zstd --rm -fd ${IMG_NAME}.zst
 
 DISK_ZFS=diskzfs
 rm -f ${DISK_ZFS}

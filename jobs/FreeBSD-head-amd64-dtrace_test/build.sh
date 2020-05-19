@@ -13,8 +13,8 @@ fi
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 IMG_NAME=disk-test.img
 
-fetch https://artifact.ci.freebsd.org/dtrace-test/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
-xz -fd ${IMG_NAME}.xz
+fetch https://artifact.ci.freebsd.org/dtrace-test/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
+zstd --rm -fd ${IMG_NAME}.zst
 
 # run test VM image with bhyve
 TEST_VM_NAME=test_vm_${EXECUTOR_NUMBER}

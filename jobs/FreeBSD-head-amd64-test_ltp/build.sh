@@ -28,8 +28,8 @@ METAOUTDIR=meta-out
 
 TEST_VM_MEMORY=8192m
 
-fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
-xz -fd ${IMG_NAME}.xz
+fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
+zstd --rm -fd ${IMG_NAME}.zst
 
 # prepare meta disk to pass information to testvm
 rm -fr ${METADIR}

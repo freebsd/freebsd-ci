@@ -32,8 +32,8 @@ METAOUTDIR=meta-out
 
 TEST_VM_MEMORY=8192m
 
-fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.xz
-xz -fd ${IMG_NAME}.xz
+fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
+zstd --rm -fd ${IMG_NAME}.zst
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	truncate -s ${EXTRA_DISK_SIZE} disk${i}

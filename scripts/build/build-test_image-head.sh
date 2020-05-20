@@ -107,7 +107,7 @@ do
 done
 
 case "${TARGET}" in
-	mips)
+	mips|powerpc)
 		B_FLAG="big"
 		;;
 	*)
@@ -140,6 +140,15 @@ case "${TARGET}" in
 		;;
 	mips|riscv)
 		mv ufs.img ${OUTPUT_IMG_NAME}
+		;;
+	powerpc)
+		# Note: BSD slices container is not working when cross created from amd64.
+		#       As workaround, add UFS image directly on MBR partition  #2
+		mkimg -a 1 -s mbr -f raw \
+			-p prepboot:=ufs/boot/boot1.elf \
+			-p freebsd:=ufs.img \
+			-p freebsd::1G \
+			-o ${OUTPUT_IMG_NAME}
 		;;
 	*)
 		mkimg -s gpt -f raw \

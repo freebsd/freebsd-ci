@@ -106,6 +106,17 @@ do
 	cat ${FROM}$f | sudo tee -a ${TO}/$f > /dev/null
 done
 
+if [ "${TARGET}" = "powerpc" ]; then
+	# XXX: Looks like powerpc64 cannot boot with GPT,
+	#      and the default fstab specifies /dev/gpt/rootfs.
+	cat > ufs/etc/fstab <<EOF
+# Device        Mountpoint      FStype  Options Dump    Pass#
+/dev/vtbd0s3    none            swap    sw      0       0
+/dev/vtbd0s2    /               ufs     rw      1       1
+fdesc           /dev/fd         fdescfs rw      0       0
+EOF
+fi
+
 case "${TARGET}" in
 	mips|powerpc)
 		B_FLAG="big"

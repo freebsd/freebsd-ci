@@ -54,7 +54,11 @@ if [ "${USE_QEMU}" = 1 ]; then
 
 	: ${QEMU_DEVICES:="-device virtio-blk,drive=hd0 -device virtio-blk,drive=hd1"}
 	timeout -k 60 ${TIMEOUT_VM} /usr/local/bin/qemu-system-${QEMU_ARCH} \
-		-machine ${QEMU_MACHINE} -smp ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -nographic \
+		-machine ${QEMU_MACHINE} \
+		-smp ${VM_CPU_COUNT} \
+		-m ${VM_MEM_SIZE} \
+		-nographic \
+		-no-reboot \
 		${QEMU_EXTRA_PARAM} \
 		-drive if=none,file=${IMG_NAME},format=raw,id=hd0 \
 		-drive if=none,file=meta.tar,format=raw,id=hd1 \

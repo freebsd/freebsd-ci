@@ -7,7 +7,7 @@ export QEMU_ARCH="riscv64"
 export QEMU_MACHINE="virt"
 # XXX: Note the virtio-blk-device instead of virtio-blk; kernel doesn't seem to support the latter.
 export QEMU_DEVICES="-device virtio-blk-device,drive=hd0 -device virtio-blk-device,drive=hd1"
-export QEMU_EXTRA_PARAM="-bios /usr/local/share/opensbi/platform/qemu/virt/firmware/fw_jump.elf -kernel kernel"
+export QEMU_EXTRA_PARAM="-bios default -kernel kernel"
 
 # XXX: Eventually panics with SMP.
 export VM_CPU_COUNT=1

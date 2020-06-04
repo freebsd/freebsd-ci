@@ -1,6 +1,7 @@
 #!/bin/sh
 
 METADIR=/meta
+sh -ex ${METADIR}/disable-disks-tests.sh
 sh -ex ${METADIR}/disable-dtrace-tests.sh
 sh -ex ${METADIR}/disable-zfs-tests.sh
 sh -ex ${METADIR}/disable-notyet-tests.sh

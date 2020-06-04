@@ -16,6 +16,7 @@ export VM_MEM_SIZE="2G"
 export VM_CPU_COUNT=1
 
 export USE_TEST_SUBR="
+disable-disks-tests.sh
 disable-dtrace-tests.sh
 disable-zfs-tests.sh
 disable-notyet-tests.sh

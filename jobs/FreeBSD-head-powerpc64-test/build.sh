@@ -16,6 +16,7 @@ export QEMU_EXTRA_PARAM="-vga none -accel tcg,thread=multi"
 export VM_CPU_COUNT=1
 
 export USE_TEST_SUBR="
+disable-disks-tests.sh
 disable-dtrace-tests.sh
 disable-zfs-tests.sh
 disable-notyet-tests.sh

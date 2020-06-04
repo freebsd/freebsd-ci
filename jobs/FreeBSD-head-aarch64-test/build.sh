@@ -13,6 +13,7 @@ export QEMU_EXTRA_PARAM="-bios /usr/local/share/u-boot/u-boot-qemu-arm64/u-boot.
 export VM_CPU_COUNT=1
 
 export USE_TEST_SUBR="
+disable-disks-tests.sh
 disable-dtrace-tests.sh
 disable-zfs-tests.sh
 disable-notyet-tests.sh

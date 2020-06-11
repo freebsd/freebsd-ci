@@ -85,10 +85,10 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		python2		\
 		sudo
 
-	if [ "${TARGET}" = "amd64" ]; then
-		sudo chroot ufs pkg install -Iy	\
-			linux-c7-ltp
-	fi
+	#if [ "${TARGET}" = "amd64" ]; then
+	#	sudo chroot ufs pkg install -Iy	\
+	#		linux-c7-ltp
+	#fi
 
 	sudo umount ufs/dev
 	sudo rm -f ufs/etc/resolv.conf

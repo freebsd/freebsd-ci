@@ -41,7 +41,7 @@ echo "openposix" >> /compat/linux/opt/ltp/scenario_groups/default
 mdconfig -s 262144k
 
 set +e
-yes | limits -n 1024 chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf -b /dev/md0 -pl /ltp-results.log
+yes | chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf -b /dev/md0 -pl /ltp-results.log
 echo $? > ${METADIR}/runltp.error
 set -e
 

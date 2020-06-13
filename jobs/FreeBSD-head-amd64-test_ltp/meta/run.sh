@@ -7,7 +7,7 @@ export PATH
 
 # Enable services needed by tests
 sysrc linux_enable="YES"
-for i in proc sys tmp; do
+for i in proc sys tmp dev; do
 	mkdir -p /compat/linux/$i
 done
 service linux start

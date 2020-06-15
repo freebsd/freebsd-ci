@@ -1,0 +1,34 @@
+#!/bin/sh
+
+echo
+echo "--------------------------------------------------------------"
+echo "rc.local start!"
+echo "--------------------------------------------------------------"
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+export PATH
+
+set -x
+
+ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
+
+TARDEV=/dev/ada1
+METADIR=/meta
+
+ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)
+
+if [ ${ISTAR} -eq 1 ]; then
+        rm -fr ${METADIR}
+        mkdir -p ${METADIR}
+        tar xvf ${TARDEV} -C ${METADIR}
+        sh -ex ${METADIR}/run.sh
+        tar cvf ${TARDEV} -C ${METADIR} .
+else
+	echo "ERROR: ${TARDEV} is not a POSIX tar archive."
+	# Don't shutdown because this is not run in unattended mode
+	exit 1
+fi
+
+if [ -f ${METADIR}/auto-shutdown ]; then
+        shutdown -p now
+fi

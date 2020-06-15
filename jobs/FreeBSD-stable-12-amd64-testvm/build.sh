@@ -10,4 +10,4 @@ export WITH_DEBUG=1
 export WITH_DOC=1
 export WITH_TESTS=1
 
-sh -x freebsd-ci/scripts/build/build-test_image.sh
+sh -x freebsd-ci/scripts/build/build-test_image-12.sh

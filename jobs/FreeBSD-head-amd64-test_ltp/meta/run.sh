@@ -38,7 +38,7 @@ END
 # Add Open POSIX to the default run.
 echo "openposix" >> /compat/linux/opt/ltp/scenario_groups/default
 
-mdconfig -s 262144k
+mdconfig -s 512m
 
 set +e
 yes | chroot /compat/linux /opt/ltp/runltp -Q -S /ltp-skipfile.conf -b /dev/md0 -pl /ltp-results.log

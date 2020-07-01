@@ -221,7 +221,7 @@
 - job-template:
     defaults: global
     name: 'FreeBSD-{branch}-riscv64-test'
-    node: jailer
+    node: vmhost
     scm:
       - 'FreeBSD-src-{branch}-empty'
     parameters:
@@ -260,7 +260,7 @@
 - job-template:
     defaults: global
     name: 'FreeBSD-{branch}-armv7-test'
-    node: jailer
+    node: vmhost
     scm:
       - 'FreeBSD-src-{branch}-empty'
     parameters:
@@ -298,7 +298,7 @@
 - job-template:
     defaults: global
     name: 'FreeBSD-{branch}-aarch64-test'
-    node: jailer
+    node: vmhost
     scm:
       - 'FreeBSD-src-{branch}-empty'
     parameters:
@@ -336,7 +336,7 @@
 - job-template:
     defaults: global
     name: 'FreeBSD-{branch}-mips64-test'
-    node: jailer
+    node: vmhost
     scm:
       - 'FreeBSD-src-{branch}-empty'
     parameters:
@@ -374,7 +374,7 @@
 - job-template:
     defaults: global
     name: 'FreeBSD-{branch}-powerpc64-test'
-    node: jailer
+    node: vmhost
     scm:
       - 'FreeBSD-src-{branch}-empty'
     parameters:

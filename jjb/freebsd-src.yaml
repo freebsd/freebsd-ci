@@ -361,7 +361,7 @@
 
 - job:
     name: FreeBSD-head-amd64-dtrace_test
-    node: bhyve_host
+    node: vmhost_bhyve
     scm:
       - FreeBSD-src-head-empty
     properties:
@@ -392,7 +392,7 @@
 
 - job:
     name: FreeBSD-head-amd64-test_dtrace
-    node: bhyve_host
+    node: vmhost_bhyve
     scm:
       - FreeBSD-src-head-empty
     properties:
@@ -421,7 +421,7 @@
 
 - job:
     name: FreeBSD-head-amd64-test_zfs
-    node: bhyve_host
+    node: vmhost_bhyve
     scm:
       - FreeBSD-src-head-empty
     properties:
@@ -450,7 +450,7 @@
 
 - job:
     name: FreeBSD-head-amd64-test_ltp
-    node: bhyve_host
+    node: vmhost_bhyve
     scm:
       - FreeBSD-src-head-empty
     properties:

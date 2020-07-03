@@ -185,7 +185,7 @@
 - job-template:
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-test'
-    node: bhyve_host
+    node: vmhost_bhyve
     scm:
       - 'FreeBSD-src-{branch}-empty'
     properties:
@@ -620,7 +620,7 @@
     artifact_path: artifact
     defaults: global
     name: 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
-    node: bhyve_host
+    node: vmhost_bhyve
     scm:
       - 'FreeBSD-src-project-empty'
     parameters:
@@ -706,7 +706,7 @@
 - job-template:
     defaults: global
     name: 'FreeBSD-srcproj-{project}-{target_arch}-test'
-    node: bhyve_host
+    node: vmhost_bhyve
     scm:
       - 'FreeBSD-src-project-empty'
     properties:

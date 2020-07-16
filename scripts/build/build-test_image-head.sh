@@ -68,7 +68,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# perl5: lots of stuff
 	# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 	# py-dpkt: sys/opencrypto/runtests
-	# python2: sys/opencrypto/runtests
+	# python3: sys/opencrypto/runtests
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
@@ -82,7 +82,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		py37-dpkt	\
 		py37-scapy	\
 		python		\
-		python2		\
+		python3		\
 		sudo
 
 	if [ "${TARGET}" = "amd64" ]; then

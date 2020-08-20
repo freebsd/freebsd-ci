@@ -10,7 +10,7 @@ fi
 F=/usr/tests/lib/libcasper/services/cap_net/Kyuafile
 if [ -f ${F} ]; then
 	sed -i .bak \
-		-e 's/tap_test_program{name="net_test", }/-- tap_test_program{name="net_test", }/' \
+		-e 's/atf_test_program{name="net_test", }/-- atf_test_program{name="net_test", }/' \
 		${F}
 fi
 

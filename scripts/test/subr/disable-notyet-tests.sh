@@ -7,6 +7,13 @@ if [ -f ${F} ]; then
 		${F}
 fi
 
+F=/usr/tests/lib/libcasper/services/cap_net/Kyuafile
+if [ -f ${F} ]; then
+	sed -i .bak \
+		-e 's/tap_test_program{name="net_test", }/-- tap_test_program{name="net_test", }/' \
+		${F}
+fi
+
 F=/usr/local/tests/kyua/utils/signals/Kyuafile
 if [ -f ${F} ]; then
 	sed -i .bak \

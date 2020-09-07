@@ -21,3 +21,6 @@ run-kyua.sh
 "
 
 sh -x freebsd-ci/scripts/test/run-tests.sh
+
+# Turn known test failures into xfails.
+while read t; do xml ed -P -L -r "/testsuite/testcase[@classname=\"$t\"]/error" -v skip test-result.xml; done < xfail-list

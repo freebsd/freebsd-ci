@@ -91,6 +91,13 @@ sh -ex ${TEST_BASE}/extract-meta.sh
 rm -f test-report.*
 mv ${METAOUTDIR}/test-report.* .
 
+# Turn known test failures into xfails.
+if [ -e ${JOB_DIR}/xfail-list ]; then
+	while read t; do
+		xml ed -P -L -r "/testsuite/testcase[@classname=\"$t\"]/error" -v skip test-report.xml
+	done < ${JOB_DIR}/xfail-list
+fi
+
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	rm -f disk${i}
 done

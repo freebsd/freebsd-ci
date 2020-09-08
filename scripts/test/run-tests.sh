@@ -93,8 +93,16 @@ mv ${METAOUTDIR}/test-report.* .
 
 # Turn known test failures into xfails.
 if [ -e ${JOB_DIR}/xfail-list ]; then
-	while read t; do
-		xml ed -P -L -r "/testsuite/testcase[@classname=\"$t\"]/error" -v skip test-report.xml
+	while IFS=":" read classname name; do
+		report="test-report.xml"
+		xpath="/testsuite/testcase[@classname=\"${classname}\"][@name=\"${name}\"]"
+		if ! xml sel -Q -t -c "${xpath}" "${report}"; then
+			echo "Testcase ${classname}:${name} vanished"
+		elif ! xml sel -Q -t -c "${xpath}/*[self::error or self::failure]" "${report}"; then
+			echo "Testcase ${classname}:${name} unexpectedly succeeded"
+		else
+			xml ed -P -L -r "${xpath}/*[self::error or self::failure]" -v skip "${report}"
+		fi
 	done < ${JOB_DIR}/xfail-list
 fi
 

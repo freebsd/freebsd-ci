@@ -11,9 +11,15 @@ lib.msun.next_test:main
 lib.msun.rem_test:main
 lib.msun.trig_test:special
 libexec.tftpd.functional:dotdot_v6
+libexec.tftpd.functional:rrq_duped_ack_v6
 libexec.tftpd.functional:s_flag_v6
 libexec.tftpd.functional:wrq_dropped_data_v6
 sys.capsicum.capsicum-test:main
+sys.geom.class.eli.reentrancy_test:init
+sys.geom.class.eli.online_resize_test:online_resize
 sys.fs.fusefs.io:main
+sys.mac.portacl.nobody_test:main
+sys.mac.portacl.root_test:main
 sys.kern.coredump_phnum_test:coredump_phnum
 sys.kern.ptrace_test:ptrace__PT_STEP_with_signal
+usr.sbin.mixer.mixer_test:set_empty_value

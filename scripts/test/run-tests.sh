@@ -92,9 +92,9 @@ rm -f test-report.*
 mv ${METAOUTDIR}/test-report.* .
 
 # Turn known test failures into xfails.
-if [ -e ${JOB_DIR}/xfail-list ]; then
+report="test-report.xml"
+if [ -e ${JOB_DIR}/xfail-list -a -e "${report}" ]; then
 	while IFS=":" read classname name; do
-		report="test-report.xml"
 		xpath="/testsuite/testcase[@classname=\"${classname}\"][@name=\"${name}\"]"
 		if ! xml sel -Q -t -c "${xpath}" "${report}"; then
 			echo "Testcase ${classname}:${name} vanished"

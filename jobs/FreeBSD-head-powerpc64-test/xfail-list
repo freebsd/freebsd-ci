@@ -1,5 +1,7 @@
 bin.pkill.pgrep-j_test:main
+bin.pkill.pkill-j_test:main
 lib.googletest.gmock_main.gmock-spec-builders_test:main
+lib.libarchive.functional_test:__test_cases_list__
 lib.libc.gen.makecontext_test:makecontext_arg1
 lib.libc.gen.makecontext_test:makecontext_arg2
 lib.libc.gen.makecontext_test:makecontext_arg3
@@ -27,6 +29,7 @@ sbin.ping.in_cksum_test:unaligned_odd_length_big_endian
 sbin.ping.in_cksum_test:unaligned_odd_length_little_endian
 sys.capsicum.capsicum-test:main
 sys.fs.fusefs.io:main
+sys.fs.tmpfs.vnode_leak_test:main
 sys.geom.class.eli.online_resize_test:online_resize
 sys.geom.class.eli.reentrancy_test:init
 sys.geom.class.mirror.component_selection:run_latest_genid
@@ -37,5 +40,10 @@ sys.mac.portacl.nobody_test:main
 sys.mac.portacl.root_test:main
 sys.netpfil.common.nat:ipfnat_basic
 sys.netpfil.common.nat:ipfw_basic
+sys.netpfil.common.nat:ipfw_userspace_nat
+sys.netpfil.common.pass_block:pf_v4
 sys.netpfil.pf.pass_block:v4
+usr.sbin.jail.jail_basic_test:basic
+usr.sbin.jail.jail_basic_test:nested
 usr.sbin.mixer.mixer_test:set_empty_value
+usr.sbin.newsyslog.legacy_test:main

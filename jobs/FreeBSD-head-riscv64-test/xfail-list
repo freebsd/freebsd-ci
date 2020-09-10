@@ -1,3 +1,4 @@
+bin.pkill.pkill-j_test:main
 lib.libc.stdio.scanfloat_test:infinities_and_nans
 lib.libc.stdlib.strtod_test:strtold_nan
 lib.libc.sys.connect_test:connect_low_port
@@ -21,8 +22,13 @@ lib.libc.sys.sendfile_test:sbytes_negative_v6
 lib.libc.sys.sendfile_test:sbytes_positive_v4
 lib.libc.sys.sendfile_test:sbytes_positive_v6
 lib.libexecinfo.backtrace_test:backtrace_fmt_basic
+lib.libthr.timedmutex_test:mutex2
+lib.libthr.timedmutex_test:mutex3
 lib.msun.csqrt_test:main
+lib.msun.ctrig_test:test_axes
+lib.msun.ctrig_test:test_large_inputs
 lib.msun.ctrig_test:test_nan_inputs
+lib.msun.ctrig_test:test_small_inputs
 lib.msun.exponential_test:main
 lib.msun.fe_round_test:fe_round
 lib.msun.fenv_test:main
@@ -101,6 +107,8 @@ sbin.ping.ping_test:ping_c1_s56_t1
 sbin.ping6.ping6_test:ping6_c1_s8_t1
 sys.capsicum.capsicum-test:main
 sys.capsicum.ioctls_test:cap_ioctls__listen_copy
+sys.fs.fusefs.io:main
+sys.geom.class.eli:online_resize_test.online_resize
 sys.geom.class.gate.ggate_test:ggated
 sys.kern.coredump_phnum_test:coredump_phnum
 sys.kern.ptrace_test:ptrace__PT_STEP_with_signal
@@ -165,3 +173,6 @@ sys.netpfil.pf.set_skip:set_skip_group
 sys.netpfil.pf.set_skip:set_skip_group_lo
 sys.netpfil.pf.table:v4_counters
 sys.netpfil.pf.table:v6_counters
+usr.sbin.jail.jail_basic_test:basic
+usr.sbin.jail.jail_basic_test:nested
+usr.sbin.mixer.mixer_test:set_empty_value

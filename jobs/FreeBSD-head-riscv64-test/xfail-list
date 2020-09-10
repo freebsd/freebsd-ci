@@ -108,7 +108,7 @@ sbin.ping6.ping6_test:ping6_c1_s8_t1
 sys.capsicum.capsicum-test:main
 sys.capsicum.ioctls_test:cap_ioctls__listen_copy
 sys.fs.fusefs.io:main
-sys.geom.class.eli:online_resize_test.online_resize
+sys.geom.class.eli.online_resize_test:online_resize
 sys.geom.class.gate.ggate_test:ggated
 sys.kern.coredump_phnum_test:coredump_phnum
 sys.kern.ptrace_test:ptrace__PT_STEP_with_signal

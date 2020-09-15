@@ -11,11 +11,17 @@ lib.msun.next_test:main
 lib.msun.rem_test:main
 lib.msun.trig_test:special
 libexec.tftpd.functional:dotdot_v6
+libexec.tftpd.functional:rrq_dropped_ack_v4
 libexec.tftpd.functional:rrq_dropped_ack_v6
+libexec.tftpd.functional:rrq_duped_ack_v4
 libexec.tftpd.functional:rrq_duped_ack_v6
 libexec.tftpd.functional:rrq_eaccess_v6
+libexec.tftpd.functional:rrq_netascii_v6
 libexec.tftpd.functional:s_flag_v6
+libexec.tftpd.functional:wrq_dropped_data_v4
 libexec.tftpd.functional:wrq_dropped_data_v6
+libexec.tftpd.functional:wrq_netascii_v4
+libexec.tftpd.functional:wrq_small_v4
 sys.capsicum.capsicum-test:main
 sys.fs.fusefs.io:main
 sys.geom.class.eli.online_resize_test:online_resize

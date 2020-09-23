@@ -159,6 +159,17 @@
           warnscanner: gcc4
 
 - project:
+    name: FreeBSD-powerpc64le
+    target_arch:
+      - powerpc64le
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-powerpc64le-ci':
+          target: powerpc
+          warnscanner: clang
+
+- project:
     name: FreeBSD-powerpcspe
     target_arch:
       - powerpcspe

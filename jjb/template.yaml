@@ -492,6 +492,11 @@
        - 'FreeBSD-{branch}-powerpc64-test'
 
 - job-group:
+    name: 'FreeBSD-{branch}-powerpc64le-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+
+- job-group:
     name: 'FreeBSD-{branch}-powerpcspe-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'

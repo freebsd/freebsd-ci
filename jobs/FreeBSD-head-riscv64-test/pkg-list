@@ -1,2 +1,4 @@
 qemu50
+opensbi
+u-boot-qemu-riscv64
 xmlstarlet

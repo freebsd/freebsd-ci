@@ -51,6 +51,27 @@
           viewvc-url: https://svnweb.FreeBSD.org/base/
 
 - scm:
+    name: FreeBSD-src-releng-12_2
+    scm:
+      - svn:
+          repos:
+            - url: svn://svn.freebsd.org/base/releng/12.2/
+              basedir: src
+          workspaceupdater: emulateclean
+          viewvc-url: https://svnweb.FreeBSD.org/base/
+
+- scm:
+    name: FreeBSD-src-releng-12_2-empty
+    scm:
+      - svn:
+          repos:
+            - url: svn://svn.freebsd.org/base/releng/12.2/@${SVN_REVISION}
+              basedir: src
+              repo-depth: empty
+          workspaceupdater: update
+          viewvc-url: https://svnweb.FreeBSD.org/base/
+
+- scm:
     name: FreeBSD-src-stable-11
     scm:
       - svn:
@@ -66,27 +87,6 @@
       - svn:
           repos:
             - url: svn://svn.freebsd.org/base/stable/11/@${SVN_REVISION}
-              basedir: src
-              repo-depth: empty
-          workspaceupdater: update
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-releng-11_2
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/releng/11.2/
-              basedir: src
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-releng-11_2-empty
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/releng/11.2/@${SVN_REVISION}
               basedir: src
               repo-depth: empty
           workspaceupdater: update

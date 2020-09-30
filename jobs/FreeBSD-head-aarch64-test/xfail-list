@@ -19,6 +19,7 @@ libexec.tftpd.functional:rrq_eaccess_v6
 libexec.tftpd.functional:rrq_empty_v6
 libexec.tftpd.functional:rrq_medium_v6
 libexec.tftpd.functional:rrq_netascii_v6
+libexec.tftpd.functional:rrq_small_v4
 libexec.tftpd.functional:rrq_window_rfc7440_v4
 libexec.tftpd.functional:s_flag_v6
 libexec.tftpd.functional:wrq_dropped_ack_v4
@@ -26,9 +27,12 @@ libexec.tftpd.functional:wrq_dropped_data_v4
 libexec.tftpd.functional:wrq_dropped_data_v6
 libexec.tftpd.functional:wrq_medium_v4
 libexec.tftpd.functional:wrq_medium_v6
+libexec.tftpd.functional:wrq_medium_window_v4
+libexec.tftpd.functional:wrq_medium_window_v6
 libexec.tftpd.functional:wrq_netascii_v4
 libexec.tftpd.functional:wrq_small_v4
 libexec.tftpd.functional:wrq_truncate_v6
+libexec.tftpd.functional:wrq_window_rfc7440_v6
 sys.capsicum.capsicum-test:main
 sys.fs.fusefs.io:main
 sys.geom.class.eli.online_resize_test:online_resize

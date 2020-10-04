@@ -44,6 +44,7 @@ sys.netpfil.common.nat:ipfw_userspace_nat
 sys.netpfil.common.nat:pf_basic
 sys.netpfil.common.pass_block:pf_v4
 sys.netpfil.pf.pass_block:v4
+sys.netpfil.pf.pfsync:basic
 usr.sbin.jail.jail_basic_test:basic
 usr.sbin.jail.jail_basic_test:nested
 usr.sbin.mixer.mixer_test:set_empty_value

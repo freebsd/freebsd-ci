@@ -1,5 +1,7 @@
+lib.libc.ssp.ssp_test:vsprintf
 lib.libc.string.memcmp_test:diff
 lib.libexecinfo.backtrace_test:backtrace_fmt_basic
+lib.librt.sem_test:timedwait
 lib.msun.exponential_test:main
 lib.msun.fenv_test:main
 lib.msun.fma_test:main
@@ -17,7 +19,9 @@ libexec.tftpd.functional:rrq_duped_ack_v4
 libexec.tftpd.functional:rrq_duped_ack_v6
 libexec.tftpd.functional:rrq_eaccess_v6
 libexec.tftpd.functional:rrq_empty_v6
+libexec.tftpd.functional:rrq_medium_v4
 libexec.tftpd.functional:rrq_medium_v6
+libexec.tftpd.functional:rrq_medium_window_v6
 libexec.tftpd.functional:rrq_netascii_v6
 libexec.tftpd.functional:rrq_small_v4
 libexec.tftpd.functional:rrq_window_rfc7440_v4
@@ -25,6 +29,8 @@ libexec.tftpd.functional:s_flag_v6
 libexec.tftpd.functional:wrq_dropped_ack_v4
 libexec.tftpd.functional:wrq_dropped_data_v4
 libexec.tftpd.functional:wrq_dropped_data_v6
+libexec.tftpd.functional:wrq_duped_data_v4
+libexec.tftpd.functional:wrq_eaccess_v4
 libexec.tftpd.functional:wrq_medium_v4
 libexec.tftpd.functional:wrq_medium_v6
 libexec.tftpd.functional:wrq_medium_window_v4

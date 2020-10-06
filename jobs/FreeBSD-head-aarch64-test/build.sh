@@ -9,9 +9,6 @@ export QEMU_MACHINE="virt"
 export QEMU_DEVICES="-device virtio-blk,drive=hd0 -device ahci,id=ahci -device ide-hd,drive=hd1,bus=ahci.0"
 export QEMU_EXTRA_PARAM="-bios /usr/local/share/u-boot/u-boot-qemu-arm64/u-boot.bin -cpu cortex-a57"
 
-# XXX: Temporary, to compare performance results.
-export VM_CPU_COUNT=1
-
 export USE_TEST_SUBR="
 disable-disks-tests.sh
 disable-dtrace-tests.sh

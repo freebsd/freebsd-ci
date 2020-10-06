@@ -9,9 +9,6 @@ export QEMU_MACHINE="virt"
 export QEMU_DEVICES="-device virtio-blk-device,drive=hd0 -device virtio-blk-device,drive=hd1"
 export QEMU_EXTRA_PARAM="-bios default -kernel kernel"
 
-# XXX: Eventually panics with SMP.
-export VM_CPU_COUNT=1
-
 export USE_TEST_SUBR="
 disable-disks-tests.sh
 disable-dtrace-tests.sh

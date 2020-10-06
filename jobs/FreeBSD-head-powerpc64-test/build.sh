@@ -12,9 +12,6 @@ export QEMU_DEVICES="-device virtio-blk,drive=hd1 -device virtio-blk,drive=hd0"
 # The -accel tcg,thread=multi is supposed to improve performance.
 export QEMU_EXTRA_PARAM="-vga none -accel tcg,thread=multi"
 
-# XXX: Temporary, to compare performance results.
-export VM_CPU_COUNT=1
-
 export USE_TEST_SUBR="
 disable-disks-tests.sh
 disable-dtrace-tests.sh

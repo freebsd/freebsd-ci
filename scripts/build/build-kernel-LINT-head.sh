@@ -8,9 +8,6 @@ SRCCONF=/dev/null
 
 KERNCONF=${KERNCONF:-LINT}
 
-cd ${WORKSPACE}/src/sys/${TARGET}/conf
-make LINT
-
 cd ${WORKSPACE}/src
 
 make -j ${JFLAG} \

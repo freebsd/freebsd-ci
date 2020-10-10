@@ -512,6 +512,8 @@
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
+       - 'FreeBSD-{branch}-{target_arch}-testvm'
        - 'FreeBSD-{branch}-riscv64-test'
 
 - job-group:

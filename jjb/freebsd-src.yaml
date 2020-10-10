@@ -196,7 +196,6 @@
           target: riscv
           warnscanner: clang
           disable_job_images: true
-          disable_job_LINT: true
           node_job_build: jailer
 
 - project:

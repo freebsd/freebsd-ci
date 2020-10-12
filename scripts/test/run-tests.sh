@@ -103,7 +103,7 @@ if [ -e ${JOB_DIR}/xfail-list -a -e "${report}" ]; then
 				echo "Testcase ${classname}:${name} unexpectedly succeeded"
 			fi
 		else
-			xml ed -P -L -r "${xpath}/*[self::error or self::failure]" -v skip "${report}"
+			xml ed -P -L -r "${xpath}/*[self::error or self::failure]" -v skipped "${report}"
 		fi
 	done < ${JOB_DIR}/xfail-list
 fi

@@ -234,7 +234,7 @@
       - FreeBSD-src-head
     properties:
       - build-discarder:
-          num-to-keep: 60
+          num-to-keep: 30
     triggers:
       - timed: '@daily'
     builders:

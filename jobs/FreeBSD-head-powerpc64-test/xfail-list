@@ -14,9 +14,7 @@ lib.libc.sys.mincore_test:mincore_resid
 lib.libc.sys.mincore_test:mincore_shmseg
 lib.libthr.timedmutex_test:mutex2
 lib.libthr.timedmutex_test:mutex3
-lib.msun.fenv_test:main
 lib.msun.fma_test:main
-lib.msun.lrint_test:main
 lib.msun.rem_test:main
 libexec.tftpd.functional:wrq_dropped_data_v6
 sbin.ping.in_cksum_test:aligned_even_length_big_endian

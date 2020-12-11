@@ -16,7 +16,7 @@
     name: add-svn-revision-description
     builders:
       - system-groovy:
-          command: build.setDescription("r" + build.envVars.SVN_REVISION)
+          command: "build.setDescription( build.envVars.containsKey('GIT_COMMIT') ? build.envVars.GIT_COMMIT : build.envVars.SVN_REVISION)"
 
 - publisher:
     name: scan-clang-warnings

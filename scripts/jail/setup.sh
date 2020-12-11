@@ -113,8 +113,12 @@ if [ "$QUARANTINE" ]; then
 	fi
 fi
 
-sudo jexec ${JNAME} sh -c "/usr/sbin/pw groupadd jenkins -g 5213"
-sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u 5213 -g 5213 default -c \"Jenkins CI\" -d ${WORKSPACE_IN_JAIL} /bin/sh"
+# Inherit Jenkins uid and gid from host.
+JAIL_UID=$(id -u jenkins)
+JAIL_GID=$(id -g jenkins)
+
+sudo jexec ${JNAME} sh -c "/usr/sbin/pw groupadd jenkins -g ${JAIL_GID}"
+sudo jexec ${JNAME} sh -c "/usr/sbin/pw useradd jenkins -u ${JAIL_UID} -g ${JAIL_GID} default -c \"Jenkins CI\" -d ${WORKSPACE_IN_JAIL} /bin/sh"
 sudo jexec ${JNAME} sh -c "umask 7337; echo 'jenkins ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/jenkins"
 
 echo "build environment:"

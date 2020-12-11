@@ -72,8 +72,8 @@
       - execute-in-jail
     publishers:
       - clean-jail
-      - mail-notify-failure
-      - mail-notify-fixed
+      - git-mail-notify-failure
+      - git-mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-doc-main-igor'

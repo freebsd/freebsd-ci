@@ -1,170 +1,61 @@
 - scm:
-    name: FreeBSD-src-head
+    name: FreeBSD-src
     scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/head/
-              basedir: src
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-head-set_revision
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/head/@${SVN_REVISION}
-              basedir: src
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-head-empty
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/head/@${SVN_REVISION}
-              basedir: src
-              repo-depth: empty
-          workspaceupdater: update
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-stable-12
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/stable/12/
-              basedir: src
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-stable-12-empty
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/stable/12/@${SVN_REVISION}
-              basedir: src
-              repo-depth: empty
-          workspaceupdater: update
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-releng-12_2
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/releng/12.2/
-              basedir: src
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-releng-12_2-empty
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/releng/12.2/@${SVN_REVISION}
-              basedir: src
-              repo-depth: empty
-          workspaceupdater: update
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-stable-11
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/stable/11/
-              basedir: src
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/base/
-
-- scm:
-    name: FreeBSD-src-stable-11-empty
-    scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/stable/11/@${SVN_REVISION}
-              basedir: src
-              repo-depth: empty
-          workspaceupdater: update
-          viewvc-url: https://svnweb.FreeBSD.org/base/
+      - git:
+          url: ssh://anongit@git.freebsd.org/src.git
+          branches:
+            - 'origin/{branch}'
+          basedir: src
+          clean:
+            before: True
+            after: False
+          wipe-workspace: False
 
 - scm:
     name: FreeBSD-src-stable-10
     scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/stable/10/
-              basedir: src
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/base/
+      - FreeBSD-src:
+          branch: 'stable/10'
 
 - scm:
-    name: FreeBSD-src-stable-10-empty
+    name: FreeBSD-src-stable-11
     scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/stable/10/@${SVN_REVISION}
-              basedir: src
-              repo-depth: empty
-          workspaceupdater: update
-          viewvc-url: https://svnweb.FreeBSD.org/base/
+      - FreeBSD-src:
+          branch: 'stable/11'
 
 - scm:
-    project: project
-    name: FreeBSD-src-project
+    name: FreeBSD-src-stable-12
     scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/projects/${FBSD_SRC_PROJECT}/
-              basedir: src
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/base/
+      - FreeBSD-src:
+          branch: 'stable/12'
 
 - scm:
-    project: project
-    name: FreeBSD-src-project-empty
+    name: FreeBSD-src-main
     scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/base/projects/${FBSD_SRC_PROJECT}/@${SVN_REVISION}
-              basedir: src
-              repo-depth: empty
-          workspaceupdater: update
-          viewvc-url: https://svnweb.FreeBSD.org/base/
+      - FreeBSD-src:
+          branch: 'main'
 
-# OBSOLETE
+# Temporary compat entry
 - scm:
-    name: FreeBSD-doc-head
+    name: FreeBSD-src-head
     scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/doc/head/
-              basedir: doc
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/doc/
+      - FreeBSD-src:
+          branch: 'main'
 
 - scm:
-    name: FreeBSD-doc-main
+    name: FreeBSD-doc
     scm:
       - git:
           url: https://git.freebsd.org/doc.git
           branches:
-            - origin/main
+            - 'origin/{branch}'
           basedir: doc
           browser: cgit
           browser-url: https://cgit.freebsd.org/doc/
           reference-repo: '/jenkins/repo/doc.git'
 
 - scm:
-    name: FreeBSD-ports-head
+    name: FreeBSD-doc-main
     scm:
-      - svn:
-          repos:
-            - url: svn://svn.freebsd.org/ports/head/
-              basedir: ports
-          workspaceupdater: emulateclean
-          viewvc-url: https://svnweb.FreeBSD.org/ports/
+      - FreeBSD-doc:
+          branch: 'main'

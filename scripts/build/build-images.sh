@@ -9,6 +9,7 @@ if [ -z "${SVN_REVISION}" ]; then
 	exit 1
 fi
 
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 OUTPUT_IMG_NAME=disk.img
 
@@ -35,7 +36,7 @@ fi
 mkdir -p ufs
 for f in ${DIST_PACKAGES}
 do
-	fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
+	fetch https://${ARTIFACT_SERVER}/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs
 done
 

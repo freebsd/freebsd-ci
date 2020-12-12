@@ -84,7 +84,7 @@
           buildsteps:
             - shell: |
                 if [ -z "${SVN_REVISION}" ]; then
-                    ARTIFACT_SERVER=artifact.ci.freebsd.org
+                    ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
                     ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/latest_testvm/${FBSD_TARGET}/${FBSD_TARGET_ARCH}
                     SVN_REVISION=$(curl -s https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/revision.txt | cut -d 'r' -f 2)
                 fi

@@ -11,6 +11,7 @@ BRANCH=head
 TARGET=amd64
 TARGET_ARCH=amd64
 
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=${BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 
 sudo rm -fr work
@@ -20,7 +21,7 @@ cd work
 mkdir -p ufs
 for f in base kernel lib32 base-dbg kernel-dbg lib32-dbg tests
 do
-	fetch https://artifact.ci.freebsd.org/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
+	fetch https://${ARTIFACT_SERVER}/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs
 done
 

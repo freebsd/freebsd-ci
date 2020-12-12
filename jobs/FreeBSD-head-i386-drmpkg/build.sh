@@ -11,7 +11,7 @@ if [ -z "${SVN_REVISION}" ]; then
 	exit 1
 fi
 
-ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 IMG_NAME=disk-base.img
 JOB_DIR=freebsd-ci/jobs/${JOB_NAME}
@@ -33,7 +33,7 @@ METADIR=meta
 METAOUTDIR=meta-out
 RUN_RESULT_FILE=${METAOUTDIR}/result
 
-fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
+fetch https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
 zstd --rm -fd ${IMG_NAME}.zst
 
 DISK_ZFS=diskzfs

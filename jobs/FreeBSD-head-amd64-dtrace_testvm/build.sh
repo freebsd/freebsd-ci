@@ -25,7 +25,7 @@ cleanup () {
 
 trap cleanup EXIT
 
-ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=dtrace-test/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 OUTPUT_IMG_NAME=disk-test.img
 
@@ -52,7 +52,7 @@ fi
 mkdir -p ufs
 for f in ${DIST_PACKAGES}
 do
-	fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${f}.txz
+	fetch https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs
 done
 

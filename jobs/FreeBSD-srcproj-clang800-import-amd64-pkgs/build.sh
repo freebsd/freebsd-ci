@@ -11,7 +11,7 @@ if [ -z "${SVN_REVISION}" ]; then
 	exit 1
 fi
 
-ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
 IMG_NAME=disk-base.img
 JOB_DIR=freebsd-ci/jobs/${JOB_NAME}
@@ -32,7 +32,7 @@ VM_MEM_SIZE=${BUILDER_MEMORY}
 METADIR=meta
 METAOUTDIR=meta-out
 
-fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
+fetch https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
 zstd --rm -fd ${IMG_NAME}.zst
 
 DISK_ZFS=diskzfs
@@ -50,7 +50,7 @@ printf "${BUILDER_RESOLV_CONF}" > ${METADIR}/resolv.conf
 eval BUILDER_JAIL_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"
 echo "${BUILDER_JAIL_IP6}" > ${METADIR}/ip
 echo "${BUILDER_HTTP_PROXY}" > ${METADIR}/http_proxy
-echo "${ARTIFACT_SERVER}" > ${METADIR}/artifact_server
+echo "https://${ARTIFACT_SERVER}" > ${METADIR}/artifact_server
 echo "${ARTIFACT_SUBDIR}" > ${METADIR}/artifact_subdir
 touch ${METADIR}/auto-shutdown
 sh -ex ${TEST_BASE}/create-meta.sh

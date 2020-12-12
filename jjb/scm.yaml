@@ -136,6 +136,7 @@
           workspaceupdater: update
           viewvc-url: https://svnweb.FreeBSD.org/base/
 
+# OBSOLETE
 - scm:
     name: FreeBSD-doc-head
     scm:
@@ -145,6 +146,21 @@
               basedir: doc
           workspaceupdater: emulateclean
           viewvc-url: https://svnweb.FreeBSD.org/doc/
+
+- scm:
+    name: FreeBSD-doc-main
+    scm:
+      - git:
+          url: https://git.freebsd.org/doc.git
+          branches:
+            - origin/main
+          basedir: doc
+          clean:
+            before: True
+            after: False
+          browser: cgit
+          browser-url: https://cgit.freebsd.org/doc/
+          wipe-workspace: False
 
 - scm:
     name: FreeBSD-ports-head

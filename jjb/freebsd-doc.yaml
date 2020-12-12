@@ -1,6 +1,7 @@
 - job:
     name: FreeBSD-doc-head
     defaults: global
+    disabled: true
     node: jailer
     scm:
       - FreeBSD-doc-head
@@ -31,6 +32,7 @@
 - job:
     name: FreeBSD-doc-head-igor
     defaults: global
+    disabled: true
     node: jailer
     scm:
       - FreeBSD-doc-head
@@ -40,6 +42,56 @@
           description: "Subversion revision"
     properties:
       - inject
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - publish-checkstyle-results
+      - clean-jail
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+- job:
+    name: FreeBSD-doc-main
+    defaults: global
+    node: jailer
+    scm:
+      - FreeBSD-doc-main
+    triggers:
+      - pollscm:
+          cron: "H/5 * * * *"
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - clean-jail
+      - git-mail-notify-failure
+      - git-mail-notify-fixed
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-doc-main-igor'
+          condition: SUCCESS
+          git-revision: true
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 60
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+
+- job:
+    name: FreeBSD-doc-main-igor
+    defaults: global
+    node: jailer
+    scm:
+      - FreeBSD-doc-main
     builders:
       - add-svn-revision-description
       - checkout-scripts

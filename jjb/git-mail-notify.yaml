@@ -1,0 +1,92 @@
+- publisher:
+    name: git-mail-notify-failure
+    publishers:
+      - email-ext:
+          recipients: ${DEFAULT_RECIPIENTS}
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          body: |
+            $PROJECT_NAME - Build #$BUILD_NUMBER (${ENV, var="GIT_COMMIT"}) - $BUILD_STATUS
+
+            Build information: ${BUILD_URL}
+            Full change log: ${BUILD_URL}changes
+            Full build log: ${BUILD_URL}console
+
+            Status explanation:
+            "Failure" - the build is suspected being broken by the following changes
+            "Still Failing" - the build has not been fixed by the following changes and
+                              this is a notification to note that these changes have
+                              not been fully tested by the CI system
+            
+            Change summaries:
+            (Those commits are likely but not certainly responsible)
+            
+            ${CHANGES, format="%r by %a:\\n%m\\n"}
+            
+            The end of the build log:
+            
+            ${BUILD_LOG}
+          failure: true
+          unstable: false
+          fixed: false
+          presend-script: ${DEFAULT_PRESEND_SCRIPT}
+          send-to:
+            - developers
+            - recipients
+- publisher:
+    name: git-mail-notify-unstable
+    publishers:
+      - email-ext:
+          recipients: ${DEFAULT_RECIPIENTS}
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          body: |
+            $PROJECT_NAME - Build #$BUILD_NUMBER (${ENV, var="GIT_COMMIT"}) - $BUILD_STATUS
+
+            Build information: ${BUILD_URL}
+            Full change log: ${BUILD_URL}changes
+            Full build log: ${BUILD_URL}console
+
+            Status explanation:
+            "Unstable" - some tests are suspected being broken by the following changes
+            "Still Unstable" - the failing test cases have not been fixed by these
+                               following changes and this is a notification to note that
+                               these changes have not been fully tested by the CI system
+            
+            Change summaries:
+            (Those commits are likely but not certainly responsible)
+            
+            ${CHANGES, format="%r by %a:\\n%m\\n"}
+            
+            The failed test cases:
+            
+            ${FAILED_TESTS, showStack="false", showMessage="true", maxTests=100}
+          failure: false
+          unstable: true
+          fixed: false
+          presend-script: ${DEFAULT_PRESEND_SCRIPT}
+          send-to:
+            - developers
+            - recipients
+- publisher:
+    name: git-mail-notify-fixed
+    publishers:
+      - email-ext:
+          recipients: ${DEFAULT_RECIPIENTS}
+          subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
+          body: |
+            $PROJECT_NAME - Build #$BUILD_NUMBER (${ENV, var="GIT_COMMIT"}) - $BUILD_STATUS
+            
+            Build information: ${BUILD_URL}
+            Full change log: ${BUILD_URL}changes
+            Full build log: ${BUILD_URL}console
+            
+            Change summaries:
+            (Those commits are likely but not certainly responsible)
+            
+            ${CHANGES, format="%r by %a:\\n%m\\n"}
+          failure: false
+          unstable: false
+          fixed: true
+          presend-script: ${DEFAULT_PRESEND_SCRIPT}
+          send-to:
+            #- culprits
+            - recipients

@@ -75,7 +75,6 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		gdb		\
 		jq		\
 		ksh93		\
-		kyua		\
 		nist-kat	\
 		nmap		\
 		perl5		\

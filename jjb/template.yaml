@@ -331,14 +331,17 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-images'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
-       - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-head-amd64-test_bhyve'
+       - 'FreeBSD-{branch}-{target_arch}-testvm':
+           downstream_projects:
+            - 'FreeBSD-{branch}-{target_arch}-test'
+            - 'FreeBSD-{branch}-{target_arch}-test_zfs'
+            - 'FreeBSD-{branch}-{target_arch}-test_ltp'
+       - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
 - job-group:
     name: 'FreeBSD-{branch}-armv6-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
-       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-armv7-ci'

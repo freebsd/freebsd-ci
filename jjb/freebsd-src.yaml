@@ -4,7 +4,6 @@
       - amd64
     branch:
       - stable-12
-      - releng-12_2
       - stable-11
       - stable-10
     jobs:
@@ -30,7 +29,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-aarch64-ci':
@@ -44,7 +42,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-armv6-ci':
@@ -58,7 +55,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
     jobs:
       - 'FreeBSD-{branch}-armv7-ci':
           target: arm
@@ -71,7 +67,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
       - stable-11
       - stable-10
     jobs:
@@ -86,7 +81,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
     jobs:
       - 'FreeBSD-{branch}-mips-ci':
           target: mips
@@ -113,7 +107,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
     jobs:
       - 'FreeBSD-{branch}-mips64-ci':
           target: mips
@@ -140,7 +133,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
@@ -154,7 +146,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-powerpc64-ci':
@@ -179,7 +170,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
     jobs:
       - 'FreeBSD-{branch}-powerpcspe-ci':
           target: powerpc
@@ -205,7 +195,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
       - stable-11
       - stable-10
     jobs:

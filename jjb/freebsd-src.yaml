@@ -5,7 +5,6 @@
     branch:
       - stable-12
       - stable-11
-      - stable-10
     jobs:
       - 'FreeBSD-{branch}-amd64-ci':
           target: amd64
@@ -68,7 +67,6 @@
       - head
       - stable-12
       - stable-11
-      - stable-10
     jobs:
       - 'FreeBSD-{branch}-i386-ci':
           target: i386
@@ -196,7 +194,6 @@
       - head
       - stable-12
       - stable-11
-      - stable-10
     jobs:
       - 'FreeBSD-{branch}-sparc64-ci':
           target: sparc64

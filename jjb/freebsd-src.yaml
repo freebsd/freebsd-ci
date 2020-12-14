@@ -219,8 +219,8 @@
       - aarch64
       - amd64
       - i386
-    project:
-      - clang800-import
+# Add list of projects here.
+    project: []
     jobs:
       - 'FreeBSD-srcproj-{project}-{target_arch}-ci':
           target: amd64

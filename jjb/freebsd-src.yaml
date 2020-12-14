@@ -8,7 +8,7 @@
       - stable-11
       - stable-10
     jobs:
-      - 'FreeBSD-{branch}-{target_arch}-ci':
+      - 'FreeBSD-{branch}-amd64-ci':
           target: amd64
           warnscanner: clang
 
@@ -75,7 +75,7 @@
       - stable-11
       - stable-10
     jobs:
-      - 'FreeBSD-{branch}-{target_arch}-ci':
+      - 'FreeBSD-{branch}-i386-ci':
           target: i386
           warnscanner: clang
 

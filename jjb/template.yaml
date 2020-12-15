@@ -142,6 +142,7 @@
     artifact_path: artifact
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-testvm'
+    downstream_projects: []
     node: jailer_fast
     scm:
       - 'FreeBSD-src-{branch}-empty'
@@ -172,10 +173,7 @@
       - make-symlink
       - clean-jail
       - trigger-parameterized-builds:
-        - project:
-            - 'FreeBSD-{branch}-{target_arch}-test'
-            - 'FreeBSD-{branch}-{target_arch}-test_zfs'
-            - 'FreeBSD-{branch}-{target_arch}-test_ltp'
+        - project: '{obj:downstream_projects}'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property
@@ -326,7 +324,11 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-images'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
-       - 'FreeBSD-{branch}-{target_arch}-testvm'
+       - 'FreeBSD-{branch}-{target_arch}-testvm':
+           downstream_projects:
+            - 'FreeBSD-{branch}-{target_arch}-test'
+            - 'FreeBSD-{branch}-{target_arch}-test_zfs'
+            - 'FreeBSD-{branch}-{target_arch}-test_ltp'
        - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
 - job-group:

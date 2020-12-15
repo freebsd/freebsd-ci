@@ -126,17 +126,38 @@
           disable_job_LINT: true
 
 - project:
-    name: FreeBSD-powerpc
+    name: FreeBSD-powerpc-11
     target_arch:
       - powerpc
     branch:
-      - head
-      - stable-12
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
           target: powerpc
           warnscanner: gcc4
+          disable_job_LINT: true
+
+- project:
+    name: FreeBSD-powerpc-12
+    target_arch:
+      - powerpc
+    branch:
+      - stable-12
+    jobs:
+      - 'FreeBSD-{branch}-powerpc-ci':
+          target: powerpc
+          warnscanner: gcc4
+
+- project:
+    name: FreeBSD-powerpc
+    target_arch:
+      - powerpc
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-powerpc-ci':
+          target: powerpc
+          warnscanner: clang
 
 - project:
     name: FreeBSD-powerpc64
@@ -187,13 +208,25 @@
           disable_job_images: true
           node_job_build: jailer
 
+# Sparc64
 - project:
-    name: FreeBSD-sparc64
+    name: FreeBSD-sparc64-11
+    target_arch:
+      - sparc64
+    branch:
+      - stable-11
+    jobs:
+      - 'FreeBSD-{branch}-sparc64-ci':
+          target: sparc64
+          disable_job_LINT: true
+          warnscanner: gcc4
+
+- project:
+    name: FreeBSD-sparc64-12
     target_arch:
       - sparc64
     branch:
       - stable-12
-      - stable-11
     jobs:
       - 'FreeBSD-{branch}-sparc64-ci':
           target: sparc64

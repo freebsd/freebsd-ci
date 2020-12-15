@@ -105,6 +105,8 @@
           name: SVN_REVISION
           description: "Subversion revision"
     properties:
+      - build-discarder:
+          num-to-keep: 200
       - inject:
           properties-content: |
             FBSD_BRANCH={branch}
@@ -255,6 +257,8 @@
       - mail-notify-failure
       - mail-notify-unstable
       - mail-notify-fixed
+    triggers:
+      - timed: '0 22 * * *'
     wrappers:
       - timestamps
       - timeout:

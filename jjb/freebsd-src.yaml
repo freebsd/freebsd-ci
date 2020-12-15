@@ -32,6 +32,7 @@
     jobs:
       - 'FreeBSD-{branch}-aarch64-ci':
           target: arm64
+          disable_job_images: true
           warnscanner: clang
 
 - project:

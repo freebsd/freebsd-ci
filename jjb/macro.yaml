@@ -88,5 +88,11 @@
                     ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/latest_testvm/${FBSD_TARGET}/${FBSD_TARGET_ARCH}
                     SVN_REVISION=$(curl -s https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/revision.txt | cut -d 'r' -f 2)
                 fi
+                if [ -z "${SVN_REVISION}" ]; then
+                    # Backup method -- interrogate Jenkins directly.
+                    SVN_REVISION=$(curl -s ${JENKINS_URL}/job/FreeBSD-${FBSD_BRANCH}-${FBSD_TARGET_ARCH}-testvm/lastSuccessfulBuild/api/json | jq '.changeSet.revisions[0].revision')
+                fi
                 rm -f ${WORKSPACE}/svn_revision.property
                 echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/svn_revision.property
+            - inject:
+                properties-file: "${WORKSPACE}/svn_revision.property"

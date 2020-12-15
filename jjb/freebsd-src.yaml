@@ -434,10 +434,8 @@
             FBSD_BRANCH=head
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
+    triggers:
+      - timed: 'H */6 * * *'
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -445,6 +443,7 @@
     publishers:
       - publish-junit-results
     wrappers:
+      - use-latest-testvm-revision
       - timestamps
       - timeout:
           timeout: 240

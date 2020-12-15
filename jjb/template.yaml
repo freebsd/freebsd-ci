@@ -328,7 +328,6 @@
        - 'FreeBSD-{branch}-{target_arch}-testvm':
            downstream_projects:
             - 'FreeBSD-{branch}-{target_arch}-test'
-            - 'FreeBSD-{branch}-{target_arch}-test_zfs'
             - 'FreeBSD-{branch}-{target_arch}-test_ltp'
        - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
@@ -341,7 +340,6 @@
        - 'FreeBSD-{branch}-{target_arch}-testvm':
            downstream_projects:
             - 'FreeBSD-{branch}-{target_arch}-test'
-            - 'FreeBSD-{branch}-{target_arch}-test_zfs'
             - 'FreeBSD-{branch}-{target_arch}-test_ltp'
        - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
@@ -615,7 +613,6 @@
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-srcproj-{project}-{target_arch}-test'
-            #- 'FreeBSD-srcproj-{project}-test_zfs'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property

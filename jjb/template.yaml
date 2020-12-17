@@ -105,8 +105,8 @@
           name: SVN_REVISION
           description: "Subversion revision"
     properties:
-      - build-discarder:
-          num-to-keep: 200
+      #- build-discarder:
+      #    num-to-keep: 200
       - inject:
           properties-content: |
             FBSD_BRANCH={branch}
@@ -232,10 +232,6 @@
     node: vmhost_qemu
     scm:
       - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     properties:
       - inject:
           properties-content: |
@@ -257,48 +253,6 @@
       - mail-notify-fixed
     triggers:
       - timed: '0 22 * * *'
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 480
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-      - bind-artifact-credential
-
-# QEMU test with latest testvm.
-# This is a workaround to allow kicking off the job without being invoked by the  the  used to allow manually retesting the same revisionThis is used to prevent chicken/egg boot problems on riscv64, as the kernel
-# being run is copied out to the workspace.
-- job-template:
-    defaults: global
-    name: 'FreeBSD-{branch}-{target_arch}-test'
-    id: 'FreeBSD-{branch}-{target_arch}-test_qemu_latest'
-    node: vmhost_qemu
-    scm:
-      - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
-    properties:
-      - inject:
-          properties-content: |
-            FBSD_BRANCH={branch}
-            FBSD_TARGET={target}
-            FBSD_TARGET_ARCH={target_arch}
-            LINK_TYPE=latest_tested
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - setup-jail
-      - execute-in-jail
-    publishers:
-      - clean-jail
-      - make-symlink
-      - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
-      - mail-notify-fixed
     wrappers:
       - use-latest-testvm-revision
       - timestamps
@@ -362,7 +316,10 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-images'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
-       - 'FreeBSD-{branch}-{target_arch}-testvm'
+       - 'FreeBSD-{branch}-{target_arch}-testvm':
+           downstream_projects:
+             - 'FreeBSD-{branch}-{target_arch}-test'
+             - 'FreeBSD-{branch}-{target_arch}-test_zfs'
        - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
 - job-group:
@@ -429,7 +386,7 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-{branch}-{target_arch}-test_qemu_latest'
+       - 'FreeBSD-{branch}-{target_arch}-test_qemu'
 
 - job-group:
     name: 'FreeBSD-srcproj-{project}-{target_arch}-ci'

@@ -80,8 +80,16 @@
     publishers:
       - scan-clang-warnings
       - clean-jail
-      - mail-notify-failure
-      - mail-notify-fixed
+      - mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
+      - mail-notify-fixed-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- culprits
+            - recipients
     wrappers:
       - timestamps
       - timeout:
@@ -212,8 +220,16 @@
     publishers:
       - make-symlink
       - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
+      - mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
+      - mail-notify-unstable-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
       - mail-notify-fixed
     wrappers:
       - timestamps
@@ -248,8 +264,16 @@
       - clean-jail
       - make-symlink
       - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
+      - mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
+      - mail-notify-unstable-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
       - mail-notify-fixed
     triggers:
       - timed: '0 22 * * *'

@@ -1,15 +1,23 @@
 - publisher:
     name: git-mail-notify-failure
     publishers:
+      - git-mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            - developers
+            - recipients
+- publisher:
+    name: git-mail-notify-failure-custom
+    publishers:
       - email-ext:
-          recipients: ${DEFAULT_RECIPIENTS}
+          recipients: ${{DEFAULT_RECIPIENTS}}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER (${ENV, var="GIT_COMMIT"}) - $BUILD_STATUS
+            $PROJECT_NAME - Build #$BUILD_NUMBER (${{ENV, var="GIT_COMMIT"}}) - $BUILD_STATUS
 
-            Build information: ${BUILD_URL}
-            Full change log: ${BUILD_URL}changes
-            Full build log: ${BUILD_URL}console
+            Build information: ${{BUILD_URL}}
+            Full change log: ${{BUILD_URL}}changes
+            Full build log: ${{BUILD_URL}}console
 
             Status explanation:
             "Failure" - the build is suspected being broken by the following changes
@@ -20,30 +28,38 @@
             Change summaries:
             (Those commits are likely but not certainly responsible)
             
-            ${CHANGES, format="%r by %a:\\n%m\\n"}
+            ${{CHANGES, format="%r by %a:\\n%m\\n"}}
             
             The end of the build log:
             
-            ${BUILD_LOG}
+            ${{BUILD_LOG}}
           failure: true
           unstable: false
           fixed: false
-          presend-script: ${DEFAULT_PRESEND_SCRIPT}
+          presend-script: ${{DEFAULT_PRESEND_SCRIPT}}
+          send-to: '{obj:freebsd_send_to}'
+          disable-publisher: '{obj:freebsd_mail_disable}'
+
+- publisher:
+    name: git-mail-notify-unstable
+    publishers:
+      - git-mail-notify-unstable-custom:
+          freebsd_mail_disable: false
           send-to:
             - developers
             - recipients
 - publisher:
-    name: git-mail-notify-unstable
+    name: git-mail-notify-unstable-custom
     publishers:
       - email-ext:
-          recipients: ${DEFAULT_RECIPIENTS}
+          recipients: ${{DEFAULT_RECIPIENTS}}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER (${ENV, var="GIT_COMMIT"}) - $BUILD_STATUS
+            $PROJECT_NAME - Build #$BUILD_NUMBER (${{ENV, var="GIT_COMMIT"}}) - $BUILD_STATUS
 
-            Build information: ${BUILD_URL}
-            Full change log: ${BUILD_URL}changes
-            Full build log: ${BUILD_URL}console
+            Build information: ${{BUILD_URL}}
+            Full change log: ${{BUILD_URL}}changes
+            Full build log: ${{BUILD_URL}}console
 
             Status explanation:
             "Unstable" - some tests are suspected being broken by the following changes
@@ -54,39 +70,46 @@
             Change summaries:
             (Those commits are likely but not certainly responsible)
             
-            ${CHANGES, format="%r by %a:\\n%m\\n"}
+            ${{CHANGES, format="%r by %a:\\n%m\\n"}}
             
             The failed test cases:
             
-            ${FAILED_TESTS, showStack="false", showMessage="true", maxTests=100}
+            ${{FAILED_TESTS, showStack="false", showMessage="true", maxTests=100}}
           failure: false
           unstable: true
           fixed: false
-          presend-script: ${DEFAULT_PRESEND_SCRIPT}
-          send-to:
-            - developers
-            - recipients
+          presend-script: ${{DEFAULT_PRESEND_SCRIPT}}
+          send-to: '{obj:freebsd_send_to}'
+          disable-publisher: '{obj:freebsd_mail_disable}'
+
 - publisher:
     name: git-mail-notify-fixed
     publishers:
+      - git-mail-notify-fixed-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- culprits
+            - recipients
+- publisher:
+    name: git-mail-notify-fixed-custom
+    publishers:
       - email-ext:
-          recipients: ${DEFAULT_RECIPIENTS}
+          recipients: ${{DEFAULT_RECIPIENTS}}
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
           body: |
-            $PROJECT_NAME - Build #$BUILD_NUMBER (${ENV, var="GIT_COMMIT"}) - $BUILD_STATUS
+            $PROJECT_NAME - Build #$BUILD_NUMBER (${{ENV, var="GIT_COMMIT"}}) - $BUILD_STATUS
             
-            Build information: ${BUILD_URL}
-            Full change log: ${BUILD_URL}changes
-            Full build log: ${BUILD_URL}console
+            Build information: ${{BUILD_URL}}
+            Full change log: ${{BUILD_URL}}changes
+            Full build log: ${{BUILD_URL}}console
             
             Change summaries:
             (Those commits are likely but not certainly responsible)
             
-            ${CHANGES, format="%r by %a:\\n%m\\n"}
+            ${{CHANGES, format="%r by %a:\\n%m\\n"}}
           failure: false
           unstable: false
           fixed: true
-          presend-script: ${DEFAULT_PRESEND_SCRIPT}
-          send-to:
-            #- culprits
-            - recipients
+          presend-script: ${{DEFAULT_PRESEND_SCRIPT}}
+          send-to: '{obj:freebsd_send_to}'
+          disable-publisher: '{obj:freebsd_mail_disable}'

@@ -26,11 +26,23 @@
     target_arch:
       - aarch64
     branch:
-      - head
       - stable-12
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-aarch64-ci':
+          target: arm64
+          disable_job_images: true
+          disable_job_LINT: true
+          warnscanner: clang
+
+- project:
+    name: FreeBSD-head-aarch64
+    target_arch:
+      - aarch64
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-head-aarch64-ci':
           target: arm64
           disable_job_images: true
           warnscanner: clang
@@ -126,7 +138,7 @@
           disable_job_LINT: true
 
 - project:
-    name: FreeBSD-powerpc-11
+    name: FreeBSD-11-powerpc
     target_arch:
       - powerpc
     branch:
@@ -138,7 +150,7 @@
           disable_job_LINT: true
 
 - project:
-    name: FreeBSD-powerpc-12
+    name: FreeBSD-12-powerpc
     target_arch:
       - powerpc
     branch:
@@ -164,13 +176,23 @@
     target_arch:
       - powerpc64
     branch:
-      - head
       - stable-12
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc
           warnscanner: gcc4
+
+- project:
+    name: FreeBSD-head-powerpc64
+    target_arch:
+      - powerpc64
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-head-powerpc64-ci':
+          target: powerpc
+          warnscanner: clang
 
 - project:
     name: FreeBSD-powerpc64le

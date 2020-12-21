@@ -59,3 +59,12 @@
     scm:
       - FreeBSD-doc:
           branch: 'main'
+
+- scm:
+    name: FreeBSD-ci
+    scm:
+      - git:
+          url: https://github.com/freebsd/freebsd-ci.git
+          branches:
+            - 'origin/master'
+          basedir: freebsd-ci

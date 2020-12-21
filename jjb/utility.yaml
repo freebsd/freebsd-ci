@@ -1,0 +1,25 @@
+---
+- job:
+    name: jenkins-job-comparison
+    defaults: global
+    node: master
+    scm:
+      - FreeBSD-ci
+    builders:
+      - shell: |
+          #!/bin/sh
+          rm -rf new_jobs
+          mkdir new_jobs
+          jenkins-jobs -l error test --config-xml -o new_jobs freebsd-ci/jjb
+
+          rm -rf current_jobs
+          mkdir current_jobs
+          rsync -amq --include='config.xml' --include='*/' --exclude='*' ~jenkins/jobs/ current_jobs/
+
+          echo
+          jenkins-jobs -l error --version
+          echo "=================="
+          echo "  EXCLUSIVE JOBS  "
+          echo "=================="
+
+          diff -upr current_jobs new_jobs | grep 'Only in'

@@ -10,8 +10,8 @@ SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 
 set -ex
 
-if [ -z "${SVN_REVISION}" ]; then
-	echo "No subversion revision specified"
+if [ -z "${GIT_COMMIT}" ]; then
+	echo "No git commit id specified"
 	exit 1
 fi
 
@@ -26,7 +26,7 @@ cleanup () {
 trap cleanup EXIT
 
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
-ARTIFACT_SUBDIR=dtrace-test/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+ARTIFACT_SUBDIR=dtrace-test/${FBSD_BRANCH}/${GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
 OUTPUT_IMG_NAME=disk-test.img
 
 sudo rm -fr work
@@ -101,4 +101,4 @@ rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
 mv work/${OUTPUT_IMG_NAME}.zst artifact/${ARTIFACT_SUBDIR}
 
-echo "SVN_REVISION=${SVN_REVISION}" > ${WORKSPACE}/trigger.property
+echo "GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property

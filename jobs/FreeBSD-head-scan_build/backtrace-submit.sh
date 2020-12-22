@@ -53,7 +53,7 @@ echo "Submitting ${CHUNK_COUNT} chunks..."
 
 counter=1
 
-QUERY_STRING="author=${CHANGE_AUTHOR}&build_id=${BUILD_ID}&build_number=${BUILD_NUMBER}&job_name=${JOB_NAME}&build_url=${BUILD_URL}&svn_revision=${SVN_REVISION}"
+QUERY_STRING="author=${CHANGE_AUTHOR}&build_id=${BUILD_ID}&build_number=${BUILD_NUMBER}&job_name=${JOB_NAME}&build_url=${BUILD_URL}&git_commit=${GIT_COMMIT}"
 
 for i in `find ${BUILD}/archives -type f -name '*.tar.gz'`; do
 	CHUNK=`basename $i`

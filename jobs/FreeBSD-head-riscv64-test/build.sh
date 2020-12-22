@@ -19,7 +19,7 @@ run-kyua.sh
 
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
-ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/${GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
 
 rm -f kernel kernel.txz
 fetch https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/kernel.txz

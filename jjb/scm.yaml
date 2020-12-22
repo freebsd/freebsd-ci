@@ -49,6 +49,20 @@
       - FreeBSD-src:
           branch: 'main'
 
+# Temporary compat entry
+- scm:
+    name: FreeBSD-src-stable-11-empty
+    scm:
+      - FreeBSD-src:
+          branch: 'stable/11'
+
+# Temporary compat entry
+- scm:
+    name: FreeBSD-src-stable-12-empty
+    scm:
+      - FreeBSD-src:
+          branch: 'stable/12'
+
 - scm:
     name: FreeBSD-doc
     scm:

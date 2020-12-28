@@ -172,12 +172,23 @@
           warnscanner: clang
 
 - project:
-    name: FreeBSD-powerpc64
+    name: FreeBSD-11-powerpc64
+    target_arch:
+      - powerpc64
+    branch:
+      - stable-11
+    jobs:
+      - 'FreeBSD-{branch}-powerpc64-ci':
+          target: powerpc
+          warnscanner: gcc4
+          disable_job_LINT: true
+
+- project:
+    name: FreeBSD-12-powerpc64
     target_arch:
       - powerpc64
     branch:
       - stable-12
-      - stable-11
     jobs:
       - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc

@@ -155,13 +155,9 @@
           branches:
             - origin/main
           basedir: doc
-          clean:
-            before: True
-            after: False
           browser: cgit
           browser-url: https://cgit.freebsd.org/doc/
-          wipe-workspace: False
-          shallow-clone: True
+          reference-repo: '/jenkins/repo/doc.git'
 
 - scm:
     name: FreeBSD-ports-head

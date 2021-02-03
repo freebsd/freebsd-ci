@@ -7,13 +7,13 @@ export TARGET_ARCH=amd64
 
 SSL_CA_CERT_FILE=/usr/local/share/certs/ca-root-nss.crt
 
-if [ -z "${SVN_REVISION}" ]; then
-	echo "No subversion revision specified"
+if [ -z "${GIT_COMMIT}" ]; then
+	echo "No git commit id specified"
 	exit 1
 fi
 
-ARTIFACT_SERVER=${ARTIFACT_SERVER:-https://artifact.ci.freebsd.org}
-ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/r${SVN_REVISION}/${TARGET}/${TARGET_ARCH}
+ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
+ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/${GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
 IMG_NAME=disk-test.img
 JOB_DIR=freebsd-ci/jobs/${JOB_NAME}
 TEST_BASE=freebsd-ci/scripts/test
@@ -28,7 +28,7 @@ METAOUTDIR=meta-out
 
 TEST_VM_MEMORY=8192m
 
-fetch ${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
+fetch https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
 zstd --rm -fd ${IMG_NAME}.zst
 
 # prepare meta disk to pass information to testvm

@@ -44,7 +44,7 @@
             - 'FreeBSD-{branch}-{target_arch}-gcc6_build'
             - 'FreeBSD-{branch}-{target_arch}-dtrace_build'
           condition: SUCCESS
-          svn-revision: true
+          git-revision: true
           property-file: trigger.property
     wrappers:
       - timestamps
@@ -64,10 +64,6 @@
     node: jailer_fast
     scm:
       - 'FreeBSD-src-{branch}'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     properties:
       - inject:
           properties-content: |
@@ -80,12 +76,12 @@
     publishers:
       - scan-clang-warnings
       - clean-jail
-      - mail-notify-failure-custom:
+      - git-mail-notify-failure-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- developers
             - recipients
-      - mail-notify-fixed-custom:
+      - git-mail-notify-fixed-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- culprits
@@ -108,10 +104,6 @@
     node: jailer
     scm:
       - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     properties:
       #- build-discarder:
       #    num-to-keep: 200
@@ -154,10 +146,6 @@
     node: jailer_fast
     scm:
       - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     properties:
       - inject:
           properties-content: |
@@ -183,7 +171,7 @@
       - trigger-parameterized-builds:
         - project: '{obj:downstream_projects}'
           condition: SUCCESS
-          svn-revision: true
+          git-revision: true
           property-file: trigger.property
     wrappers:
       - timestamps
@@ -209,10 +197,6 @@
             FBSD_TARGET={target}
             FBSD_TARGET_ARCH={target_arch}
             LINK_TYPE=latest_tested
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -220,17 +204,17 @@
     publishers:
       - make-symlink
       - publish-junit-results
-      - mail-notify-failure-custom:
+      - git-mail-notify-failure-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- developers
             - recipients
-      - mail-notify-unstable-custom:
+      - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- developers
             - recipients
-      - mail-notify-fixed
+      - git-mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:
@@ -264,17 +248,17 @@
       - clean-jail
       - make-symlink
       - publish-junit-results
-      - mail-notify-failure-custom:
+      - git-mail-notify-failure-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- developers
             - recipients
-      - mail-notify-unstable-custom:
+      - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- developers
             - recipients
-      - mail-notify-fixed
+      - git-mail-notify-fixed
     triggers:
       - timed: '0 22 * * *'
     wrappers:
@@ -441,7 +425,8 @@
     name: 'FreeBSD-srcproj-{project}-{target_arch}-build'
     node: '{node_job_build}'
     scm:
-      - 'FreeBSD-src-project'
+      - 'FreeBSD-src':
+          branch: 'project/{project}'
     triggers:
       - pollscm:
           cron: "H/5 * * * *"
@@ -470,13 +455,13 @@
           retry-delay: 10000
       #- make-symlink
       - clean-jail
-      - mail-notify-failure
-      - mail-notify-fixed
+      - git-mail-notify-failure
+      - git-mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
           condition: SUCCESS
-          svn-revision: true
+          git-revision: true
           property-file: trigger.property
     wrappers:
       - timestamps
@@ -494,11 +479,8 @@
     name: 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
     node: jailer_fast
     scm:
-      - 'FreeBSD-src-project-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
+      - 'FreeBSD-src':
+          branch: 'project/{project}'
     properties:
       - inject:
           properties-content: |
@@ -522,7 +504,7 @@
         - project:
             - 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
           condition: SUCCESS
-          svn-revision: true
+          git-revision: true
           property-file: trigger.property
     wrappers:
       - timestamps
@@ -538,11 +520,8 @@
     name: 'FreeBSD-srcproj-{project}-{target_arch}-pkgs'
     node: vmhost_bhyve
     scm:
-      - 'FreeBSD-src-project-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
+      - 'FreeBSD-src':
+          branch: 'project/{project}'
     properties:
       - inject:
           properties-content: |
@@ -564,7 +543,7 @@
         - project:
             - 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
           condition: SUCCESS
-          svn-revision: true
+          git-revision: true
           property-file: trigger.property
     wrappers:
       - timestamps
@@ -580,11 +559,8 @@
     name: 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
     node: jailer_fast
     scm:
-      - 'FreeBSD-src-project-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
+      - 'FreeBSD-src':
+          branch: 'project/{project}'
     properties:
       - inject:
           properties-content: |
@@ -608,7 +584,7 @@
         - project:
             - 'FreeBSD-srcproj-{project}-{target_arch}-test'
           condition: SUCCESS
-          svn-revision: true
+          git-revision: true
           property-file: trigger.property
     wrappers:
       - timestamps
@@ -623,7 +599,8 @@
     name: 'FreeBSD-srcproj-{project}-{target_arch}-test'
     node: vmhost_bhyve
     scm:
-      - 'FreeBSD-src-project-empty'
+      - 'FreeBSD-src':
+          branch: 'project/{project}'
     properties:
       - inject:
           properties-content: |
@@ -632,10 +609,6 @@
             FBSD_TARGET={target}
             FBSD_TARGET_ARCH={target_arch}
             LINK_TYPE=latest_tested
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -643,9 +616,9 @@
     publishers:
       #- make-symlink
       - publish-junit-results
-      #- mail-notify-failure
-      #- mail-notify-unstable
-      #- mail-notify-fixed
+      #- git-mail-notify-failure
+      #- git-mail-notify-unstable
+      #- git-mail-notify-fixed
     wrappers:
       - timestamps
       - timeout:

@@ -172,12 +172,23 @@
           warnscanner: clang
 
 - project:
-    name: FreeBSD-powerpc64
+    name: FreeBSD-11-powerpc64
+    target_arch:
+      - powerpc64
+    branch:
+      - stable-11
+    jobs:
+      - 'FreeBSD-{branch}-powerpc64-ci':
+          target: powerpc
+          warnscanner: gcc4
+          disable_job_LINT: true
+
+- project:
+    name: FreeBSD-12-powerpc64
     target_arch:
       - powerpc64
     branch:
       - stable-12
-      - stable-11
     jobs:
       - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc
@@ -303,11 +314,7 @@
     defaults: global
     node: jailer
     scm:
-      - FreeBSD-src-head-set_revision
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
+      - FreeBSD-src-head
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -316,7 +323,7 @@
     publishers:
       - scan-gcc-warnings
       - clean-jail
-      - mail-notify-failure
+      - git-mail-notify-failure
     wrappers:
       - timestamps
       - timeout:
@@ -330,11 +337,7 @@
     defaults: global
     node: jailer_fast
     scm:
-      - FreeBSD-src-head-set_revision
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
+      - FreeBSD-src-head
     properties:
       - inject:
           properties-content: |
@@ -378,10 +381,6 @@
     node: jailer_fast
     scm:
       - FreeBSD-src-head-empty
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     properties:
       - inject:
           properties-content: |
@@ -426,10 +425,6 @@
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
             LINK_TYPE=latest_tested
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -484,10 +479,6 @@
             FBSD_BRANCH=head
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     builders:
       - add-svn-revision-description
       - checkout-scripts

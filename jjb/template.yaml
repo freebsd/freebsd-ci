@@ -1,3 +1,4 @@
+# Main build. Build world sets and upload to the artifact server.
 - job-template:
     artifact_path: src/release/artifact
     defaults: global
@@ -54,6 +55,7 @@
           type: absolute
       - bind-artifact-credential
 
+# Run static analysis.
 - job-template:
     disable_job_LINT: false
     defaults: global
@@ -78,8 +80,16 @@
     publishers:
       - scan-clang-warnings
       - clean-jail
-      - mail-notify-failure
-      - mail-notify-fixed
+      - mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
+      - mail-notify-fixed-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- culprits
+            - recipients
     wrappers:
       - timestamps
       - timeout:
@@ -88,6 +98,7 @@
           fail: true
           type: absolute
 
+# Build virtual machine images for general use.
 - job-template:
     disable_job_images: false
     artifact_path: artifact
@@ -102,6 +113,8 @@
           name: SVN_REVISION
           description: "Subversion revision"
     properties:
+      #- build-discarder:
+      #    num-to-keep: 200
       - inject:
           properties-content: |
             FBSD_BRANCH={branch}
@@ -132,10 +145,12 @@
           type: absolute
       - bind-artifact-credential
 
+# Build virtual machine image with testing tools for automated testing.
 - job-template:
     artifact_path: artifact
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-testvm'
+    downstream_projects: []
     node: jailer_fast
     scm:
       - 'FreeBSD-src-{branch}-empty'
@@ -166,10 +181,7 @@
       - make-symlink
       - clean-jail
       - trigger-parameterized-builds:
-        - project:
-            - 'FreeBSD-{branch}-{target_arch}-test'
-            - 'FreeBSD-{branch}-{target_arch}-test_zfs'
-            - 'FreeBSD-{branch}-{target_arch}-test_ltp'
+        - project: '{obj:downstream_projects}'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property
@@ -182,9 +194,11 @@
           type: absolute
       - bind-artifact-credential
 
+# bhyve test for x86 architectures.
 - job-template:
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-test'
+    id: 'FreeBSD-{branch}-{target_arch}-test_bhyve'
     node: vmhost_bhyve
     scm:
       - 'FreeBSD-src-{branch}-empty'
@@ -206,8 +220,16 @@
     publishers:
       - make-symlink
       - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
+      - mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
+      - mail-notify-unstable-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
       - mail-notify-fixed
     wrappers:
       - timestamps
@@ -218,22 +240,20 @@
           type: absolute
       - bind-artifact-credential
 
+# QEMU test for non x86 architectures.
 - job-template:
     defaults: global
-    name: 'FreeBSD-{branch}-riscv64-test'
+    name: 'FreeBSD-{branch}-{target_arch}-test'
+    id: 'FreeBSD-{branch}-{target_arch}-test_qemu'
     node: vmhost_qemu
     scm:
       - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
     properties:
       - inject:
           properties-content: |
             FBSD_BRANCH={branch}
             FBSD_TARGET={target}
-            FBSD_TARGET_ARCH=riscv64
+            FBSD_TARGET_ARCH={target_arch}
             LINK_TYPE=latest_tested
     builders:
       - add-svn-revision-description
@@ -244,9 +264,19 @@
       - clean-jail
       - make-symlink
       - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
+      - mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
+      - mail-notify-unstable-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- developers
+            - recipients
       - mail-notify-fixed
+    triggers:
+      - timed: '0 22 * * *'
     wrappers:
       - use-latest-testvm-revision
       - timestamps
@@ -257,166 +287,34 @@
           type: absolute
       - bind-artifact-credential
 
-- job-template:
-    defaults: global
-    name: 'FreeBSD-{branch}-armv7-test'
-    node: vmhost_qemu
-    scm:
-      - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
-    properties:
-      - inject:
-          properties-content: |
-            FBSD_BRANCH={branch}
-            FBSD_TARGET={target}
-            FBSD_TARGET_ARCH=armv7
-            LINK_TYPE=latest_tested
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - setup-jail
-      - execute-in-jail
-    publishers:
-      - clean-jail
-      - make-symlink
-      - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
-      - mail-notify-fixed
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 480
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-      - bind-artifact-credential
-
-- job-template:
-    defaults: global
-    name: 'FreeBSD-{branch}-aarch64-test'
-    node: vmhost_qemu
-    scm:
-      - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
-    properties:
-      - inject:
-          properties-content: |
-            FBSD_BRANCH={branch}
-            FBSD_TARGET={target}
-            FBSD_TARGET_ARCH=aarch64
-            LINK_TYPE=latest_tested
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - setup-jail
-      - execute-in-jail
-    publishers:
-      - clean-jail
-      - make-symlink
-      - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
-      - mail-notify-fixed
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 480
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-      - bind-artifact-credential
-
-- job-template:
-    defaults: global
-    name: 'FreeBSD-{branch}-mips64-test'
-    node: vmhost_qemu
-    scm:
-      - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
-    properties:
-      - inject:
-          properties-content: |
-            FBSD_BRANCH={branch}
-            FBSD_TARGET={target}
-            FBSD_TARGET_ARCH=mips64
-            LINK_TYPE=latest_tested
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - setup-jail
-      - execute-in-jail
-    publishers:
-      - clean-jail
-      - make-symlink
-      - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
-      - mail-notify-fixed
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 480
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-      - bind-artifact-credential
-
-- job-template:
-    defaults: global
-    name: 'FreeBSD-{branch}-powerpc64-test'
-    node: vmhost_qemu
-    scm:
-      - 'FreeBSD-src-{branch}-empty'
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
-    properties:
-      - inject:
-          properties-content: |
-            FBSD_BRANCH={branch}
-            FBSD_TARGET={target}
-            FBSD_TARGET_ARCH=powerpc64
-            LINK_TYPE=latest_tested
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - setup-jail
-      - execute-in-jail
-    publishers:
-      - clean-jail
-      - make-symlink
-      - publish-junit-results
-      - mail-notify-failure
-      - mail-notify-unstable
-      - mail-notify-fixed
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 480
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-      - bind-artifact-credential
+# Per-architecture job list
+- job-group:
+    name: 'FreeBSD-{branch}-aarch64-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-images'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
-    name: 'FreeBSD-{branch}-{target_arch}-ci'
+    name: 'FreeBSD-head-aarch64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-images'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-{branch}-{target_arch}-test'
+       - 'FreeBSD-{branch}-{target_arch}-test_qemu'
+
+- job-group:
+    name: 'FreeBSD-{branch}-amd64-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-images'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
+       - 'FreeBSD-{branch}-{target_arch}-testvm':
+           downstream_projects:
+            - 'FreeBSD-{branch}-{target_arch}-test'
+            - 'FreeBSD-{branch}-{target_arch}-test_ltp'
+       - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
 - job-group:
     name: 'FreeBSD-head-amd64-ci'
@@ -424,22 +322,16 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-images'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
-       - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-head-amd64-test'
-
-- job-group:
-    name: 'FreeBSD-{branch}-aarch64-ci'
-    jobs:
-       - 'FreeBSD-{branch}-{target_arch}-build'
-       - 'FreeBSD-{branch}-{target_arch}-LINT'
-       - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-{branch}-aarch64-test'
+       - 'FreeBSD-{branch}-{target_arch}-testvm':
+           downstream_projects:
+            - 'FreeBSD-{branch}-{target_arch}-test'
+            - 'FreeBSD-{branch}-{target_arch}-test_ltp'
+       - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
 - job-group:
     name: 'FreeBSD-{branch}-armv6-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
-       - 'FreeBSD-{branch}-{target_arch}-LINT'
 
 - job-group:
     name: 'FreeBSD-{branch}-armv7-ci'
@@ -447,7 +339,19 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-{branch}-armv7-test'
+       - 'FreeBSD-{branch}-{target_arch}-test_qemu'
+
+- job-group:
+    name: 'FreeBSD-{branch}-i386-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-images'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
+       - 'FreeBSD-{branch}-{target_arch}-testvm':
+           downstream_projects:
+             - 'FreeBSD-{branch}-{target_arch}-test'
+             - 'FreeBSD-{branch}-{target_arch}-test_zfs'
+       - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
 - job-group:
     name: 'FreeBSD-{branch}-mips-ci'
@@ -469,7 +373,7 @@
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-{branch}-mips64-test'
+       - 'FreeBSD-{branch}-{target_arch}-test_qemu'
 
 - job-group:
     name: 'FreeBSD-{branch}-mips64_xtoolchain-ci'
@@ -486,10 +390,16 @@
     name: 'FreeBSD-{branch}-powerpc64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
+       - 'FreeBSD-{branch}-{target_arch}-LINT'
+
+- job-group:
+    name: 'FreeBSD-head-powerpc64-ci'
+    jobs:
+       - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-images'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-{branch}-powerpc64-test'
+       - 'FreeBSD-{branch}-{target_arch}-test_qemu'
 
 - job-group:
     name: 'FreeBSD-{branch}-powerpc64le-ci'
@@ -513,7 +423,7 @@
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-LINT'
        - 'FreeBSD-{branch}-{target_arch}-testvm'
-       - 'FreeBSD-{branch}-riscv64-test'
+       - 'FreeBSD-{branch}-{target_arch}-test_qemu'
 
 - job-group:
     name: 'FreeBSD-srcproj-{project}-{target_arch}-ci'
@@ -697,7 +607,6 @@
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-srcproj-{project}-{target_arch}-test'
-            #- 'FreeBSD-srcproj-{project}-test_zfs'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property

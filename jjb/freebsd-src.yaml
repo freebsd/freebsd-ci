@@ -4,11 +4,9 @@
       - amd64
     branch:
       - stable-12
-      - releng-12_2
       - stable-11
-      - stable-10
     jobs:
-      - 'FreeBSD-{branch}-{target_arch}-ci':
+      - 'FreeBSD-{branch}-amd64-ci':
           target: amd64
           warnscanner: clang
 
@@ -28,13 +26,25 @@
     target_arch:
       - aarch64
     branch:
-      - head
       - stable-12
-      - releng-12_2
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-aarch64-ci':
           target: arm64
+          disable_job_images: true
+          disable_job_LINT: true
+          warnscanner: clang
+
+- project:
+    name: FreeBSD-head-aarch64
+    target_arch:
+      - aarch64
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-head-aarch64-ci':
+          target: arm64
+          disable_job_images: true
           warnscanner: clang
 
 - project:
@@ -44,7 +54,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-armv6-ci':
@@ -58,7 +67,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
     jobs:
       - 'FreeBSD-{branch}-armv7-ci':
           target: arm
@@ -71,11 +79,9 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
       - stable-11
-      - stable-10
     jobs:
-      - 'FreeBSD-{branch}-{target_arch}-ci':
+      - 'FreeBSD-{branch}-i386-ci':
           target: i386
           warnscanner: clang
 
@@ -86,7 +92,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
     jobs:
       - 'FreeBSD-{branch}-mips-ci':
           target: mips
@@ -113,7 +118,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
     jobs:
       - 'FreeBSD-{branch}-mips64-ci':
           target: mips
@@ -134,32 +138,61 @@
           disable_job_LINT: true
 
 - project:
-    name: FreeBSD-powerpc
+    name: FreeBSD-11-powerpc
     target_arch:
       - powerpc
     branch:
-      - head
-      - stable-12
-      - releng-12_2
       - stable-11
+    jobs:
+      - 'FreeBSD-{branch}-powerpc-ci':
+          target: powerpc
+          warnscanner: gcc4
+          disable_job_LINT: true
+
+- project:
+    name: FreeBSD-12-powerpc
+    target_arch:
+      - powerpc
+    branch:
+      - stable-12
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
           target: powerpc
           warnscanner: gcc4
 
 - project:
+    name: FreeBSD-powerpc
+    target_arch:
+      - powerpc
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-{branch}-powerpc-ci':
+          target: powerpc
+          warnscanner: clang
+
+- project:
     name: FreeBSD-powerpc64
     target_arch:
       - powerpc64
     branch:
-      - head
       - stable-12
-      - releng-12_2
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc
           warnscanner: gcc4
+
+- project:
+    name: FreeBSD-head-powerpc64
+    target_arch:
+      - powerpc64
+    branch:
+      - head
+    jobs:
+      - 'FreeBSD-head-powerpc64-ci':
+          target: powerpc
+          warnscanner: clang
 
 - project:
     name: FreeBSD-powerpc64le
@@ -179,7 +212,6 @@
     branch:
       - head
       - stable-12
-      - releng-12_2
     jobs:
       - 'FreeBSD-{branch}-powerpcspe-ci':
           target: powerpc
@@ -198,16 +230,25 @@
           disable_job_images: true
           node_job_build: jailer
 
+# Sparc64
 - project:
-    name: FreeBSD-sparc64
+    name: FreeBSD-sparc64-11
     target_arch:
       - sparc64
     branch:
-      - head
-      - stable-12
-      - releng-12_2
       - stable-11
-      - stable-10
+    jobs:
+      - 'FreeBSD-{branch}-sparc64-ci':
+          target: sparc64
+          disable_job_LINT: true
+          warnscanner: gcc4
+
+- project:
+    name: FreeBSD-sparc64-12
+    target_arch:
+      - sparc64
+    branch:
+      - stable-12
     jobs:
       - 'FreeBSD-{branch}-sparc64-ci':
           target: sparc64
@@ -219,8 +260,8 @@
       - aarch64
       - amd64
       - i386
-    project:
-      - clang800-import
+# Add list of projects here.
+    project: []
     jobs:
       - 'FreeBSD-srcproj-{project}-{target_arch}-ci':
           target: amd64
@@ -405,35 +446,6 @@
       - bind-artifact-credential
 
 - job:
-    name: FreeBSD-head-amd64-test_dtrace
-    node: vmhost_bhyve
-    scm:
-      - FreeBSD-src-head-empty
-    properties:
-      - inject:
-          properties-content: |
-            FBSD_BRANCH=head
-            FBSD_TARGET=amd64
-            FBSD_TARGET_ARCH=amd64
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - execute-job-build-script
-    publishers:
-      - publish-junit-results
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 60
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-
-- job:
     name: FreeBSD-head-amd64-test_zfs
     node: vmhost_bhyve
     scm:
@@ -444,10 +456,8 @@
             FBSD_BRANCH=head
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
-    parameters:
-      - string:
-          name: SVN_REVISION
-          description: "Subversion revision"
+    triggers:
+      - timed: 'H */6 * * *'
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -455,6 +465,7 @@
     publishers:
       - publish-junit-results
     wrappers:
+      - use-latest-testvm-revision
       - timestamps
       - timeout:
           timeout: 240

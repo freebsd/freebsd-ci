@@ -13,7 +13,10 @@ basedir = '/home/artifact/snapshot'
 
 def set_link(x):
     branch = x['branch']
-    revision = 'r' + str(x['revision'])
+    if 'commit' in x:
+        revision = str(x['commit'])
+    else:
+        revision = 'r' + str(x['revision'])
     target = x['target']
     target_arch = x['target_arch']
     link_type = x['link_type']

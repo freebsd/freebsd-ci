@@ -6,10 +6,7 @@
           branches:
             - 'origin/{branch}'
           basedir: src
-          clean:
-            before: True
-            after: False
-          wipe-workspace: False
+          reference-repo: '/jenkins/repo/src.git'
 
 - scm:
     name: FreeBSD-src-stable-10

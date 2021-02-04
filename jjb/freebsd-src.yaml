@@ -3,6 +3,7 @@
     target_arch:
       - amd64
     branch:
+      - main
       - stable-13
       - stable-12
       - stable-11
@@ -12,23 +13,10 @@
           warnscanner: clang
 
 - project:
-    name: FreeBSD-main-amd64
-    target_arch:
-      - amd64
-    branch:
-      - main
-    jobs:
-      - 'FreeBSD-main-amd64-ci':
-          target: amd64
-          warnscanner: clang
-
-- project:
-    name: FreeBSD-aarch64
+    name: FreeBSD-11-aarch64
     target_arch:
       - aarch64
     branch:
-      - stable-13
-      - stable-12
       - stable-11
     jobs:
       - 'FreeBSD-{branch}-aarch64-ci':
@@ -38,13 +26,27 @@
           warnscanner: clang
 
 - project:
-    name: FreeBSD-main-aarch64
+    name: FreeBSD-12-aarch64
+    target_arch:
+      - aarch64
+    branch:
+      - stable-12
+    jobs:
+      - 'FreeBSD-{branch}-aarch64-ci':
+          target: arm64
+          disable_job_images: true
+          disable_job_LINT: true
+          warnscanner: clang
+
+- project:
+    name: FreeBSD-aarch64
     target_arch:
       - aarch64
     branch:
       - main
+      - stable-13
     jobs:
-      - 'FreeBSD-main-aarch64-ci':
+      - 'FreeBSD-{branch}-aarch64-ci':
           target: arm64
           disable_job_images: true
           warnscanner: clang
@@ -205,12 +207,22 @@
           warnscanner: gcc4
 
 - project:
+    name: FreeBSD-13-powerpc64
+    target_arch:
+      - powerpc64
+    branch:
+      - stable-13
+    jobs:
+      - 'FreeBSD-{branch}-powerpc64-ci':
+          target: powerpc
+          warnscanner: clang
+
+- project:
     name: FreeBSD-main-powerpc64
     target_arch:
       - powerpc64
     branch:
       - main
-      - stable-13
     jobs:
       - 'FreeBSD-main-powerpc64-ci':
           target: powerpc
@@ -229,17 +241,27 @@
           warnscanner: clang
 
 - project:
+    name: FreeBSD-12-powerpcspe
+    target_arch:
+      - powerpcspe
+    branch:
+      - stable-12
+    jobs:
+      - 'FreeBSD-{branch}-powerpcspe-ci':
+          target: powerpc
+          warnscanner: gcc4
+
+- project:
     name: FreeBSD-powerpcspe
     target_arch:
       - powerpcspe
     branch:
       - main
       - stable-13
-      - stable-12
     jobs:
       - 'FreeBSD-{branch}-powerpcspe-ci':
           target: powerpc
-          warnscanner: gcc4
+          warnscanner: clang
 
 - project:
     name: FreeBSD-riscv64
@@ -394,7 +416,7 @@
     name: FreeBSD-main-amd64-dtrace_testvm
     node: jailer_fast
     scm:
-      - FreeBSD-src-main-empty
+      - FreeBSD-src-main
     properties:
       - inject:
           properties-content: |
@@ -431,7 +453,7 @@
     name: FreeBSD-main-amd64-dtrace_test
     node: vmhost_bhyve
     scm:
-      - FreeBSD-src-main-empty
+      - FreeBSD-src-main
     properties:
       - inject:
           properties-content: |
@@ -458,7 +480,7 @@
     name: FreeBSD-main-amd64-test_zfs
     node: vmhost_bhyve
     scm:
-      - FreeBSD-src-main-empty
+      - FreeBSD-src-main
     properties:
       - inject:
           properties-content: |
@@ -486,7 +508,7 @@
     name: FreeBSD-main-amd64-test_ltp
     node: vmhost_bhyve
     scm:
-      - FreeBSD-src-main-empty
+      - FreeBSD-src-main
     properties:
       - inject:
           properties-content: |

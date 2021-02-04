@@ -3,6 +3,7 @@
     target_arch:
       - amd64
     branch:
+      - stable-13
       - stable-12
       - stable-11
     jobs:
@@ -26,6 +27,7 @@
     target_arch:
       - aarch64
     branch:
+      - stable-13
       - stable-12
       - stable-11
     jobs:
@@ -53,6 +55,7 @@
       - armv6
     branch:
       - main
+      - stable-13
       - stable-12
       - stable-11
     jobs:
@@ -66,6 +69,7 @@
       - armv7
     branch:
       - main
+      - stable-13
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-armv7-ci':
@@ -78,6 +82,7 @@
       - i386
     branch:
       - main
+      - stable-13
       - stable-12
       - stable-11
     jobs:
@@ -91,6 +96,7 @@
       - mips
     branch:
       - main
+      - stable-13
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips-ci':
@@ -104,6 +110,7 @@
       - mips
     branch:
       - main
+      - stable-13
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips_xtoolchain-ci':
@@ -117,6 +124,7 @@
       - mips64
     branch:
       - main
+      - stable-13
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips64-ci':
@@ -130,6 +138,7 @@
       - mips64
     branch:
       - main
+      - stable-13
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips64_xtoolchain-ci':
@@ -166,6 +175,7 @@
       - powerpc
     branch:
       - main
+      - stable-13
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
           target: powerpc
@@ -200,6 +210,7 @@
       - powerpc64
     branch:
       - main
+      - stable-13
     jobs:
       - 'FreeBSD-main-powerpc64-ci':
           target: powerpc
@@ -211,6 +222,7 @@
       - powerpc64le
     branch:
       - main
+      - stable-13
     jobs:
       - 'FreeBSD-{branch}-powerpc64le-ci':
           target: powerpc
@@ -222,6 +234,7 @@
       - powerpcspe
     branch:
       - main
+      - stable-13
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-powerpcspe-ci':
@@ -234,6 +247,7 @@
       - riscv64
     branch:
       - main
+      - stable-13
     jobs:
       - 'FreeBSD-{branch}-riscv64-ci':
           target: riscv

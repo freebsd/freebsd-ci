@@ -2,7 +2,7 @@
     name: FreeBSD-src
     scm:
       - git:
-          url: ssh://anongit@git.freebsd.org/src.git
+          url: https://git.freebsd.org/src.git
           branches:
             - 'origin/{branch}'
           basedir: src

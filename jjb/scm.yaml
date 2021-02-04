@@ -6,7 +6,7 @@
           branches:
             - 'origin/{branch}'
           basedir: src
-          reference-repo: '/jenkins/repo/src.git'
+          reference-repo: '/home/git/src.git'
 
 - scm:
     name: FreeBSD-src-stable-10
@@ -76,7 +76,7 @@
           basedir: doc
           browser: cgit
           browser-url: https://cgit.freebsd.org/doc/
-          reference-repo: '/jenkins/repo/doc.git'
+          reference-repo: '/home/git/src.git'
 
 - scm:
     name: FreeBSD-doc-main

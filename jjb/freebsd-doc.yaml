@@ -8,7 +8,7 @@
       - pollscm:
           cron: "H/5 * * * *"
     builders:
-      - add-git-ver-description
+      - add-svn-revision-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail

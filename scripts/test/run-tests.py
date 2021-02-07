@@ -123,7 +123,7 @@ def runTest():
     if "mac" in test_config:
         macaddress = ",mac=%s" % test_config['mac']
 
-    cmd = "bhyve -c 2 -m %s -AI -H -P -g 0 -s 0:0,hostbridge " \
+    cmd = "bhyve -c 2 -m %s -AI -H -P -s 0:0,hostbridge " \
           "-s 1:0,lpc -s 2:0,virtio-net,%s%s -s 3:0,ahci-hd,%s " \
           "-l com1,stdio %s"  % \
          (test_config['ram'], test_config['tap'], macaddress, \

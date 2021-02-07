@@ -72,7 +72,7 @@ else
 	set +e
 	expect -c "set timeout ${TIMEOUT_EXPECT}; \
 		spawn sudo /usr/bin/timeout -k 60 ${TIMEOUT_VM} /usr/sbin/bhyve \
-		-c ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -A -H -P -g 0 \
+		-c ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -A -H -P \
 		-s 0:0,hostbridge \
 		-s 1:0,lpc \
 		-s 2:0,ahci-hd,${IMG_NAME} \

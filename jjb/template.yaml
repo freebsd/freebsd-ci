@@ -19,7 +19,7 @@
             LINK_TYPE=latest
             MOUNT_REPO=src
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -69,7 +69,7 @@
           properties-content: |
             MOUNT_REPO=src
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -114,7 +114,7 @@
             FBSD_TARGET_ARCH={target_arch}
             LINK_TYPE=latest_vm
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -154,7 +154,7 @@
             FBSD_TARGET_ARCH={target_arch}
             LINK_TYPE=latest_testvm
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -198,7 +198,7 @@
             FBSD_TARGET_ARCH={target_arch}
             LINK_TYPE=latest_tested
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - execute-job-build-script
     publishers:
@@ -240,7 +240,7 @@
             FBSD_TARGET_ARCH={target_arch}
             LINK_TYPE=latest_tested
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -440,7 +440,7 @@
             LINK_TYPE=latest
             MOUNT_REPO=src
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -487,7 +487,7 @@
             FBSD_BRANCH={project}
             FBSD_SRC_PROJECT={project}
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -528,7 +528,7 @@
             FBSD_BRANCH={project}
             FBSD_SRC_PROJECT={project}
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - execute-job-build-script
     publishers:
@@ -567,7 +567,7 @@
             FBSD_BRANCH={project}
             FBSD_SRC_PROJECT={project}
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -610,7 +610,7 @@
             FBSD_TARGET_ARCH={target_arch}
             LINK_TYPE=latest_tested
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - execute-job-build-script
     publishers:

@@ -304,7 +304,7 @@
     triggers:
       - timed: '@daily'
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -330,7 +330,7 @@
     scm:
       - FreeBSD-src-main
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -361,7 +361,7 @@
             LINK_TYPE=latest
             MOUNT_REPO=src
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -400,7 +400,7 @@
           properties-content: |
             FBSD_BRANCH=main
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - setup-jail
       - execute-in-jail
@@ -440,7 +440,7 @@
             FBSD_TARGET_ARCH=amd64
             LINK_TYPE=latest_tested
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - execute-job-build-script
     publishers:
@@ -468,7 +468,7 @@
     triggers:
       - timed: 'H */6 * * *'
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - execute-job-build-script
     publishers:
@@ -494,7 +494,7 @@
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
     builders:
-      - add-svn-revision-description
+      - add-git-ver-description
       - checkout-scripts
       - execute-job-build-script
     publishers:

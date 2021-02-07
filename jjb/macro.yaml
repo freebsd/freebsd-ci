@@ -13,10 +13,16 @@
           sh -ex freebsd-ci/jobs/${JOB_NAME}/build.sh
 
 - builder:
-    name: add-svn-revision-description
+    name: add-git-ver-description
     builders:
       - system-groovy:
-          command: "build.setDescription(build.envVars.containsKey('GIT_COMMIT') ? build.envVars.GIT_COMMIT : 'r' + build.envVars.SVN_REVISION)"
+          command: |
+            def repoPath= build.envVars.WORKSPACE + '/' + build.envVars.GIT_CHECKOUT_DIR
+            def gitCommit = build.envVars.GIT_COMMIT
+            def gitCount = ['sh', '-c', "cd ${repoPath} && git rev-list --first-parent --count ${gitCommit}"].execute().text.trim()
+            def gitHash = ['sh', '-c', "cd ${repoPath} && git rev-parse --verify --short ${gitCommit}"].execute().text.trim()
+            def gitVer = "n${gitCount}-${gitHash}"
+            build.setDescription(gitVer)
 
 - publisher:
     name: scan-clang-warnings

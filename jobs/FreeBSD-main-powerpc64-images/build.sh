@@ -7,7 +7,7 @@ if [ -z "${GIT_COMMIT}" ]; then
 	exit 1
 fi
 
-BRANCH=head
+BRANCH=main
 TARGET=powerpc
 TARGET_ARCH=powerpc64
 

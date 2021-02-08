@@ -7,7 +7,7 @@ if [ -z "${GIT_COMMIT}" ]; then
 	exit 1
 fi
 
-BRANCH=head
+BRANCH=stable-13
 TARGET=amd64
 TARGET_ARCH=amd64
 

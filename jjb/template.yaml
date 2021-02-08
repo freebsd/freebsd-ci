@@ -34,8 +34,8 @@
           retry-delay: 10000
       - make-symlink
       - clean-jail
-      - mail-notify-failure
-      - mail-notify-fixed
+      - git-mail-notify-failure
+      - git-mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-{branch}-{target_arch}-images'

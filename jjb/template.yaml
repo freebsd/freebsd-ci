@@ -34,8 +34,8 @@
           retry-delay: 10000
       - make-symlink
       - clean-jail
-      - mail-notify-failure
-      - mail-notify-fixed
+      - git-mail-notify-failure
+      - git-mail-notify-fixed
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-{branch}-{target_arch}-images'
@@ -103,7 +103,7 @@
     disabled: '{disable_job_images}'
     node: jailer
     scm:
-      - 'FreeBSD-src-{branch}-empty'
+      - 'FreeBSD-src-{branch}'
     properties:
       #- build-discarder:
       #    num-to-keep: 200
@@ -145,7 +145,7 @@
     downstream_projects: []
     node: jailer_fast
     scm:
-      - 'FreeBSD-src-{branch}-empty'
+      - 'FreeBSD-src-{branch}'
     properties:
       - inject:
           properties-content: |
@@ -189,7 +189,7 @@
     id: 'FreeBSD-{branch}-{target_arch}-test_bhyve'
     node: vmhost_bhyve
     scm:
-      - 'FreeBSD-src-{branch}-empty'
+      - 'FreeBSD-src-{branch}'
     properties:
       - inject:
           properties-content: |
@@ -231,7 +231,7 @@
     id: 'FreeBSD-{branch}-{target_arch}-test_qemu'
     node: vmhost_qemu
     scm:
-      - 'FreeBSD-src-{branch}-empty'
+      - 'FreeBSD-src-{branch}'
     properties:
       - inject:
           properties-content: |
@@ -290,18 +290,6 @@
 
 - job-group:
     name: 'FreeBSD-{branch}-amd64-ci'
-    jobs:
-       - 'FreeBSD-{branch}-{target_arch}-build'
-       - 'FreeBSD-{branch}-{target_arch}-images'
-       - 'FreeBSD-{branch}-{target_arch}-LINT'
-       - 'FreeBSD-{branch}-{target_arch}-testvm':
-           downstream_projects:
-            - 'FreeBSD-{branch}-{target_arch}-test'
-            - 'FreeBSD-{branch}-{target_arch}-test_ltp'
-       - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
-
-- job-group:
-    name: 'FreeBSD-main-amd64-ci'
     jobs:
        - 'FreeBSD-{branch}-{target_arch}-build'
        - 'FreeBSD-{branch}-{target_arch}-images'

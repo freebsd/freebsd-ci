@@ -6,6 +6,8 @@
           branches:
             - 'origin/{branch}'
           basedir: src
+          browser: cgit
+          browser-url: https://cgit.freebsd.org/src/
           reference-repo: '/home/git/src.git'
 
 - scm:

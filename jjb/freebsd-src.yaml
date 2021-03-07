@@ -369,6 +369,29 @@
           type: absolute
 
 - job:
+    name: FreeBSD-main-amd64-gcc9_build
+    defaults: global
+    node: jailer
+    scm:
+      - FreeBSD-src-main
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - scan-gcc-warnings
+      - clean-jail
+      - git-mail-notify-failure
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 90
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job:
     name: FreeBSD-main-amd64-dtrace_build
     defaults: global
     node: jailer_fast

@@ -551,3 +551,28 @@
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
+
+- job:
+    name: FreeBSD-main-amd64-test_tcptestsuite
+    node: vmhost_bhyve
+    scm:
+      - FreeBSD-src-main
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH=main
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - publish-junit-results
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 120
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute

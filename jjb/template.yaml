@@ -299,6 +299,7 @@
            downstream_projects:
             - 'FreeBSD-{branch}-{target_arch}-test'
             - 'FreeBSD-{branch}-{target_arch}-test_ltp'
+            - 'FreeBSD-{branch}-{target_arch}-test_tcptestsuite'
        - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
 - job-group:

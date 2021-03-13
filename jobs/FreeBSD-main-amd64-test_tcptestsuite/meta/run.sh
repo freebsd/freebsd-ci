@@ -15,7 +15,7 @@ mount /dev/ada7 /tmp
 # Required by Packet Drill
 sysctl vm.old_mlock=1
 
-cd /usr/local/tests/
+cd /usr/local/tests/tcptestsuite
 set +e
 /usr/bin/kyua test_suites.FreeBSD.allow_sysctl_side_effects=1
 rc=$?

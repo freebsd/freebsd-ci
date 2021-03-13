@@ -70,6 +70,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# py-dpkt: sys/opencrypto/runtests
 	# python3: sys/opencrypto/runtests
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
+	# tcptestsuite: network stack test suite
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
 		gdb		\
@@ -82,7 +83,8 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		py37-scapy	\
 		python		\
 		python3		\
-		sudo
+		sudo		\
+		tcptestsuite
 
 	if [ "${TARGET}" = "amd64" ]; then
 		sudo chroot ufs pkg install -Iy	\

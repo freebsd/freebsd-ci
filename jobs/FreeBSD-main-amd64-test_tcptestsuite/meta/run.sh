@@ -17,7 +17,7 @@ sysctl vm.old_mlock=1
 
 cd /usr/local/tests/tcptestsuite
 set +e
-/usr/bin/kyua test_suites.FreeBSD.allow_sysctl_side_effects=1
+/usr/bin/kyua test
 rc=$?
 if [ ${rc} -ne 0 ] && [ ${rc} -ne 1 ]; then
 	exit ${rc}

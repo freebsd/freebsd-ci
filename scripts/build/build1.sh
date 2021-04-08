@@ -55,6 +55,6 @@ set +x
 echo "--------------------------------------------------------------"
 set -x
 
-make -j 4 buildworld __MAKE_CONF=${WORKSPACE}/make.conf
-make -j 4 buildkernel __MAKE_CONF=${WORKSPACE}/make.conf
+make -s -de -j 4 buildworld __MAKE_CONF=${WORKSPACE}/make.conf
+make -s -de -j 4 buildkernel __MAKE_CONF=${WORKSPACE}/make.conf
 

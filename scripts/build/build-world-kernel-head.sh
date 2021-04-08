@@ -14,14 +14,14 @@ if [ -n "${CROSS_TOOLCHAIN}" ]; then
 	CROSS_TOOLCHAIN_PARAM=CROSS_TOOLCHAIN=${CROSS_TOOLCHAIN}
 fi
 
-sudo make -j ${JFLAG} -DNO_CLEAN \
+sudo make -s -de -j ${JFLAG} -DNO_CLEAN \
 	buildworld \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	${CROSS_TOOLCHAIN_PARAM} \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF}
-sudo make -j ${JFLAG} -DNO_CLEAN \
+sudo make -s -de -j ${JFLAG} -DNO_CLEAN \
 	buildkernel \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \

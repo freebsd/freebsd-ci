@@ -8,4 +8,4 @@ export WITH_DEBUG=1
 export WITH_DOC=1
 export WITH_TESTS=1
 
-sh -x freebsd-ci/scripts/build/build-images.sh
+sh -ex freebsd-ci/scripts/build/build-images.sh

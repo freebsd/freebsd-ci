@@ -7,4 +7,4 @@ env \
 	WITH_LIB32=0 \
 	WITH_DEBUG=1 \
 	WITH_TESTS=1 \
-	sh -x freebsd-ci/scripts/build/build-test_image-head.sh
+	sh -ex freebsd-ci/scripts/build/build-test_image-head.sh

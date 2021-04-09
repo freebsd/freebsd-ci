@@ -10,4 +10,4 @@ disable-notyet-tests.sh
 run-kyua.sh
 "
 
-sh -x freebsd-ci/scripts/test/run-tests.sh
+sh -ex freebsd-ci/scripts/test/run-tests.sh

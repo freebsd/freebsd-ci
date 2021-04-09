@@ -25,4 +25,4 @@ rm -f kernel kernel.txz
 fetch https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/kernel.txz
 tar Jxvf kernel.txz --strip-components 3 boot/kernel/kernel
 
-sh -x freebsd-ci/scripts/test/run-tests.sh
+sh -ex freebsd-ci/scripts/test/run-tests.sh

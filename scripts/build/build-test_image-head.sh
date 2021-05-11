@@ -79,8 +79,8 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		nist-kat	\
 		nmap		\
 		perl5		\
-		net/py-dpkt
-		net/scapy
+		net/py-dpkt	\
+		net/scapy	\
 		python		\
 		python3		\
 		sudo		\

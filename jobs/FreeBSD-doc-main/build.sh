@@ -1,6 +1,6 @@
 #!/bin/sh
 
 cd doc
-make -j 2
+make HUGO_ARGS="--verbose --debug --path-warnings"
 
 echo "GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property

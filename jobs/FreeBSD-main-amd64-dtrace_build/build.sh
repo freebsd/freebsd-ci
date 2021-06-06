@@ -7,4 +7,4 @@ env \
 	SRCCONF=${SRCCONF} \
 	TARGET=amd64 \
 	TARGET_ARCH=amd64 \
-	sh -x ${WORKSPACE}/freebsd-ci/scripts/build/build-world-kernel-head.sh
+	sh -ex ${WORKSPACE}/freebsd-ci/scripts/build/build-world-kernel-head.sh

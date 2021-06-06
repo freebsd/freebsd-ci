@@ -8,4 +8,4 @@ env \
 	CROSS_TOOLCHAIN=mips64-gcc \
 	TARGET=mips \
 	TARGET_ARCH=mips64 \
-	sh -x ${WORKSPACE}/freebsd-ci/scripts/build/build-world-kernel-head.sh
+	sh -ex ${WORKSPACE}/freebsd-ci/scripts/build/build-world-kernel-head.sh

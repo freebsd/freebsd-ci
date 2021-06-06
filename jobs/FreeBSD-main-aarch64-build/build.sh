@@ -5,4 +5,4 @@ env \
 	TARGET=arm64 \
 	TARGET_ARCH=aarch64 \
 	SRCCONF=${WORKSPACE}/`dirname $0`/src.conf \
-	sh -x ${WORKSPACE}/freebsd-ci/scripts/build/build-world-kernel-head.sh
+	sh -ex ${WORKSPACE}/freebsd-ci/scripts/build/build-world-kernel-head.sh

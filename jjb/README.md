@@ -1,7 +1,7 @@
 [Jenkins Job Builder](http://docs.openstack.org/infra/jenkins-job-builder/) config for FreeBSD CI jobs
 
 Setup:
-- Install jenkins job builder form source (recommended) or ports/pkg `devel/py-jenkins-job-builder`
+- Install jenkins job builder from source (recommended) or ports/pkg `devel/py-jenkins-job-builder`
 - `cp jenkins_jobs.ini.sample jenkins_jobs.ini`
 - Edit `jenkins_jobs.ini` for your credenticals of ci.FreeBSD.org
   (https://ci.freebsd.org/me/configure -> "show api token")

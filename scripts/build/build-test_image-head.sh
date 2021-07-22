@@ -25,9 +25,11 @@ ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/${GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
 CONFIG_BASE=`dirname $0 | xargs realpath`/config-head
 if [ "${KERNCONF}" = "GENERIC" ]; then
 	KERNEL=kernel
+	KERNEL_DBG=kernel-dbg
 	OUTPUT_IMG_NAME=disk-test.img
 else
 	KERNEL=kernel-${KERNCONF}
+	KERNEL_DBG=kernel-dbg-${KERNCONF}
 	OUTPUT_IMG_NAME=disk-test-${KERNCONF}.img
 fi
 
@@ -43,7 +45,7 @@ if [ "${WITH_TESTS}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} tests"
 fi
 if [ "${WITH_DEBUG}" = 1 ]; then
-	DIST_PACKAGES="${DIST_PACKAGES} base-dbg ${KERNEL}-dbg"
+	DIST_PACKAGES="${DIST_PACKAGES} base-dbg ${KERNEL_DBG}"
 fi
 if [ "${WITH_LIB32}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} lib32"

@@ -558,6 +558,13 @@
       - setup-jail
       - execute-in-jail
     publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: 'snapshot'
+          source: 'src/release/artifact/**'
+          remove-prefix: 'src/release/artifact'
+          retries: 3
+          retry-delay: 10000
       - clean-jail
       - trigger-parameterized-builds:
         - project:

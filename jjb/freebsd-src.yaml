@@ -537,9 +537,9 @@
     publishers:
       - ftp:
           site: 'artifact.ci.freebsd.org'
-          target: 'snapshot'
-          source: 'src/release/artifact/**'
-          remove-prefix: 'src/release/artifact'
+          target: ''
+          source: 'artifact/**'
+          remove-prefix: 'artifact'
           retries: 3
           retry-delay: 10000
       - clean-jail

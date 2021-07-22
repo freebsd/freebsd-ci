@@ -7,9 +7,14 @@ if [ -z "${GIT_COMMIT}" ]; then
 	exit 1
 fi
 
+KERNCONF=${KERNCONF:-GENERIC}
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/${GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
-IMG_NAME=disk-test.img
+if [ "${KERNCONF}" = "GENERIC" ]; then
+	IMG_NAME=disk-test.img
+else
+	IMG_NAME=disk-test-${KERNCONF}.img
+fi
 JOB_DIR=freebsd-ci/jobs/${JOB_NAME}
 TEST_BASE=`dirname $0`
 

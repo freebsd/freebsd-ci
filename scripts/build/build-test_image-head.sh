@@ -19,16 +19,23 @@ cleanup () {
 
 trap cleanup EXIT
 
+KERNCONF=${KERNCONF:-GENERIC}
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
 ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/${GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
 CONFIG_BASE=`dirname $0 | xargs realpath`/config-head
-OUTPUT_IMG_NAME=disk-test.img
+if [ "${KERNCONF}" = "GENERIC" ]; then
+	KERNEL=kernel
+	OUTPUT_IMG_NAME=disk-test.img
+else
+	KERNEL=kernel-${KERNCONF}
+	OUTPUT_IMG_NAME=disk-test-${KERNCONF}.img
+fi
 
 sudo rm -fr work
 mkdir -p work
 cd work
 
-DIST_PACKAGES="base kernel"
+DIST_PACKAGES="base ${KERNEL}"
 if [ "${WITH_DOC}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} doc"
 fi
@@ -36,7 +43,7 @@ if [ "${WITH_TESTS}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} tests"
 fi
 if [ "${WITH_DEBUG}" = 1 ]; then
-	DIST_PACKAGES="${DIST_PACKAGES} base-dbg kernel-dbg"
+	DIST_PACKAGES="${DIST_PACKAGES} base-dbg ${KERNEL}-dbg"
 fi
 if [ "${WITH_LIB32}" = 1 ]; then
 	DIST_PACKAGES="${DIST_PACKAGES} lib32"

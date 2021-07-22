@@ -15,7 +15,7 @@ if [ -n "${CROSS_TOOLCHAIN}" ]; then
 	CROSS_TOOLCHAIN_PARAM=CROSS_TOOLCHAIN=${CROSS_TOOLCHAIN}
 fi
 
-make -j ${JFLAG} -DNO_CLEAN \
+sudo make -j ${JFLAG} -DNO_CLEAN \
 	kernel-toolchain \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
@@ -41,9 +41,23 @@ sudo make -DNOPORTS -DNOSRC -DNODOC kernel.txz \
 	MAKE="make -DDB_FROM_SRC __MAKE_CONF=${MAKECONF} SRCCONF=${SRCCONF}"
 
 ARTIFACT_DEST=artifact/${FBSD_BRANCH}/${GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
+if [ "${KERNCONF}" != "GENERIC" ]; then
+	ARTIFACT_SUFFIX="-${KERNCONF}"
+fi
 sudo mkdir -p ${ARTIFACT_DEST}
-sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/kernel.txz ${ARTIFACT_DEST}/kernel-GENERIC-KASAN.txz
-sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/MANIFEST ${ARTIFACT_DEST}/MANIFEST.GENERIC-KASAN
+
+ARTIFACT_OBJDIR=/usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release
+for f in `ls ${ARTIFACT_OBJDIR}/*.txz ${ARTIFACT_OBJDIR}/MANIFEST`; do
+	fb=$(basename ${f})
+	fn=${fb%.*}
+	fe=${fb##*.}
+	if [ "${fn}" != "${fe}" ]; then
+		fnew=${fn}${ARTIFACT_SUFFIX}.${fe}
+	else
+		fnew=${fb}${ARTIFACT_SUFFIX}
+	fi
+	sudo mv ${f} ${ARTIFACT_DEST}/${fnew}
+done
 
 echo "${GIT_COMMIT}" | sudo tee ${ARTIFACT_DEST}/revision.txt
 

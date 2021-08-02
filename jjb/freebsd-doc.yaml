@@ -14,8 +14,8 @@
       - execute-in-jail
     publishers:
       - clean-jail
-      - git-mail-notify-failure
-      - git-mail-notify-fixed
+      - git-mail-notify-failure-doc
+      - git-mail-notify-fixed-doc
     wrappers:
       - timestamps
       - timeout:

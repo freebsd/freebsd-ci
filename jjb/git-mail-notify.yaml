@@ -6,11 +6,21 @@
           freebsd_send_to:
             - developers
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
+- publisher:
+    name: git-mail-notify-failure-doc
+    publishers:
+      - git-mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            - developers
+            - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}, doceng@FreeBSD.org
 - publisher:
     name: git-mail-notify-failure-custom
     publishers:
       - email-ext:
-          recipients: ${{DEFAULT_RECIPIENTS}}
+          recipients: '{obj:freebsd_recipients}'
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
           body: |
             $PROJECT_NAME - Build #$BUILD_NUMBER (${{ENV, var="GIT_COMMIT"}}) - $BUILD_STATUS
@@ -48,11 +58,21 @@
           send-to:
             - developers
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
+- publisher:
+    name: git-mail-notify-unstable-doc
+    publishers:
+      - git-mail-notify-unstable-custom:
+          freebsd_mail_disable: false
+          send-to:
+            - developers
+            - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}, doceng@FreeBSD.org
 - publisher:
     name: git-mail-notify-unstable-custom
     publishers:
       - email-ext:
-          recipients: ${{DEFAULT_RECIPIENTS}}
+          recipients: '{obj:freebsd_recipients}'
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
           body: |
             $PROJECT_NAME - Build #$BUILD_NUMBER (${{ENV, var="GIT_COMMIT"}}) - $BUILD_STATUS
@@ -90,11 +110,21 @@
           freebsd_send_to:
             #- culprits
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
+- publisher:
+    name: git-mail-notify-fixed-doc
+    publishers:
+      - git-mail-notify-fixed-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- culprits
+            - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}, doceng@FreeBSD.org
 - publisher:
     name: git-mail-notify-fixed-custom
     publishers:
       - email-ext:
-          recipients: ${{DEFAULT_RECIPIENTS}}
+          recipients: '{obj:freebsd_recipients}'
           subject: "$PROJECT_NAME - Build #$BUILD_NUMBER - $BUILD_STATUS"
           body: |
             $PROJECT_NAME - Build #$BUILD_NUMBER (${{ENV, var="GIT_COMMIT"}}) - $BUILD_STATUS

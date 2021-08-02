@@ -56,7 +56,7 @@
           type: absolute
       - bind-artifact-credential
 
-# Run static analysis.
+# Build LINT kernel
 - job-template:
     disable_job_LINT: false
     defaults: global
@@ -80,7 +80,7 @@
       - git-mail-notify-failure-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
-            #- developers
+            - developers
             - recipients
       - git-mail-notify-fixed-custom:
           freebsd_mail_disable: false

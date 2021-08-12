@@ -44,6 +44,7 @@
             - 'FreeBSD-{branch}-{target_arch}-gcc9_build'
             - 'FreeBSD-{branch}-{target_arch}-dtrace_build'
             - 'FreeBSD-{branch}-{target_arch}-KASAN_build'
+            - 'FreeBSD-{branch}-{target_arch}-KMSAN_build'
           condition: SUCCESS
           git-revision: true
           property-file: trigger.property

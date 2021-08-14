@@ -414,7 +414,7 @@
 - job:
     defaults: global
     name: FreeBSD-main-amd64-dtrace_testvm
-    node: jailer_fast
+    node: image_builder
     scm:
       - FreeBSD-src-main
     properties:
@@ -522,7 +522,7 @@
 - job:
     defaults: global
     name: FreeBSD-main-amd64-KASAN_testvm
-    node: jailer_fast
+    node: image_builder
     scm:
       - FreeBSD-src-main
     properties:
@@ -630,7 +630,7 @@
 - job:
     defaults: global
     name: FreeBSD-main-amd64-KMSAN_testvm
-    node: jailer_fast
+    node: image_builder
     scm:
       - FreeBSD-src-main
     properties:

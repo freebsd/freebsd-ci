@@ -145,7 +145,7 @@
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-testvm'
     downstream_projects: []
-    node: jailer_fast
+    node: image_builder
     scm:
       - 'FreeBSD-src-{branch}'
     properties:
@@ -468,7 +468,7 @@
     artifact_path: artifact
     defaults: global
     name: 'FreeBSD-srcproj-{project}-{target_arch}-basevm'
-    node: jailer_fast
+    node: image_builder
     scm:
       - 'FreeBSD-src':
           branch: 'project/{project}'
@@ -548,7 +548,7 @@
     artifact_path: artifact
     defaults: global
     name: 'FreeBSD-srcproj-{project}-{target_arch}-testvm'
-    node: jailer_fast
+    node: image_builder
     scm:
       - 'FreeBSD-src':
           branch: 'project/{project}'

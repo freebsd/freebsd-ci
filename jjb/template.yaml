@@ -83,11 +83,13 @@
           freebsd_send_to:
             - developers
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
       - git-mail-notify-fixed-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- culprits
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
     wrappers:
       - timestamps
       - timeout:
@@ -211,11 +213,13 @@
           freebsd_send_to:
             #- developers
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
       - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- developers
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
       - git-mail-notify-fixed
     wrappers:
       - timestamps
@@ -255,11 +259,13 @@
           freebsd_send_to:
             #- developers
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
       - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
           freebsd_send_to:
             #- developers
             - recipients
+          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
       - git-mail-notify-fixed
     triggers:
       - timed: '0 22 * * *'

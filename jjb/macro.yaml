@@ -1,3 +1,10 @@
+- parameter:
+    name: USE_GIT_COMMIT
+    parameters:
+      - string:
+          name: USE_GIT_COMMIT
+          description: Git commit hash to build
+
 - builder:
     name: checkout-scripts
     builders:

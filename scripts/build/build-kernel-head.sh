@@ -61,4 +61,4 @@ done
 
 echo "${GIT_COMMIT}" | sudo tee ${ARTIFACT_DEST}/revision.txt
 
-echo "GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property
+echo "USE_GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property

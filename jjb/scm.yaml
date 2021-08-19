@@ -41,6 +41,12 @@
           branch: 'main'
 
 - scm:
+    name: FreeBSD-src-use_git_commit
+    scm:
+      - FreeBSD-src:
+          branch: '${USE_GIT_COMMIT}'
+
+- scm:
     name: FreeBSD-doc
     scm:
       - git:

@@ -43,4 +43,4 @@ sudo mv /usr/obj/usr/src/${TARGET}.${TARGET_ARCH}/release/MANIFEST ${ARTIFACT_DE
 
 echo "${GIT_COMMIT}" | sudo tee ${ARTIFACT_DEST}/revision.txt
 
-echo "GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property
+echo "USE_GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property

@@ -101,4 +101,4 @@ rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
 mv work/${OUTPUT_IMG_NAME}.zst artifact/${ARTIFACT_SUBDIR}
 
-echo "GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property
+echo "USE_GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property

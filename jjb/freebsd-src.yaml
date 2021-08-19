@@ -350,7 +350,9 @@
     defaults: global
     node: jailer
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -373,7 +375,9 @@
     defaults: global
     node: jailer_fast
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -416,7 +420,9 @@
     name: FreeBSD-main-amd64-dtrace_testvm
     node: image_builder
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -453,7 +459,9 @@
     name: FreeBSD-main-amd64-dtrace_test
     node: vmhost_bhyve
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -481,7 +489,9 @@
     defaults: global
     node: jailer_fast
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -524,7 +534,9 @@
     name: FreeBSD-main-amd64-KASAN_testvm
     node: image_builder
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -561,7 +573,9 @@
     name: FreeBSD-main-amd64-KASAN_test
     node: vmhost_bhyve
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -589,7 +603,9 @@
     defaults: global
     node: jailer_fast
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -632,7 +648,9 @@
     name: FreeBSD-main-amd64-KMSAN_testvm
     node: image_builder
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -669,7 +687,9 @@
     name: FreeBSD-main-amd64-KMSAN_test
     node: vmhost_bhyve
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -724,7 +744,9 @@
     name: FreeBSD-main-amd64-test_ltp
     node: vmhost_bhyve
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |
@@ -749,7 +771,9 @@
     name: FreeBSD-main-amd64-test_tcptestsuite
     node: vmhost_bhyve
     scm:
-      - FreeBSD-src-main
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
     properties:
       - inject:
           properties-content: |

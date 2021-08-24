@@ -43,8 +43,14 @@
 - scm:
     name: FreeBSD-src-use_git_commit
     scm:
-      - FreeBSD-src:
-          branch: '${USE_GIT_COMMIT}'
+      - git:
+          url: https://git.freebsd.org/src.git
+          branches:
+            - '${USE_GIT_COMMIT}'
+          basedir: src
+          browser: cgit
+          browser-url: https://cgit.freebsd.org/src/
+          reference-repo: '/home/git/src.git'
 
 - scm:
     name: FreeBSD-doc

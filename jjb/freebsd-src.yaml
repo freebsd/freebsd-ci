@@ -361,7 +361,7 @@
     publishers:
       - scan-gcc-warnings
       - clean-jail
-      - git-mail-notify-failure
+      - git-mail-notify-failure-admin-only
     wrappers:
       - timestamps
       - timeout:

@@ -6,7 +6,7 @@
           freebsd_send_to:
             - developers
             - recipients
-          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}
 - publisher:
     name: git-mail-notify-failure-doc
     publishers:
@@ -15,7 +15,7 @@
           freebsd_send_to:
             - developers
             - recipients
-          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}, doceng@FreeBSD.org
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}, doceng@FreeBSD.org
 - publisher:
     name: git-mail-notify-failure-custom
     publishers:
@@ -58,7 +58,7 @@
           send-to:
             - developers
             - recipients
-          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}
 - publisher:
     name: git-mail-notify-unstable-doc
     publishers:
@@ -67,7 +67,7 @@
           send-to:
             - developers
             - recipients
-          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}, doceng@FreeBSD.org
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}, doceng@FreeBSD.org
 - publisher:
     name: git-mail-notify-unstable-custom
     publishers:
@@ -110,7 +110,7 @@
           freebsd_send_to:
             #- culprits
             - recipients
-          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}
 - publisher:
     name: git-mail-notify-fixed-doc
     publishers:
@@ -119,7 +119,7 @@
           freebsd_send_to:
             #- culprits
             - recipients
-          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}, doceng@FreeBSD.org
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}, doceng@FreeBSD.org
 - publisher:
     name: git-mail-notify-fixed-custom
     publishers:

@@ -16,6 +16,7 @@ x['target'] = os.environ['FBSD_TARGET']
 x['target_arch'] = os.environ['FBSD_TARGET_ARCH']
 x['link_type'] = os.environ['LINK_TYPE']
 json_req = json.dumps(x)
+print('Post link:', x)
 
 if os.environ.get('ARTIFACT_SERVER', False):
     connections = http.client.HTTPSConnection(os.environ['ARTIFACT_SERVER'], 8182)

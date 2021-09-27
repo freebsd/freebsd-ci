@@ -19,7 +19,7 @@ mkdir -p work
 cd work
 
 mkdir -p ufs
-for f in base kernel base-dbg kernel-dbg doc tests
+for f in base kernel base-dbg kernel-dbg tests
 do
 	fetch https://${ARTIFACT_SERVER}/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs

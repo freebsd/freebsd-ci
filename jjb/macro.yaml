@@ -90,17 +90,17 @@
           failOnError: true
           buildsteps:
             - shell: |
-                if [ -z "${GIT_COMMIT}" ]; then
+                if [ -z "${USE_GIT_COMMIT}" ]; then
                     ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
                     ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/latest_testvm/${FBSD_TARGET}/${FBSD_TARGET_ARCH}
                     GIT_COMMIT=$(curl -s https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/revision.txt)
                 fi
-                if [ -z "${GIT_COMMIT}" ]; then
+                if [ -z "${USE_GIT_COMMIT}" ]; then
                     # Backup method -- interrogate Jenkins directly.
                     # Assumes description is set to the commit hash.
                     GIT_COMMIT=$(curl -s ${JENKINS_URL}/job/FreeBSD-${FBSD_BRANCH}-${FBSD_TARGET_ARCH}-testvm/lastSuccessfulBuild/api/json | jq '.description')
                 fi
-                rm -f ${WORKSPACE}/git_commit.property
-                echo "GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/git_commit.property
+                rm -f ${WORKSPACE}/use_git_commit.property
+                echo "USE_GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/use_git_commit.property
             - inject:
-                properties-file: "${WORKSPACE}/git_commit.property"
+                properties-file: "${WORKSPACE}/use_git_commit.property"

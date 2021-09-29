@@ -28,3 +28,11 @@ if [ -f ${F} ]; then
 		${F}
 	rm -f ${F}.bak
 fi
+
+F=/usr/tests/sys/geom/class/Kyuafile
+if [ -f ${F} ]; then
+	sed -i .bak \
+		-e 's,include("eli/Kyuafile"),-- include("eli/Kyuafile"),' \
+		${F}
+	rm -f ${F}.bak
+fi

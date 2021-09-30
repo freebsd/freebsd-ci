@@ -8,6 +8,15 @@
             - recipients
           freebsd_recipients: ${DEFAULT_RECIPIENTS}
 - publisher:
+    name: git-mail-notify-failure-mailinglist
+    publishers:
+      - git-mail-notify-failure-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            - developers
+            - recipients
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}, dev-ci@FreeBSD.org
+- publisher:
     name: git-mail-notify-failure-admin-only
     publishers:
       - git-mail-notify-failure-custom:
@@ -68,6 +77,15 @@
             - recipients
           freebsd_recipients: ${DEFAULT_RECIPIENTS}
 - publisher:
+    name: git-mail-notify-unstable-mailinglist
+    publishers:
+      - git-mail-notify-unstable-custom:
+          freebsd_mail_disable: false
+          send-to:
+            - developers
+            - recipients
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}, dev-ci@FreeBSD.org
+- publisher:
     name: git-mail-notify-unstable-admin-only
     publishers:
       - git-mail-notify-unstable-custom:
@@ -127,6 +145,15 @@
             #- culprits
             - recipients
           freebsd_recipients: ${DEFAULT_RECIPIENTS}
+- publisher:
+    name: git-mail-notify-fixed-mailinglist
+    publishers:
+      - git-mail-notify-fixed-custom:
+          freebsd_mail_disable: false
+          freebsd_send_to:
+            #- culprits
+            - recipients
+          freebsd_recipients: ${DEFAULT_RECIPIENTS}, dev-ci@FreeBSD.org
 - publisher:
     name: git-mail-notify-fixed-admin-only
     publishers:

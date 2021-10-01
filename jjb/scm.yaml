@@ -17,12 +17,6 @@
           branch: 'stable/10'
 
 - scm:
-    name: FreeBSD-src-stable-11
-    scm:
-      - FreeBSD-src:
-          branch: 'stable/11'
-
-- scm:
     name: FreeBSD-src-stable-12
     scm:
       - FreeBSD-src:

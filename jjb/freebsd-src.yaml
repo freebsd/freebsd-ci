@@ -6,23 +6,9 @@
       - main
       - stable-13
       - stable-12
-      - stable-11
     jobs:
       - 'FreeBSD-{branch}-amd64-ci':
           target: amd64
-          warnscanner: clang
-
-- project:
-    name: FreeBSD-11-aarch64
-    target_arch:
-      - aarch64
-    branch:
-      - stable-11
-    jobs:
-      - 'FreeBSD-{branch}-aarch64-ci':
-          target: arm64
-          disable_job_images: true
-          disable_job_LINT: true
           warnscanner: clang
 
 - project:
@@ -59,7 +45,6 @@
       - main
       - stable-13
       - stable-12
-      - stable-11
     jobs:
       - 'FreeBSD-{branch}-armv6-ci':
           target: arm
@@ -86,7 +71,6 @@
       - main
       - stable-13
       - stable-12
-      - stable-11
     jobs:
       - 'FreeBSD-{branch}-i386-ci':
           target: i386
@@ -149,18 +133,6 @@
           disable_job_LINT: true
 
 - project:
-    name: FreeBSD-11-powerpc
-    target_arch:
-      - powerpc
-    branch:
-      - stable-11
-    jobs:
-      - 'FreeBSD-{branch}-powerpc-ci':
-          target: powerpc
-          warnscanner: gcc4
-          disable_job_LINT: true
-
-- project:
     name: FreeBSD-12-powerpc
     target_arch:
       - powerpc
@@ -182,18 +154,6 @@
       - 'FreeBSD-{branch}-powerpc-ci':
           target: powerpc
           warnscanner: clang
-
-- project:
-    name: FreeBSD-11-powerpc64
-    target_arch:
-      - powerpc64
-    branch:
-      - stable-11
-    jobs:
-      - 'FreeBSD-{branch}-powerpc64-ci':
-          target: powerpc
-          warnscanner: gcc4
-          disable_job_LINT: true
 
 - project:
     name: FreeBSD-12-powerpc64
@@ -276,30 +236,6 @@
           warnscanner: clang
           disable_job_images: true
           node_job_build: jailer
-
-# Sparc64
-- project:
-    name: FreeBSD-sparc64-11
-    target_arch:
-      - sparc64
-    branch:
-      - stable-11
-    jobs:
-      - 'FreeBSD-{branch}-sparc64-ci':
-          target: sparc64
-          disable_job_LINT: true
-          warnscanner: gcc4
-
-- project:
-    name: FreeBSD-sparc64-12
-    target_arch:
-      - sparc64
-    branch:
-      - stable-12
-    jobs:
-      - 'FreeBSD-{branch}-sparc64-ci':
-          target: sparc64
-          warnscanner: gcc4
 
 - project:
     name: FreeBSD-srcproj

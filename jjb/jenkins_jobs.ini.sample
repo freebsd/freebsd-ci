@@ -3,6 +3,6 @@ ignore_cache=True
 [__future__]
 param_order_from_yaml=True
 [jenkins]
-user=<USERNAME>
-password=<API_TOKEN>
-url=https://ci.FreeBSD.org
+user=lwhsu
+password=118fcf000ce44a349dc297b6799436ffec
+url=https://localhost:8080

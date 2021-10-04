@@ -1,9 +1,21 @@
 - project:
-    name: FreeBSD-amd64
+    name: FreeBSD-main-amd64
     target_arch:
       - amd64
     branch:
       - main
+    jobs:
+      - 'FreeBSD-{branch}-amd64-ci':
+          target: amd64
+          warnscanner: clang
+          mail_notify_failure: mailinglist
+          mail_notify_fixed: mailinglist
+
+- project:
+    name: FreeBSD-stable-amd64
+    target_arch:
+      - amd64
+    branch:
       - stable-13
       - stable-12
     jobs:

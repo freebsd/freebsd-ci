@@ -81,7 +81,6 @@
     target_arch:
       - mips
     branch:
-      - main
       - stable-13
       - stable-12
     jobs:
@@ -95,7 +94,6 @@
     target_arch:
       - mips
     branch:
-      - main
       - stable-13
       - stable-12
     jobs:
@@ -109,7 +107,6 @@
     target_arch:
       - mips64
     branch:
-      - main
       - stable-13
       - stable-12
     jobs:
@@ -123,7 +120,6 @@
     target_arch:
       - mips64
     branch:
-      - main
       - stable-13
       - stable-12
     jobs:

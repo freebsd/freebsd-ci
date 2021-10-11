@@ -6,11 +6,11 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 export PATH
 
 cat <<EOF >> /etc/kyua/kyua.conf
-test_suites.FreeBSD.disks = '/dev/ada2 /dev/ada3 /dev/ada4 /dev/ada5 /dev/ada6'
+test_suites.FreeBSD.disks = '/dev/vtbd2 /dev/vtbd3 /dev/vtbd4 /dev/vtbd5 /dev/vtbd6'
 EOF
 
-newfs /dev/ada7
-mount /dev/ada7 /tmp
+newfs /dev/vtbd7
+mount /dev/vtbd7 /tmp
 
 # Enable services needed by tests
 sysrc zfsd_enable="YES"

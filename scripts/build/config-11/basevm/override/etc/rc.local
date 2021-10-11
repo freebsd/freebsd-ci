@@ -12,7 +12,7 @@ set -x
 
 ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
 
-TARDEV=/dev/ada1
+TARDEV=/dev/vtbd1
 METADIR=/meta
 
 ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)

@@ -37,7 +37,7 @@ zstd --rm -fd ${IMG_NAME}.zst
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	truncate -s 128m disk${i}
-	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,ahci-hd,disk${i}"
+	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,virtio-blk,disk${i}"
 done
 
 # prepare meta disk to pass information to testvm
@@ -80,8 +80,8 @@ else
 		-c ${VM_CPU_COUNT} -m ${VM_MEM_SIZE} -A -H -P \
 		-s 0:0,hostbridge \
 		-s 1:0,lpc \
-		-s 2:0,ahci-hd,${IMG_NAME} \
-		-s 3:0,ahci-hd,meta.tar \
+		-s 2:0,virtio-blk,${IMG_NAME} \
+		-s 3:0,virtio-blk,meta.tar \
 		${BHYVE_EXTRA_DISK_PARAM} \
 		-l com1,stdio \
 		${TEST_VM_NAME}; \

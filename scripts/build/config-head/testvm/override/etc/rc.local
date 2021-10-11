@@ -12,7 +12,7 @@ set -x
 
 ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
 
-for TARDEV in /dev/ada0 /dev/ada1 /dev/vtbd0 /dev/vtbd1; do
+for TARDEV in /dev/vtbd0 /dev/vtbd1 /dev/vtbd0 /dev/vtbd1; do
         ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)
         if [ ${ISTAR} -eq 1 ]; then
                 break

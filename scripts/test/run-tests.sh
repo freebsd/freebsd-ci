@@ -35,9 +35,13 @@ METAOUTDIR=meta-out
 fetch https://${ARTIFACT_SERVER}/${ARTIFACT_SUBDIR}/${IMG_NAME}.zst
 zstd --rm -fd ${IMG_NAME}.zst
 
+# for cam(4) tests
+truncate -s 128m disk-cam
+BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,ahci-hd,disk-cam"
+
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	truncate -s 128m disk${i}
-	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,virtio-blk,disk${i}"
+	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 4)):0,virtio-blk,disk${i}"
 done
 
 # prepare meta disk to pass information to testvm
@@ -113,6 +117,7 @@ if [ -e ${JOB_DIR}/xfail-list -a -e "${report}" ]; then
 	done < ${JOB_DIR}/xfail-list
 fi
 
+rm -f disk-cam
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	rm -f disk${i}
 done

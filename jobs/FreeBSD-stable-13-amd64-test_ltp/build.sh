@@ -52,8 +52,8 @@ expect -c "set timeout ${TIMEOUT_EXPECT}; \
 	-c 2 -m ${TEST_VM_MEMORY} -A -H -P \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
-	-s 2:0,ahci-hd,${IMG_NAME} \
-	-s 3:0,ahci-hd,meta.tar \
+	-s 2:0,virtio-blk,${IMG_NAME} \
+	-s 3:0,virtio-blk,meta.tar \
 	-l com1,stdio \
 	${TEST_VM_NAME}; \
         expect { eof }"

@@ -27,7 +27,7 @@ expect -c "set timeout 3540; \
 	-c 2 -m 4096m -A -H -P \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
-	-s 2:0,ahci-hd,${IMG_NAME} \
+	-s 2:0,virtio-blk,${IMG_NAME} \
 	-l com1,stdio \
 	${TEST_VM_NAME}; \
 	expect { eof }"

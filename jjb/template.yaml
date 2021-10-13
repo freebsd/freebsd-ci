@@ -197,6 +197,8 @@
 # bhyve test for x86 architectures.
 - job-template:
     defaults: global
+    mail_notify_failure: admin-only
+    mail_notify_fixed: admin-only
     name: 'FreeBSD-{branch}-{target_arch}-test'
     id: 'FreeBSD-{branch}-{target_arch}-test_bhyve'
     node: vmhost_bhyve
@@ -218,19 +220,8 @@
     publishers:
       - make-symlink
       - publish-junit-results
-      - git-mail-notify-failure-custom:
-          freebsd_mail_disable: false
-          freebsd_send_to:
-            #- developers
-            - recipients
-          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
-      - git-mail-notify-unstable-custom:
-          freebsd_mail_disable: false
-          freebsd_send_to:
-            #- developers
-            - recipients
-          freebsd_recipients: ${{DEFAULT_RECIPIENTS}}
-      - git-mail-notify-fixed
+      - git-mail-notify-failure-{mail_notify_failure}
+      - git-mail-notify-fixed-{mail_notify_fixed}
     wrappers:
       - timestamps
       - timeout:
@@ -332,7 +323,9 @@
             - 'FreeBSD-{branch}-{target_arch}-test':
             - 'FreeBSD-{branch}-{target_arch}-test_ltp'
             - 'FreeBSD-{branch}-{target_arch}-test_tcptestsuite'
-       - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
+       - 'FreeBSD-{branch}-{target_arch}-test_bhyve':
+           mail_notify_failure: mailinglist
+           mail_notify_fixed: mailinglist
 
 - job-group:
     name: 'FreeBSD-{branch}-armv6-ci'

@@ -198,6 +198,7 @@
 - job-template:
     defaults: global
     mail_notify_failure: admin-only
+    mail_notify_unstable: admin-only
     mail_notify_fixed: admin-only
     name: 'FreeBSD-{branch}-{target_arch}-test'
     id: 'FreeBSD-{branch}-{target_arch}-test_bhyve'
@@ -221,6 +222,7 @@
       - make-symlink
       - publish-junit-results
       - git-mail-notify-failure-{mail_notify_failure}
+      - git-mail-notify-unstable-{mail_notify_unstable}
       - git-mail-notify-fixed-{mail_notify_fixed}
     wrappers:
       - timestamps
@@ -325,6 +327,7 @@
             - 'FreeBSD-{branch}-{target_arch}-test_tcptestsuite'
        - 'FreeBSD-{branch}-{target_arch}-test_bhyve':
            mail_notify_failure: mailinglist
+           mail_notify_unstable: mailinglist
            mail_notify_fixed: mailinglist
 
 - job-group:

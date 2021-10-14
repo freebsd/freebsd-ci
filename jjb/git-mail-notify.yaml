@@ -83,7 +83,7 @@
     publishers:
       - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
-          send-to:
+          freebsd_send_to:
             - developers
             - recipients
           freebsd_recipients: ${DEFAULT_RECIPIENTS}
@@ -92,7 +92,7 @@
     publishers:
       - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
-          send-to:
+          freebsd_send_to:
             - developers
             - recipients
           freebsd_recipients: ${DEFAULT_RECIPIENTS}, dev-ci@FreeBSD.org
@@ -101,7 +101,7 @@
     publishers:
       - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
-          send-to:
+          freebsd_send_to:
             - developers
             - recipients
           freebsd_recipients: ${DEFAULT_RECIPIENTS}
@@ -110,7 +110,7 @@
     publishers:
       - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
-          send-to:
+          freebsd_send_to:
             - recipients
           freebsd_recipients: ${DEFAULT_RECIPIENTS}
 - publisher:
@@ -118,7 +118,7 @@
     publishers:
       - git-mail-notify-unstable-custom:
           freebsd_mail_disable: false
-          send-to:
+          freebsd_send_to:
             - developers
             - recipients
           freebsd_recipients: ${DEFAULT_RECIPIENTS}, doceng@FreeBSD.org

@@ -1,7 +1,7 @@
 # Main build. Build world sets and upload to the artifact server.
 - job-template:
     artifact_path: src/release/artifact
-    mail_notify_failure: admin-only
+    mail_notify_failure: developers-only
     mail_notify_fixed: admin-only
     defaults: global
     node_job_build: jailer_fast

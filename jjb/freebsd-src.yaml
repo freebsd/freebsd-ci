@@ -9,6 +9,7 @@
           target: amd64
           warnscanner: clang
           mail_notify_failure: mailinglist
+          mail_notify_unstable: mailinglist
           mail_notify_fixed: mailinglist
 
 - project:

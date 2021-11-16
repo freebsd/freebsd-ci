@@ -16,6 +16,31 @@
       - clean-jail
       - git-mail-notify-failure-doc
       - git-mail-notify-fixed-doc
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-doc-main-offline_docs'
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 60
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+
+- job:
+    name: FreeBSD-doc-main-offline_docs
+    defaults: global
+    node: jailer
+    scm:
+      - FreeBSD-doc-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - clean-jail
     wrappers:
       - timestamps
       - timeout:

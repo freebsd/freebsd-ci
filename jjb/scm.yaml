@@ -65,6 +65,18 @@
           branch: 'main'
 
 - scm:
+    name: FreeBSD-doc-use_git_commit
+    scm:
+      - git:
+          url: https://git.freebsd.org/doc.git
+          branches:
+            - '${USE_GIT_COMMIT}'
+          basedir: doc
+          browser: cgit
+          browser-url: https://cgit.freebsd.org/doc/
+          reference-repo: '/home/git/doc.git'
+
+- scm:
     name: FreeBSD-ci
     scm:
       - git:

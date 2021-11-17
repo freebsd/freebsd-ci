@@ -19,7 +19,7 @@ mkdir -p work
 cd work
 
 mkdir -p ufs
-for f in base kernel lib32 base-dbg kernel-dbg lib32-dbg tests
+for f in base kernel base-dbg kernel-dbg tests
 do
 	fetch https://${ARTIFACT_SERVER}/snapshot/${ARTIFACT_SUBDIR}/${f}.txz
 	sudo tar Jxf ${f}.txz -C ufs
@@ -32,7 +32,7 @@ cat <<EOF | sudo tee ufs/etc/fstab
 EOF
 
 sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1
-sudo makefs -B be -d 6144 -t ffs -s 16g -o version=2,bsize=32768,fsize=4096,density=16384 ufs.img ufs
+sudo makefs -B le -d 6144 -t ffs -s 16g -o version=2,bsize=32768,fsize=4096,density=16384 ufs.img ufs
 mkimg -a1 -s mbr -f qcow2 \
 	-p prepboot:=ufs/boot/boot1.elf \
 	-p freebsd::1G \

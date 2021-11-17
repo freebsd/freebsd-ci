@@ -127,8 +127,8 @@ fdesc           /dev/fd         fdescfs rw      0       0
 EOF
 fi
 
-case "${TARGET}" in
-	mips|powerpc)
+case "${TARGET_ARCH}" in
+	mips|mips64|powerpc|powerpcspe|powerpc64)
 		B_FLAG="big"
 		;;
 	*)

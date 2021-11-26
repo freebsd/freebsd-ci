@@ -19,6 +19,9 @@
       - trigger-parameterized-builds:
         - project:
             - 'FreeBSD-doc-main-offline_docs'
+          condition: SUCCESS
+          git-revision: true
+          property-file: trigger.property
     wrappers:
       - timestamps
       - timeout:

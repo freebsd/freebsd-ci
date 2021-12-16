@@ -159,7 +159,7 @@ case "${TARGET}" in
 			-p freebsd-ufs/rootfs:=ufs.img \
 			-o ${OUTPUT_IMG_NAME}
 		;;
-	mips|riscv)
+	mips)
 		mv ufs.img ${OUTPUT_IMG_NAME}
 		;;
 	powerpc)
@@ -169,6 +169,16 @@ case "${TARGET}" in
 			-p prepboot:=ufs/boot/boot1.elf \
 			-p freebsd:=ufs.img \
 			-p freebsd::1G \
+			-o ${OUTPUT_IMG_NAME}
+		;;
+	riscv)
+		mkdir -p efi/EFI/BOOT
+		cp -f ufs/boot/loader_lua.efi efi/EFI/BOOT/bootriscv64.efi
+		sudo makefs -d 6144 -t msdos -s 50m -Z efi.img efi
+		mkimg -s gpt -f raw \
+			-p efi:=efi.img \
+			-p freebsd-swap/swapfs::1G \
+			-p freebsd-ufs/rootfs:=ufs.img \
 			-o ${OUTPUT_IMG_NAME}
 		;;
 	*)

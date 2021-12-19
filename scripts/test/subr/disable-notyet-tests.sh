@@ -28,3 +28,10 @@ if [ -f ${F} ]; then
 		${F}
 	rm -f ${F}.bak
 fi
+
+F=/usr/tests/sys/netmap/Kyuafile
+if [ -f ${F} ]; then
+	sed -i .bak \
+		-e 's,plain_test_program{name="ctrl-api-test",-- plain_test_program{name="ctrl-api-test",' \
+		${F}
+fi

@@ -17,7 +17,8 @@ patterns = [
     'tar: Error opening archive: Failed to open',
     'Build timed out',
     'fetch: INDEX.bz2 appears to be truncated',
-    'unable to access \'https://github.com/freebsd/freebsd-ci'
+    'unable to access \'https://github.com/freebsd/freebsd-ci',
+    'fetch-pack: unexpected disconnect while reading sideband packet'
 ]
 
 try {

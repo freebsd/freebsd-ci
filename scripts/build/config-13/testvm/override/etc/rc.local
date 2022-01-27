@@ -10,7 +10,7 @@ export PATH
 
 set -x
 
-ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
+ddb script kdb.enter.panic="show pcpu; reset"
 
 for TARDEV in /dev/vtbd0 /dev/vtbd1; do
         ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)

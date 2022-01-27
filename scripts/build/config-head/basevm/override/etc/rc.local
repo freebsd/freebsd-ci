@@ -1,4 +1,4 @@
-#!/bin/sh
+t d#!/bin/sh
 
 echo
 echo "--------------------------------------------------------------"
@@ -10,7 +10,7 @@ export PATH
 
 set -x
 
-ddb script kdb.enter.panic="show pcpu;alltrace;dump;reset"
+ddb script kdb.enter.panic="show pcpu; reset"
 
 TARDEV=/dev/vtbd1
 METADIR=/meta

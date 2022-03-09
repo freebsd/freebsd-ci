@@ -69,6 +69,10 @@ cat <<EOF | sudo tee ufs/etc/fstab
 fdesc           /dev/fd         fdescfs rw      0       0
 EOF
 
+cat <<EOF | sudo tee ufs/etc/rc.conf
+kld_list="sctp"
+EOF
+
 cat <<EOF | sudo tee ufs/etc/rc.local
 #!/bin/sh -ex
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin

@@ -88,6 +88,10 @@ cd /usr/tests/cddl/usr.sbin/dtrace
 shutdown -p now
 EOF
 
+cat <<EOF | sudo tee ufs/etc/kyua/kyua.conf
+test_suites.FreeBSD.ci = 'true'
+EOF
+
 sudo rm -f ufs/etc/resolv.conf
 
 sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1

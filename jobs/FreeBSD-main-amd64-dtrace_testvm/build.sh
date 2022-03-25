@@ -88,7 +88,7 @@ cd /usr/tests/cddl/usr.sbin/dtrace
 shutdown -p now
 EOF
 
-cat <<EOF | sudo tee ufs/etc/kyua/kyua.conf
+cat <<EOF | sudo tee -a ufs/etc/kyua/kyua.conf
 test_suites.FreeBSD.ci = 'true'
 EOF
 

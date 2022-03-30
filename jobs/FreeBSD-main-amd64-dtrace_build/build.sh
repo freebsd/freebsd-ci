@@ -1,10 +1,11 @@
 #!/bin/sh
 
-SRCCONF=${WORKSPACE}/`dirname $0`/src.conf
+JOBDIR=${WORKSPACE}/`dirname $0`
 
 env \
 	JFLAG=${BUILDER_JFLAG} \
-	SRCCONF=${SRCCONF} \
+	SRCCONF=${JOBDIR}/src.conf \
+	MAKECONF=${JOBDIR}/make.conf \
 	TARGET=amd64 \
 	TARGET_ARCH=amd64 \
 	KERNCONF=GENERIC-KASAN \

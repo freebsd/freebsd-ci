@@ -56,7 +56,7 @@
           basedir: doc
           browser: cgit
           browser-url: https://cgit.freebsd.org/doc/
-          reference-repo: '/home/git/src.git'
+          reference-repo: '/home/git/doc.git'
 
 - scm:
     name: FreeBSD-doc-main

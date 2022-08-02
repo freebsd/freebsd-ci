@@ -25,10 +25,11 @@ do
 	sudo tar Jxf ${f}.txz -C ufs
 done
 
+# TODO partition label isn't working with APM scheme, using device name instead
 cat <<EOF | sudo tee ufs/etc/fstab
 # Device        Mountpoint      FStype  Options Dump    Pass#
-/dev/ufs/swapfs none            swap    sw      0       0
-/dev/ufs/rootfs /               ufs     rw      1       1
+/dev/vtbd0s4 none            swap    sw      0       0
+/dev/vtbd0s3 /               ufs     rw      1       1
 EOF
 
 sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1

@@ -1,4 +1,4 @@
-t d#!/bin/sh
+#!/bin/sh
 
 echo
 echo "--------------------------------------------------------------"
@@ -24,7 +24,7 @@ if [ ${ISTAR} -eq 1 ]; then
         sh -ex ${METADIR}/run.sh
         tar cvf ${TARDEV} -C ${METADIR} .
 else
-	echo "ERROR: ${TARDEV} is not a POSIX tar archive."
+	echo "ERROR: no device with POSIX tar archive format found."
 	# Don't shutdown because this is not run in unattended mode
 	exit 1
 fi

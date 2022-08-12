@@ -27,16 +27,16 @@ done
 
 cat <<EOF | sudo tee ufs/etc/fstab
 # Device        Mountpoint      FStype  Options Dump    Pass#
-/dev/vtbd0p1	none            swap    sw      0       0
-/dev/vtbd0p2	/               ufs     rw      1       1
+/dev/gpt/swapfs	none            swap    sw      0       0
+/dev/gpt/rootfs	/               ufs     rw      1       1
 EOF
 
 sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1
 sudo makefs -B be -d 6144 -t ffs -s 16g -o version=2,bsize=32768,fsize=4096,density=16384 ufs.img ufs
 
 mkimg -a 1 -s gpt -f qcow2 \
-	-p freebsd-ufs:=ufs.img \
-	-p freebsd-swap::1G \
+	-p freebsd-ufs/rootfs:=ufs.img \
+	-p freebsd-swap/swapfs::1G \
 	-o disk.qcow2
 zstd --rm disk.qcow2
 

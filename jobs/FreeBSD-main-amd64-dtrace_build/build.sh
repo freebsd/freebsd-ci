@@ -8,5 +8,5 @@ env \
 	MAKECONF=${JOBDIR}/make.conf \
 	TARGET=amd64 \
 	TARGET_ARCH=amd64 \
-	KERNCONF=GENERIC-KASAN \
+	KERNCONF=GENERIC \
 	sh -x ${WORKSPACE}/freebsd-ci/scripts/build/build-world-kernel-head.sh

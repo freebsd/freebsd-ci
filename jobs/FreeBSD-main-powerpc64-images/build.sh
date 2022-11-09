@@ -33,12 +33,22 @@ EOF
 
 sudo dd if=/dev/random of=ufs/boot/entropy bs=4k count=1
 sudo makefs -B be -d 6144 -t ffs -s 16g -o version=2,bsize=32768,fsize=4096,density=16384 ufs.img ufs
+
+
+# disk for pseries machine type
 mkimg -a1 -s mbr -f qcow2 \
 	-p prepboot:=ufs/boot/boot1.elf \
 	-p freebsd::1G \
 	-p freebsd:=ufs.img \
-	-o disk.qcow2
-zstd --rm disk.qcow2
+	-o disk-pseries.qcow2
+zstd --rm disk-pseries.qcow2
+
+# disk for apple machine type (i.e.: Apple G5, QEMU mac99)
+mkimg -s apm -f qcow2 \
+	-p freebsd-boot:=ufs/boot/boot1.hfs \
+	-p freebsd-ufs:=ufs.img \
+	-o disk-apple.qcow2
+zstd --rm disk-apple.qcow2
 
 cd ${WORKSPACE}
 rm -fr artifact

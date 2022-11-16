@@ -53,4 +53,5 @@ zstd --rm disk-apple.qcow2
 cd ${WORKSPACE}
 rm -fr artifact
 mkdir -p artifact/${ARTIFACT_SUBDIR}
-mv work/disk.qcow2.zst artifact/${ARTIFACT_SUBDIR}
+mv work/disk-pseries.qcow2.zst artifact/${ARTIFACT_SUBDIR}
+mv work/disk-apple.qcow2.zst artifact/${ARTIFACT_SUBDIR}

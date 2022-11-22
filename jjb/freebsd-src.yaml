@@ -61,7 +61,7 @@
     jobs:
       - 'FreeBSD-{branch}-armv6-ci':
           target: arm
-          warnscanner: gcc4
+          warnscanner: clang
 
 - project:
     name: FreeBSD-armv7
@@ -74,7 +74,7 @@
     jobs:
       - 'FreeBSD-{branch}-armv7-ci':
           target: arm
-          warnscanner: gcc4
+          warnscanner: clang
 
 - project:
     name: FreeBSD-i386
@@ -99,7 +99,7 @@
     jobs:
       - 'FreeBSD-{branch}-mips-ci':
           target: mips
-          warnscanner: gcc4
+          warnscanner: clang
           disable_job_LINT: true
 
 - project:
@@ -112,7 +112,7 @@
     jobs:
       - 'FreeBSD-{branch}-mips64-ci':
           target: mips
-          warnscanner: gcc4
+          warnscanner: clang
           disable_job_LINT: true
 
 - project:
@@ -124,7 +124,7 @@
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
           target: powerpc
-          warnscanner: gcc4
+          warnscanner: clang
 
 - project:
     name: FreeBSD-powerpc
@@ -147,7 +147,7 @@
     jobs:
       - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc
-          warnscanner: gcc4
+          warnscanner: clang
 
 - project:
     name: FreeBSD-13-powerpc64
@@ -192,7 +192,7 @@
     jobs:
       - 'FreeBSD-{branch}-powerpcspe-ci':
           target: powerpc
-          warnscanner: gcc4
+          warnscanner: clang
 
 - project:
     name: FreeBSD-powerpcspe

@@ -33,13 +33,6 @@
             - Clang (LLVM based)
 
 - publisher:
-    name: scan-gcc4-warnings
-    publishers:
-      - warnings:
-          console-log-parsers:
-            - GNU C Compiler 4 (gcc)
-
-- publisher:
     name: scan-gcc-warnings
     publishers:
       - warnings:

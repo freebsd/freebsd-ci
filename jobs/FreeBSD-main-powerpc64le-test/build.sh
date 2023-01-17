@@ -11,6 +11,8 @@ export QEMU_MACHINE="pseries,cap-hpt-max-page-size=16M"
 export QEMU_DEVICES="-device virtio-blk,drive=hd1 -device virtio-blk,drive=hd0"
 # The -accel tcg,thread=multi is supposed to improve performance.
 export QEMU_EXTRA_PARAM="-vga none -accel tcg,thread=multi"
+# powerpc64 VM often hangs after "Launching APs" with SMP >1 in TCG mode
+export VM_CPU_COUNT="1"
 
 export USE_TEST_SUBR="
 disable-disks-tests.sh

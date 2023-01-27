@@ -43,7 +43,6 @@
             - 'FreeBSD-{branch}-{target_arch}-images'
             - 'FreeBSD-{branch}-{target_arch}-testvm'
             - 'FreeBSD-{branch}-{target_arch}-LINT'
-            - 'FreeBSD-{branch}-{target_arch}-gcc9_build'
             - 'FreeBSD-{branch}-{target_arch}-gcc12_build'
             - 'FreeBSD-{branch}-{target_arch}-dtrace_build'
             - 'FreeBSD-{branch}-{target_arch}-KASAN_build'

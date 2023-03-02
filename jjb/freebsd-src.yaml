@@ -404,8 +404,8 @@
           type: absolute
       - bind-artifact-credential
 
-- job:
-    name: FreeBSD-main-amd64-KASAN_build
+- job-template:
+    name: 'FreeBSD-{branch}-amd64-KASAN_build'
     defaults: global
     node: jailer_fast
     scm:
@@ -415,7 +415,7 @@
     properties:
       - inject:
           properties-content: |
-            FBSD_BRANCH=main
+            FBSD_BRANCH={target_arch}
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
             LINK_TYPE=latest
@@ -449,9 +449,9 @@
           type: absolute
       - bind-artifact-credential
 
-- job:
+- job-template:
     defaults: global
-    name: FreeBSD-main-amd64-KASAN_testvm
+    name: 'FreeBSD-{branch}-amd64-KASAN_testvm'
     node: image_builder
     scm:
       - FreeBSD-src-use_git_commit
@@ -460,7 +460,7 @@
     properties:
       - inject:
           properties-content: |
-            FBSD_BRANCH=main
+            FBSD_BRANCH={branch}
     builders:
       - add-svn-revision-description
       - checkout-scripts
@@ -477,7 +477,7 @@
       - clean-jail
       - trigger-parameterized-builds:
         - project:
-            - 'FreeBSD-main-amd64-KASAN_test'
+            - 'FreeBSD-{branch}-amd64-KASAN_test'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property
@@ -490,7 +490,7 @@
           type: absolute
 
 - job:
-    name: FreeBSD-main-amd64-KASAN_test
+    name: 'FreeBSD-{branch}-amd64-KASAN_test'
     node: vmhost_bhyve
     scm:
       - FreeBSD-src-use_git_commit
@@ -499,7 +499,7 @@
     properties:
       - inject:
           properties-content: |
-            FBSD_BRANCH=main
+            FBSD_BRANCH={branch}
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
             LINK_TYPE=latest_tested

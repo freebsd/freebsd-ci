@@ -94,6 +94,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		python		\
 		python3		\
 		devel/py-pytest	\
+		security/openvpn \
 		sudo		\
 		tcptestsuite
 

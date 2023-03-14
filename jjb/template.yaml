@@ -278,7 +278,7 @@
       - use-latest-testvm-revision
       - timestamps
       - timeout:
-          timeout: 480
+          timeout: 960
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

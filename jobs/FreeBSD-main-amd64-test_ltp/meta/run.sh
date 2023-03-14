@@ -32,6 +32,7 @@ utstest_unshare_3 utstest_unshare_3
 utstest_unshare_4 utstest_unshare_4
 kill10 kill10
 mmap_11-2 mmap_11-2
+mmap_11-3 mmap_11-3
 mmap_24-1 mmap_24-1
 sigaction_16-1 sigaction_16-1
 END

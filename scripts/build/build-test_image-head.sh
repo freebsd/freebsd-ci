@@ -69,6 +69,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# Install packages needed by tests:
 	# coreutils: bin/date
 	# gdb: local/kyua/utils/stacktrace_test
+	# gtar: sys/fs/tarfs
 	# jq: sys/net/if_bridge_test
 	# kyua: everything
 	# ksh93: tests/sys/cddl/zfs/...
@@ -84,6 +85,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
 		gdb		\
+		gtar		\
 		jq		\
 		ksh93		\
 		nist-kat	\

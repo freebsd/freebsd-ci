@@ -1,9 +1,10 @@
 - project:
-    name: FreeBSD-main-amd64
+    name: FreeBSD-amd64
     target_arch:
       - amd64
     branch:
       - main
+      - stable-13
     jobs:
       - 'FreeBSD-{branch}-amd64-ci':
           target: amd64
@@ -13,11 +14,10 @@
           mail_notify_fixed: mailinglist
 
 - project:
-    name: FreeBSD-stable-amd64
+    name: FreeBSD-12-amd64
     target_arch:
       - amd64
     branch:
-      - stable-13
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-amd64-ci':
@@ -221,6 +221,19 @@
           node_job_build: jailer
 
 - project:
+    name: FreeBSD-KASAN
+    target_arch:
+      - amd64
+    branch:
+      - main
+      - stable-13
+    project: []
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-KASAN_build':
+      - 'FreeBSD-{branch}-{target_arch}-KASAN_testvm':
+      - 'FreeBSD-{branch}-{target_arch}-KASAN_test':
+
+- project:
     name: FreeBSD-srcproj
     target_arch:
       - aarch64
@@ -405,7 +418,7 @@
       - bind-artifact-credential
 
 - job-template:
-    name: 'FreeBSD-{branch}-amd64-KASAN_build'
+    name: 'FreeBSD-{branch}-{target_arch}-KASAN_build'
     defaults: global
     node: jailer_fast
     scm:
@@ -415,7 +428,7 @@
     properties:
       - inject:
           properties-content: |
-            FBSD_BRANCH={target_arch}
+            FBSD_BRANCH={branch}
             FBSD_TARGET=amd64
             FBSD_TARGET_ARCH=amd64
             LINK_TYPE=latest
@@ -436,7 +449,7 @@
       - clean-jail
       - trigger-parameterized-builds:
         - project:
-            - 'FreeBSD-main-amd64-KASAN_testvm'
+            - 'FreeBSD-{branch}-{target_arch}-KASAN_testvm'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property
@@ -451,7 +464,7 @@
 
 - job-template:
     defaults: global
-    name: 'FreeBSD-{branch}-amd64-KASAN_testvm'
+    name: 'FreeBSD-{branch}-{target_arch}-KASAN_testvm'
     node: image_builder
     scm:
       - FreeBSD-src-use_git_commit
@@ -477,7 +490,7 @@
       - clean-jail
       - trigger-parameterized-builds:
         - project:
-            - 'FreeBSD-{branch}-amd64-KASAN_test'
+            - 'FreeBSD-{branch}-{target_arch}-KASAN_test'
           condition: SUCCESS
           svn-revision: true
           property-file: trigger.property
@@ -489,8 +502,8 @@
           fail: true
           type: absolute
 
-- job:
-    name: 'FreeBSD-{branch}-amd64-KASAN_test'
+- job-template:
+    name: 'FreeBSD-{branch}-{target_arch}-KASAN_test'
     node: vmhost_bhyve
     scm:
       - FreeBSD-src-use_git_commit

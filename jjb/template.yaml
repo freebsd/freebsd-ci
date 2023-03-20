@@ -641,3 +641,163 @@
           fail: true
           type: absolute
       - bind-artifact-credential
+
+- job-template:
+    name: 'FreeBSD-{branch}-{target_arch}-KASAN_build'
+    defaults: global
+    node: jailer_fast
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+            LINK_TYPE=latest
+            MOUNT_REPO=src
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: 'snapshot'
+          source: 'src/release/artifact/**'
+          remove-prefix: 'src/release/artifact'
+          retries: 3
+          retry-delay: 10000
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-{branch}-{target_arch}-KASAN_testvm'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 90
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
+- job-template:
+    defaults: global
+    name: 'FreeBSD-{branch}-{target_arch}-KASAN_testvm'
+    node: image_builder
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: 'artifact/**'
+          remove-prefix: 'artifact'
+          retries: 3
+          retry-delay: 10000
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-{branch}-{target_arch}-KASAN_test'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
+    name: 'FreeBSD-{branch}-{target_arch}-KASAN_test'
+    node: vmhost_bhyve
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+            LINK_TYPE=latest_tested
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - publish-junit-results
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 360
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
+- job:
+    name: FreeBSD-main-amd64-KMSAN_build
+    defaults: global
+    node: jailer_fast
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH=main
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+            LINK_TYPE=latest
+            MOUNT_REPO=src
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: 'snapshot'
+          source: 'src/release/artifact/**'
+          remove-prefix: 'src/release/artifact'
+          retries: 3
+          retry-delay: 10000
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-main-amd64-KMSAN_testvm'
+          condition: SUCCESS
+          svn-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 90
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+

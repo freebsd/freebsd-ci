@@ -221,17 +221,31 @@
           node_job_build: jailer
 
 - project:
-    name: FreeBSD-KASAN
+    name: FreeBSD-KASAN-amd64
+    target:
+      - amd64
     target_arch:
       - amd64
     branch:
       - main
       - stable-13
-    project: []
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-KASAN_build':
       - 'FreeBSD-{branch}-{target_arch}-KASAN_testvm':
       - 'FreeBSD-{branch}-{target_arch}-KASAN_test':
+
+- project:
+    name: FreeBSD-KASAN-aarch64
+    target:
+      - arm64
+    target_arch:
+      - aarch64
+    branch:
+      - main
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-KASAN_build':
+      - 'FreeBSD-{branch}-{target_arch}-KASAN_testvm':
+      - 'FreeBSD-{branch}-{target_arch}-KASAN_test_qemu':
 
 - project:
     name: FreeBSD-srcproj

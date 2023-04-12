@@ -37,12 +37,12 @@ zstd --rm -fd ${IMG_NAME}.zst
 
 for i in `jot ${EXTRA_DISK_NUM}`; do
 	truncate -s ${EXTRA_DISK_SIZE} disk${i}
-	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,ahci-hd,disk${i}"
+	BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((i + 3)):0,virtio-blk,disk${i}"
 done
 
 DISK_TMP=disktmp
 truncate -s 32G ${DISK_TMP}
-BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((${EXTRA_DISK_NUM} + 4)):0,ahci-hd,${DISK_TMP}"
+BHYVE_EXTRA_DISK_PARAM="${BHYVE_EXTRA_DISK_PARAM} -s $((${EXTRA_DISK_NUM} + 4)):0,virtio-blk,${DISK_TMP}"
 
 # prepare meta disk to pass information to testvm
 rm -fr ${METADIR}
@@ -65,8 +65,8 @@ expect -c "set timeout ${TIMEOUT_EXPECT}; \
 	-c 2 -m ${TEST_VM_MEMORY} -A -H -P \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
-	-s 2:0,ahci-hd,${IMG_NAME} \
-	-s 3:0,ahci-hd,meta.tar \
+	-s 2:0,virtio-blk,${IMG_NAME} \
+	-s 3:0,virtio-blk,meta.tar \
 	${BHYVE_EXTRA_DISK_PARAM} \
 	-l com1,stdio \
 	${TEST_VM_NAME}; \

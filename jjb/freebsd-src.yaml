@@ -291,57 +291,17 @@
           fail: true
           type: absolute
 
-- job:
-    name: FreeBSD-main-amd64-gcc12_build
-    defaults: global
-    node: jailer
-    scm:
-      - FreeBSD-src-use_git_commit
-    parameters:
-      - USE_GIT_COMMIT
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - setup-jail
-      - execute-in-jail
-    publishers:
-      - scan-gcc-warnings
-      - clean-jail
-      - git-mail-notify-failure-mailinglist
-      - git-mail-notify-fixed-admin-only
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 90
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
-
-- job:
-    name: FreeBSD-stable-13-amd64-gcc12_build
-    defaults: global
-    node: jailer
-    scm:
-      - FreeBSD-src-use_git_commit
-    parameters:
-      - USE_GIT_COMMIT
-    builders:
-      - add-svn-revision-description
-      - checkout-scripts
-      - setup-jail
-      - execute-in-jail
-    publishers:
-      - scan-gcc-warnings
-      - clean-jail
-      - git-mail-notify-failure-mailinglist
-      - git-mail-notify-fixed-admin-only
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 90
-          timeout-var: 'BUILD_TIMEOUT'
-          fail: true
-          type: absolute
+- project:
+    name: FreeBSD-gcc12_build
+    target:
+      - amd64
+    target_arch:
+      - amd64
+    branch:
+      - main
+      - stable-13
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-gcc12_build'
 
 - job:
     name: FreeBSD-main-amd64-dtrace_build

@@ -307,7 +307,7 @@
     publishers:
       - scan-gcc-warnings
       - clean-jail
-      - git-mail-notify-failure-admin-only
+      - git-mail-notify-failure-mailinglist
       - git-mail-notify-fixed-admin-only
     wrappers:
       - timestamps

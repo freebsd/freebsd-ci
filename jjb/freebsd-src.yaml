@@ -222,8 +222,7 @@
 
 - project:
     name: FreeBSD-KASAN-amd64
-    target:
-      - amd64
+    target: amd64
     target_arch:
       - amd64
     branch:
@@ -236,8 +235,7 @@
 
 - project:
     name: FreeBSD-KASAN-aarch64
-    target:
-      - arm64
+    target: arm64
     target_arch:
       - aarch64
     branch:
@@ -293,8 +291,7 @@
 
 - project:
     name: FreeBSD-gcc12_build
-    target:
-      - amd64
+    target: amd64
     target_arch:
       - amd64
     branch:

@@ -23,7 +23,7 @@ RELEASE_TYPE=`echo ${OSRELEASE} | cut -f 2 -d '-' | tr -d [:digit:]`
 case ${RELEASE_TYPE} in
 "RELEASE"|"BETA"|"RC")
 	SUBDIR=releases
-	BASE_URL=https://download.FreeBSD.org/ftp/${SUBDIR}/${TARGET}/${TARGET_ARCH}/${OSRELEASE}
+	BASE_URL=https://download.FreeBSD.org/${SUBDIR}/${TARGET}/${TARGET_ARCH}/${OSRELEASE}
 	;;
 *)
 	SUBDIR=snapshot

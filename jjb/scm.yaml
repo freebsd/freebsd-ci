@@ -11,12 +11,6 @@
           reference-repo: '/home/git/src.git'
 
 - scm:
-    name: FreeBSD-src-stable-10
-    scm:
-      - FreeBSD-src:
-          branch: 'stable/10'
-
-- scm:
     name: FreeBSD-src-stable-12
     scm:
       - FreeBSD-src:
@@ -27,6 +21,12 @@
     scm:
       - FreeBSD-src:
           branch: 'stable/13'
+
+- scm:
+    name: FreeBSD-src-stable-14
+    scm:
+      - FreeBSD-src:
+          branch: 'stable/14'
 
 - scm:
     name: FreeBSD-src-main

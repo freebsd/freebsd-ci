@@ -7,7 +7,7 @@ if [ -z "${GIT_COMMIT}" ]; then
 	exit 1
 fi
 
-BRANCH=main
+BRANCH=stable-14
 TARGET=i386
 TARGET_ARCH=i386
 

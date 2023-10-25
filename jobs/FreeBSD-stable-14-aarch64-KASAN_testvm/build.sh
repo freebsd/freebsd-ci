@@ -11,4 +11,4 @@ export WITH_TESTS=1
 
 export KERNCONF=GENERIC-KASAN
 
-sh -x freebsd-ci/scripts/build/build-test_image-head.sh
+sh -x freebsd-ci/scripts/build/build-test_image-14.sh

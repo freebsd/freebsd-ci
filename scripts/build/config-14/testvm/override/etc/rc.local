@@ -1,0 +1,48 @@
+#!/bin/sh
+
+echo
+echo "--------------------------------------------------------------"
+echo "rc.local start!"
+echo "--------------------------------------------------------------"
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+export PATH
+
+set -x
+
+ddb script kdb.enter.panic="show pcpu; reset"
+
+for TARDEV in /dev/vtbd0 /dev/vtbd1 /dev/ada0 /dev/ada1; do
+        ISTAR=$(file -s ${TARDEV} | grep "POSIX tar archive" | wc -l)
+        if [ ${ISTAR} -eq 1 ]; then
+                break
+        fi
+done
+
+METADIR=/meta
+
+if [ ${ISTAR} -eq 1 ]; then
+        rm -fr ${METADIR}
+        mkdir -p ${METADIR}
+        tar xvf ${TARDEV} -C ${METADIR}
+        sh -ex ${METADIR}/run.sh
+        tar cvf ${TARDEV} -C ${METADIR} .
+else
+	echo "ERROR: no device with POSIX tar archive format found."
+	# Don't shutdown because this is not run in unattended mode
+	exit 1
+fi
+
+if [ -f ${METADIR}/auto-shutdown ]; then
+	# XXX: Currently RISC-V and MIPS64 kernels lack the ability
+	#      to make qemu exit on shutdown.  Reboot instead;
+	#      it makes qemu exit too.
+	case "$(uname -p)" in
+		mips64|riscv64)
+			shutdown -r now
+			;;
+		*)
+			shutdown -p now
+			;;
+	esac
+fi

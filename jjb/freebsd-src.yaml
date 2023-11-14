@@ -313,6 +313,18 @@
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-gcc12_build'
 
+- project:
+    name: FreeBSD-gcc13_build
+    target: amd64
+    target_arch:
+      - amd64
+    branch:
+      - main
+      - stable-14
+      - stable-13
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-gcc13_build'
+
 - job:
     name: FreeBSD-main-amd64-dtrace_build
     defaults: global

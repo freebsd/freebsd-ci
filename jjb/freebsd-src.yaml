@@ -184,6 +184,7 @@
       - powerpc64le
     branch:
       - main
+      - stable-14
       - stable-13
     jobs:
       - 'FreeBSD-{branch}-powerpc64le-ci':

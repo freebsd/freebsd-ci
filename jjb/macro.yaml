@@ -10,7 +10,7 @@
     builders:
       - shell: |
           rm -fr freebsd-ci
-          git clone --depth=1 --single-branch -b master https://github.com/freebsd/freebsd-ci.git
+          git clone --depth=1 --single-branch -b main https://github.com/freebsd/freebsd-ci.git
           cd freebsd-ci; git rev-parse HEAD; cd ..
 
 - builder:

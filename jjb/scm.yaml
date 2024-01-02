@@ -82,5 +82,5 @@
       - git:
           url: https://github.com/freebsd/freebsd-ci.git
           branches:
-            - 'origin/master'
+            - 'origin/main'
           basedir: freebsd-ci

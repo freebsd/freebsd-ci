@@ -1,3 +1,5 @@
+# The `master` branch has been renamed to `main`
+
 # FreeBSD Continuous Integration (CI)
 
 This repository contains scripts and config files used

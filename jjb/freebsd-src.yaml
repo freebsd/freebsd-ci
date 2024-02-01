@@ -19,23 +19,9 @@
       - amd64
     branch:
       - stable-13
-      - stable-12
     jobs:
       - 'FreeBSD-{branch}-amd64-ci':
           target: amd64
-          warnscanner: clang
-
-- project:
-    name: FreeBSD-12-aarch64
-    target_arch:
-      - aarch64
-    branch:
-      - stable-12
-    jobs:
-      - 'FreeBSD-{branch}-aarch64-ci':
-          target: arm64
-          disable_job_images: true
-          disable_job_LINT: true
           warnscanner: clang
 
 - project:
@@ -60,7 +46,6 @@
       - main
       - stable-14
       - stable-13
-      - stable-12
     jobs:
       - 'FreeBSD-{branch}-armv6-ci':
           target: arm
@@ -74,7 +59,6 @@
       - main
       - stable-14
       - stable-13
-      - stable-12
     jobs:
       - 'FreeBSD-{branch}-armv7-ci':
           target: arm
@@ -88,7 +72,6 @@
       - main
       - stable-14
       - stable-13
-      - stable-12
     jobs:
       - 'FreeBSD-{branch}-i386-ci':
           target: i386
@@ -100,7 +83,6 @@
       - mips
     branch:
       - stable-13
-      - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips-ci':
           target: mips
@@ -113,23 +95,11 @@
       - mips64
     branch:
       - stable-13
-      - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips64-ci':
           target: mips
           warnscanner: clang
           disable_job_LINT: true
-
-- project:
-    name: FreeBSD-12-powerpc
-    target_arch:
-      - powerpc
-    branch:
-      - stable-12
-    jobs:
-      - 'FreeBSD-{branch}-powerpc-ci':
-          target: powerpc
-          warnscanner: clang
 
 - project:
     name: FreeBSD-powerpc
@@ -141,17 +111,6 @@
       - stable-13
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
-          target: powerpc
-          warnscanner: clang
-
-- project:
-    name: FreeBSD-12-powerpc64
-    target_arch:
-      - powerpc64
-    branch:
-      - stable-12
-    jobs:
-      - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc
           warnscanner: clang
 
@@ -188,17 +147,6 @@
       - stable-13
     jobs:
       - 'FreeBSD-{branch}-powerpc64le-ci':
-          target: powerpc
-          warnscanner: clang
-
-- project:
-    name: FreeBSD-12-powerpcspe
-    target_arch:
-      - powerpcspe
-    branch:
-      - stable-12
-    jobs:
-      - 'FreeBSD-{branch}-powerpcspe-ci':
           target: powerpc
           warnscanner: clang
 

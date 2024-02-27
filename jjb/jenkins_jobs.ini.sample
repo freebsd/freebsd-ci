@@ -1,4 +1,5 @@
 [job_builder]
+allow_empty_variables=True
 ignore_cache=True
 [__future__]
 param_order_from_yaml=True

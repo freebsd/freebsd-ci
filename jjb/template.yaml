@@ -201,10 +201,9 @@
     mail_notify_failure: admin-only
     mail_notify_unstable: admin-only
     mail_notify_fixed: admin-only
-    node_job_build: vmhost_bhyve
     name: 'FreeBSD-{branch}-{target_arch}-test'
     id: 'FreeBSD-{branch}-{target_arch}-test_bhyve'
-    node: '{node_job_build}'
+    node: vmhost_bhyve
     scm:
       - FreeBSD-src-use_git_commit
     parameters:
@@ -312,8 +311,7 @@
        - 'FreeBSD-{branch}-{target_arch}-testvm':
            downstream_projects:
             - 'FreeBSD-{branch}-{target_arch}-test'
-       - 'FreeBSD-{branch}-{target_arch}-test_bhyve':
-           node: vmhost_bhyve_fast
+       - 'FreeBSD-{branch}-{target_arch}-test_bhyve'
 
 - job-group:
     name: 'FreeBSD-main-amd64-ci'
@@ -332,7 +330,6 @@
            mail_notify_failure: mailinglist
            mail_notify_unstable: mailinglist
            mail_notify_fixed: mailinglist
-           node: vmhost_bhyve_fast
 
 - job-group:
     name: 'FreeBSD-{branch}-armv6-ci'

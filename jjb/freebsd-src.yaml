@@ -19,7 +19,6 @@
       - amd64
     branch:
       - stable-13
-      - releng-13_3
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-amd64-ci':
@@ -47,7 +46,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
     jobs:
       - 'FreeBSD-aarch64-ci':
           target: arm64
@@ -62,7 +60,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-armv6-ci':
@@ -77,7 +74,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-armv7-ci':
@@ -92,7 +88,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-i386-ci':
@@ -105,7 +100,6 @@
       - mips
     branch:
       - stable-13
-      - releng-13_3
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips-ci':
@@ -119,7 +113,6 @@
       - mips64
     branch:
       - stable-13
-      - releng-13_3
       - stable-12
     jobs:
       - 'FreeBSD-{branch}-mips64-ci':
@@ -146,7 +139,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
           target: powerpc
@@ -169,7 +161,6 @@
       - powerpc64
     branch:
       - stable-13
-      - releng-13_3
     jobs:
       - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc
@@ -195,7 +186,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
     jobs:
       - 'FreeBSD-{branch}-powerpc64le-ci':
           target: powerpc
@@ -220,7 +210,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
     jobs:
       - 'FreeBSD-{branch}-powerpcspe-ci':
           target: powerpc
@@ -234,7 +223,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
     jobs:
       - 'FreeBSD-{branch}-riscv64-ci':
           target: riscv
@@ -251,7 +239,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-KASAN_build':
       - 'FreeBSD-{branch}-{target_arch}-KASAN_testvm':
@@ -323,7 +310,6 @@
       - main
       - stable-14
       - stable-13
-      - releng-13_3
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-gcc12_build'
 

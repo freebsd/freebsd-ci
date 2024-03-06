@@ -23,12 +23,6 @@
           branch: 'stable/13'
 
 - scm:
-    name: FreeBSD-src-releng-13_3
-    scm:
-      - FreeBSD-src:
-          branch: 'releng/13.3'
-
-- scm:
     name: FreeBSD-src-stable-14
     scm:
       - FreeBSD-src:

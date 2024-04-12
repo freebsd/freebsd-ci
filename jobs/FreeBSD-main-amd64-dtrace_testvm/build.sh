@@ -59,7 +59,7 @@ done
 sudo cp /etc/resolv.conf ufs/etc/
 sudo mount -t devfs devfs ufs/dev
 sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
-sudo chroot ufs pkg install -y jq nmap pdksh perl5
+sudo chroot ufs pkg install -y jq libxml2 nmap pdksh perl5
 sudo umount ufs/dev
 
 cat <<EOF | sudo tee ufs/etc/fstab

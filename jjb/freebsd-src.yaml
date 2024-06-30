@@ -43,7 +43,6 @@
     target_arch:
       - armv6
     branch:
-      - main
       - stable-14
       - stable-13
     jobs:

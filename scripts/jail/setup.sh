@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 . freebsd-ci/scripts/jail/jail.conf
 
 eval BUILDER_JAIL_IP6="\$BUILDER_${EXECUTOR_NUMBER}_IP6"

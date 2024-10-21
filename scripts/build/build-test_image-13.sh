@@ -76,6 +76,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
 	# perl5: lots of stuff
 	# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
+	# porch: sys/kern/tty
 	# py-dpkt: sys/opencrypto/runtests
 	# python3: sys/opencrypto/runtests
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
@@ -88,6 +89,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		nist-kat	\
 		nmap		\
 		perl5		\
+		porch		\
 		net/py-dpkt	\
 		net/scapy	\
 		python		\

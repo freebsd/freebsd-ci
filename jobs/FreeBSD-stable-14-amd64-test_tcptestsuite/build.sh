@@ -62,7 +62,7 @@ sudo /usr/sbin/bhyveload -c stdio -m ${TEST_VM_MEMORY} -d ${IMG_NAME} ${TEST_VM_
 set +e
 expect -c "set timeout ${TIMEOUT_EXPECT}; \
 	spawn sudo /usr/bin/timeout -k 60 ${TIMEOUT_VM} /usr/sbin/bhyve \
-	-c 2 -m ${TEST_VM_MEMORY} -A -H -P \
+	-c 2 -m ${TEST_VM_MEMORY} -H -P \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
 	-s 2:0,virtio-blk,${IMG_NAME} \

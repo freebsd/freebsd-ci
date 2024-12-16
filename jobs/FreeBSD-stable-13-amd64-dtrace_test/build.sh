@@ -24,7 +24,7 @@ sudo /usr/sbin/bhyveload -c stdio -m 4096m -d ${IMG_NAME} ${TEST_VM_NAME}
 set +e
 expect -c "set timeout 3540; \
 	spawn sudo /usr/bin/timeout -k 60 3420 /usr/sbin/bhyve \
-	-c 2 -m 4096m -A -H -P \
+	-c 2 -m 4096m -H -P \
 	-s 0:0,hostbridge \
 	-s 1:0,lpc \
 	-s 2:0,virtio-blk,${IMG_NAME} \

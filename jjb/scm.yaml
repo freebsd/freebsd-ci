@@ -34,7 +34,7 @@
       - git:
           url: https://git.freebsd.org/src.git
           branches:
-            - '${USE_GIT_COMMIT}'
+            - '${{USE_GIT_COMMIT}}'
           basedir: src
           browser: cgit
           browser-url: https://cgit.freebsd.org/src/
@@ -64,7 +64,7 @@
       - git:
           url: https://git.freebsd.org/doc.git
           branches:
-            - '${USE_GIT_COMMIT}'
+            - '${{USE_GIT_COMMIT}}'
           basedir: doc
           browser: cgit
           browser-url: https://cgit.freebsd.org/doc/

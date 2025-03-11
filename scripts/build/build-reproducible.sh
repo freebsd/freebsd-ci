@@ -433,7 +433,3 @@ fi
 
 sudo mkdir -p ${ARTIFACT_DEST}
 sudo mv ${ARTIFACT} ${ARTIFACT_DEST}
-
-echo "${GIT_COMMIT}" | sudo tee ${ARTIFACT_DEST}/revision.txt
-
-echo "USE_GIT_COMMIT=${GIT_COMMIT}" > ${WORKSPACE}/trigger.property

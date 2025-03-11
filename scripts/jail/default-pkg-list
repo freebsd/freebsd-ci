@@ -1,3 +1,4 @@
 ca_root_nss
 git-tiny
 sudo
+sysutils/py-diffoscope

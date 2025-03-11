@@ -546,3 +546,25 @@
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
+
+- project:
+    name: FreeBSD-reproducibility
+    target: amd64
+    target_arch:
+      - amd64
+    branch:
+      - main
+    testtype:
+      - arch
+      - clang
+      - kernconf
+      - linkergc
+      - linkericf
+      - linkerstatic
+      - locale
+      - parallel
+      - path
+      - timestamp
+      - uid
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-reproducibility-{testtype}'

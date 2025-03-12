@@ -7,10 +7,8 @@ if [ -n "${CROSS_TOOLCHAIN}" ]; then
 fi
 
 MAKECONF=${MAKECONF:-/dev/null}
-MAKECONF_AMD=${MAKECONF_AMD:-/dev/null}
 MAKECONF_GC=${MAKECONF_GC:-/dev/null}
 MAKECONF_ICF=${MAKECONF_ICF:-/dev/null}
-MAKECONF_INTEL=${MAKECONF_INTEL:-/dev/null}
 MAKECONF_STATIC=${MAKECONF_STATIC:-/dev/null}
 SRCCONF=${SRCCONF:-/dev/null}
 FBSD_BRANCH=${FBSD_BRANCH:-main}
@@ -62,42 +60,6 @@ if [ ${TESTTYPE} = "timestamp" ]; then
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
 	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/obj1 ${WORKSPACE}/obj2
-elif [ ${TESTTYPE} = "arch" ]; then
-	echo $SOURCE_DATE_EPOCH
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objamd
-	rm -fr ${MAKEOBJDIRPREFIX}
-	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF_AMD} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF_AMD} \
-		SRCCONF=${SRCCONF}
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objintel
-	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF_INTEL} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF_INTEL} \
-		SRCCONF=${SRCCONF}
-	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/objamd ${WORKSPACE}/objintel
 elif [ ${TESTTYPE} = "path" ]; then
 	cp -Rp /usr/src ${WORKSPACE}/src1
 	cp -Rp /usr/src ${WORKSPACE}/src2

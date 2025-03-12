@@ -555,12 +555,6 @@
     branch:
       - main
     testtype:
-      - arch
-      - clang
-      - kernconf
-      - linkergc
-      - linkericf
-      - linkerstatic
       - locale
       - parallel
       - path

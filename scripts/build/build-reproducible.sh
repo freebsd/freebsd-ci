@@ -133,44 +133,6 @@ elif [ ${TESTTYPE} = "parallel" ]; then
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
 	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/objj1 ${WORKSPACE}/objjx
-elif [ ${TESTTYPE} = "locale" ]; then
-	echo $SOURCE_DATE_EPOCH
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objlocalec
-	rm -fr ${MAKEOBJDIRPREFIX}
-	cd /usr/src
-	export LC_ALL=C
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objlocalefr
-	rm -fr ${MAKEOBJDIRPREFIX}
-	export LC_ALL=fr_FR.UTF-8
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/objlocalec ${WORKSPACE}/objlocalefr
 elif [ ${TESTTYPE} = "uid" ]; then
 	echo $SOURCE_DATE_EPOCH
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objroot
@@ -210,5 +172,11 @@ elif [ ${TESTTYPE} = "uid" ]; then
 	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/objroot ${WORKSPACE}/objnobody
 fi
 
-sudo mkdir -p ${ARTIFACT_DEST}
-sudo mv ${ARTIFACT} ${ARTIFACT_DEST}
+diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/obj ${WORKSPACE}/objtest
+if [ -f "${WORKSPACE}/diff.html" ]; then
+	sudo mkdir -p ${ARTIFACT_DEST}
+	mv ${ARTIFACT} ${ARTIFACT_DEST}
+	exit 1
+else
+	exit 0
+fi

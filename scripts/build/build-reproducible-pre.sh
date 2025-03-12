@@ -20,3 +20,20 @@ if [ -n "${CROSS_TOOLCHAIN}" ]; then
 fi
 export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 rm -fr ${MAKEOBJDIRPREFIX}
+
+build_world_kernel() {
+make -j ${JFLAG} \
+	buildworld \
+	TARGET=${TARGET} \
+	TARGET_ARCH=${TARGET_ARCH} \
+	${CROSS_TOOLCHAIN_PARAM} \
+	__MAKE_CONF=${MAKECONF} \
+	SRCCONF=${SRCCONF}
+make -j ${JFLAG} \
+	buildkernel \
+	TARGET=${TARGET} \
+	TARGET_ARCH=${TARGET_ARCH} \
+	${CROSS_TOOLCHAIN_PARAM} \
+	__MAKE_CONF=${MAKECONF} \
+	SRCCONF=${SRCCONF}
+}

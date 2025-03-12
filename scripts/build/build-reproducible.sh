@@ -18,46 +18,7 @@ export TESTTYPE=${TESTTYPE:-timestamp}
 # Set SOURCE_DATE_EPOCH to today at 00:00:00 UTC
 export SOURCE_DATE_EPOCH=$(date -u -j -f "%Y-%m-%d %H:%M:%S" "$(date -u +%Y-%m-%d) 00:00:00" +%s)
 
-if [ ${TESTTYPE} = "timestamp" ]; then
-	echo $SOURCE_DATE_EPOCH
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj1
-	rm -fr ${MAKEOBJDIRPREFIX}
-	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	# One year from today's date at 00:00:00 UTC
-	export SOURCE_DATE_EPOCH=$(date -u -j -v+1y -f "%Y-%m-%d %H:%M:%S" "$(date -u +%Y-%m-%d) 00:00:00" +%s)
-	echo $SOURCE_DATE_EPOCH
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj2
-	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/obj1 ${WORKSPACE}/obj2
-elif [ ${TESTTYPE} = "uid" ]; then
+if [ ${TESTTYPE} = "uid" ]; then
 	echo $SOURCE_DATE_EPOCH
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objroot
 	rm -fr ${MAKEOBJDIRPREFIX}

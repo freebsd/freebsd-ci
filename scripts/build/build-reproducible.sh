@@ -211,50 +211,6 @@ elif [ ${TESTTYPE} = "uid" ]; then
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
 	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/objroot ${WORKSPACE}/objnobody
-elif [ ${TESTTYPE} = "clang" ]; then
-	echo $SOURCE_DATE_EPOCH
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objclan14
-	rm -fr ${MAKEOBJDIRPREFIX}
-	cd /usr/src
-	sudo pkg install -y llvm14
-	export CC=/usr/local/llvm14/bin/clang
-	export CXX=/usr/local/llvm14/bin/clang++
-	export CPP=/usr/local/llvm14/bin/clang-cpp
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objclang18
-	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo pkg install -y llvm18
-	export CC=/usr/local/llvm18/bin/clang
-	export CXX=/usr/local/llvm18/bin/clang++
-	export CPP=/usr/local/llvm18/bin/clang-cpp
-	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/objroot ${WORKSPACE}/objnobody
 elif [ ${TESTTYPE} = "linkerstatic" ]; then
 	echo $SOURCE_DATE_EPOCH
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj

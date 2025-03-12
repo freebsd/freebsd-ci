@@ -28,14 +28,14 @@ if [ ${TESTTYPE} = "timestamp" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj1
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -47,14 +47,14 @@ if [ ${TESTTYPE} = "timestamp" ]; then
 	echo $SOURCE_DATE_EPOCH
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj2
 	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -67,14 +67,14 @@ elif [ ${TESTTYPE} = "arch" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objamd
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF_AMD} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -83,14 +83,14 @@ elif [ ${TESTTYPE} = "arch" ]; then
 		SRCCONF=${SRCCONF}
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objintel
 	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF_INTEL} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -105,14 +105,14 @@ elif [ ${TESTTYPE} = "path" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objpath1
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd ${WORKSPACE}/src1
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -122,14 +122,14 @@ elif [ ${TESTTYPE} = "path" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objpath2
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd ${WORKSPACE}/src2
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -142,14 +142,14 @@ elif [ ${TESTTYPE} = "parallel" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objjx
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -159,14 +159,14 @@ elif [ ${TESTTYPE} = "parallel" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objj1
 	rm -fr ${MAKEOBJDIRPREFIX}
 	export JFLAG=1
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -180,14 +180,14 @@ elif [ ${TESTTYPE} = "locale" ]; then
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
 	export LC_ALL=C
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -197,14 +197,14 @@ elif [ ${TESTTYPE} = "locale" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objlocalefr
 	rm -fr ${MAKEOBJDIRPREFIX}
 	export LC_ALL=fr_FR.UTF-8
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -217,21 +217,21 @@ elif [ ${TESTTYPE} = "kernconf" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -246,14 +246,14 @@ elif [ ${TESTTYPE} = "uid" ]; then
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
 	export LC_ALL=C
-	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -262,14 +262,14 @@ elif [ ${TESTTYPE} = "uid" ]; then
 		SRCCONF=${SRCCONF}
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objnobody
 	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -u nobody -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -u nobody -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -u nobody -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOOT WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -u nobody -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOOT \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -286,14 +286,14 @@ elif [ ${TESTTYPE} = "clang" ]; then
 	export CC=/usr/local/llvm14/bin/clang
 	export CXX=/usr/local/llvm14/bin/clang++
 	export CPP=/usr/local/llvm14/bin/clang-cpp
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -306,14 +306,14 @@ elif [ ${TESTTYPE} = "clang" ]; then
 	export CC=/usr/local/llvm18/bin/clang
 	export CXX=/usr/local/llvm18/bin/clang++
 	export CPP=/usr/local/llvm18/bin/clang-cpp
-	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -326,14 +326,14 @@ elif [ ${TESTTYPE} = "linkerstatic" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -342,14 +342,14 @@ elif [ ${TESTTYPE} = "linkerstatic" ]; then
 		SRCCONF=${SRCCONF}
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objstatic
 	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF_STATIC} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -362,14 +362,14 @@ elif [ ${TESTTYPE} = "linkericf" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -378,14 +378,14 @@ elif [ ${TESTTYPE} = "linkericf" ]; then
 		SRCCONF=${SRCCONF}
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objicf
 	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF_ICF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -398,14 +398,14 @@ elif [ ${TESTTYPE} = "linkergc" ]; then
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
 	rm -fr ${MAKEOBJDIRPREFIX}
 	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
@@ -414,14 +414,14 @@ elif [ ${TESTTYPE} = "linkergc" ]; then
 		SRCCONF=${SRCCONF}
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objgc
 	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
 		buildworld \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \
 		${CROSS_TOOLCHAIN_PARAM} \
 		__MAKE_CONF=${MAKECONF_GC} \
 		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN WITH_REPRODUCIBLE_BUILD=yes \
+	sudo -E make -j ${JFLAG} -DNO_CLEAN \
 		buildkernel \
 		TARGET=${TARGET} \
 		TARGET_ARCH=${TARGET_ARCH} \

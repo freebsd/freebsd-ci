@@ -7,7 +7,6 @@ if [ -n "${CROSS_TOOLCHAIN}" ]; then
 fi
 
 MAKECONF=${MAKECONF:-/dev/null}
-MAKECONF_ICF=${MAKECONF_ICF:-/dev/null}
 MAKECONF_STATIC=${MAKECONF_STATIC:-/dev/null}
 SRCCONF=${SRCCONF:-/dev/null}
 FBSD_BRANCH=${FBSD_BRANCH:-main}
@@ -246,42 +245,6 @@ elif [ ${TESTTYPE} = "linkerstatic" ]; then
 		__MAKE_CONF=${MAKECONF_STATIC} \
 		SRCCONF=${SRCCONF}
 	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/obj ${WORKSPACE}/objstatic
-elif [ ${TESTTYPE} = "linkericf" ]; then
-	echo $SOURCE_DATE_EPOCH
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
-	rm -fr ${MAKEOBJDIRPREFIX}
-	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objicf
-	rm -fr ${MAKEOBJDIRPREFIX}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN -DNO_ROOT \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF_ICF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF_ICF} \
-		SRCCONF=${SRCCONF}
-	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/obj ${WORKSPACE}/objicf
 fi
 
 sudo mkdir -p ${ARTIFACT_DEST}

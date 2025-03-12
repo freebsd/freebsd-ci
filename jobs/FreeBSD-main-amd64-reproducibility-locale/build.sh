@@ -9,8 +9,6 @@ export TARGET_ARCH=amd64
 
 echo $SOURCE_DATE_EPOCH
 echo $SOURCE_DATE_EPOCH_BASE
-export MAKEOBJDIRPREFIX=${WORKSPACE}/obj
-rm -fr ${MAKEOBJDIRPREFIX}
 cd /usr/src
 make -j ${JFLAG} -DNO_CLEAN \
 	buildworld \
@@ -43,3 +41,5 @@ make -j ${JFLAG} -DNO_CLEAN \
 	${CROSS_TOOLCHAIN_PARAM} \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF}
+
+. ${WORKSPACE}/freebsd-ci/scripts/build/build-reproducible.sh

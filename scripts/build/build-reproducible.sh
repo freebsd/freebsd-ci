@@ -96,43 +96,6 @@ elif [ ${TESTTYPE} = "path" ]; then
 		__MAKE_CONF=${MAKECONF} \
 		SRCCONF=${SRCCONF}
 	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/objpath1 ${WORKSPACE}/objpath2
-elif [ ${TESTTYPE} = "parallel" ]; then
-	echo $SOURCE_DATE_EPOCH
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objjx
-	rm -fr ${MAKEOBJDIRPREFIX}
-	cd /usr/src
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	export MAKEOBJDIRPREFIX=${WORKSPACE}/objj1
-	rm -fr ${MAKEOBJDIRPREFIX}
-	export JFLAG=1
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildworld \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	sudo -E make -j ${JFLAG} -DNO_CLEAN \
-		buildkernel \
-		TARGET=${TARGET} \
-		TARGET_ARCH=${TARGET_ARCH} \
-		${CROSS_TOOLCHAIN_PARAM} \
-		__MAKE_CONF=${MAKECONF} \
-		SRCCONF=${SRCCONF}
-	diffoscope --html ${WORKSPACE}/diff.html ${WORKSPACE}/objj1 ${WORKSPACE}/objjx
 elif [ ${TESTTYPE} = "uid" ]; then
 	echo $SOURCE_DATE_EPOCH
 	export MAKEOBJDIRPREFIX=${WORKSPACE}/objroot

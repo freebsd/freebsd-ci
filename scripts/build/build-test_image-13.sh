@@ -81,6 +81,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# python3: sys/opencrypto/runtests
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
 	# tcptestsuite: network stack test suite
+	# sg3_utils: sys/cam/ctl
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
 		gdb		\
@@ -94,6 +95,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		net/scapy	\
 		python		\
 		python3		\
+		sg3_utils	\
 		sudo		\
 		tcptestsuite
 

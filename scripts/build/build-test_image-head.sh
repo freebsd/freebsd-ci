@@ -83,6 +83,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# devel/py-pytest: sys/net/routing, tests in python in general
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
 	# tcptestsuite: network stack test suite
+	# sg3_utils: sys/cam/ctl
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
 		gdb		\
@@ -100,6 +101,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		devel/py-pytest	\
 		devel/py-twisted \
 		security/openvpn \
+		sg3_utils	\
 		sudo		\
 		tcptestsuite
 

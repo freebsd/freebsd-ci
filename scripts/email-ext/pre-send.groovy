@@ -19,10 +19,15 @@ patterns = [
     'fetch: INDEX.bz2 appears to be truncated',
     'unable to access \'https://github.com/freebsd/freebsd-ci',
     'fetch-pack: unexpected disconnect while reading sideband packet',
-    'CONNECT tunnel failed, response 503'
+    'CONNECT tunnel failed, response 503',
+    'sudo: not found'
 ]
 
 try {
+    //logger.write('Test mode, only send to jenkins-admin...\n')
+    //msg.setRecipients(Message.RecipientType.TO, jenkinsAdmin)
+    //return true
+
     logger.write('Checking with false-positive patterns...\n')
     def logFilePath = build.getLogFile().getPath();
     String logContent = new File(logFilePath).text;

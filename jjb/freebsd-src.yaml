@@ -68,7 +68,6 @@
     target_arch:
       - i386
     branch:
-      - main
       - stable-14
       - stable-13
     jobs:
@@ -105,7 +104,6 @@
     target_arch:
       - powerpc
     branch:
-      - main
       - stable-14
       - stable-13
     jobs:
@@ -154,7 +152,6 @@
     target_arch:
       - powerpcspe
     branch:
-      - main
       - stable-14
       - stable-13
     jobs:
@@ -209,7 +206,6 @@
     target_arch:
       - aarch64
       - amd64
-      - i386
 # Add list of projects here.
     project: []
     jobs:

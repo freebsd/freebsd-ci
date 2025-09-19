@@ -84,9 +84,7 @@
           buildsteps:
             - shell: |
                 if [ -z "${{USE_GIT_COMMIT}}" ]; then
-                    if [ -z "${{USE_GIT_COMMIT}}" ]; then
-                        ARTIFACT_SERVER=artifact.ci.freebsd.org
-                    fi
+                    ARTIFACT_SERVER=artifact.ci.freebsd.org
                     ARTIFACT_SUBDIR=snapshot/${{FBSD_BRANCH}}/latest_testvm/${{FBSD_TARGET}}/${{FBSD_TARGET_ARCH}}
                     USE_GIT_COMMIT=$(curl -s https://${{ARTIFACT_SERVER}}/${{ARTIFACT_SUBDIR}}/revision.txt)
                 fi

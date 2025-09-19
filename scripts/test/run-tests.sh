@@ -7,9 +7,16 @@ if [ -z "${GIT_COMMIT}" ]; then
 	exit 1
 fi
 
+_GIT_COMMIT="${GIT_COMMIT}"
+
+if [ ! -z "${USE_GIT_COMMIT}" -a "${USE_GIT_COMMIT}" != "${GIT_COMMIT}" ]; then
+	echo "GIT_COMMIT ${GIT_COMMIT} does not match USE_GIT_COMMIT ${USE_GIT_COMMIT}, use USE_GIT_COMMIT for test"
+	_GIT_COMMIT="${USE_GIT_COMMIT}"
+fi
+
 KERNCONF=${KERNCONF:-GENERIC}
 ARTIFACT_SERVER=${ARTIFACT_SERVER:-artifact.ci.freebsd.org}
-ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/${GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
+ARTIFACT_SUBDIR=snapshot/${FBSD_BRANCH}/${_GIT_COMMIT}/${TARGET}/${TARGET_ARCH}
 if [ "${KERNCONF}" = "GENERIC" ]; then
 	IMG_NAME=disk-test.img
 else

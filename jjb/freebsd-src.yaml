@@ -4,6 +4,7 @@
       - amd64
     branch:
       - main
+      - stable-15
       - stable-14
     jobs:
       - 'FreeBSD-{branch}-amd64-ci':

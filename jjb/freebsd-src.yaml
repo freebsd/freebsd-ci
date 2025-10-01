@@ -31,6 +31,7 @@
       - aarch64
     branch:
       - main
+      - stable-15
       - stable-14
       - stable-13
     jobs:
@@ -57,6 +58,7 @@
       - armv7
     branch:
       - main
+      - stable-15
       - stable-14
       - stable-13
     jobs:
@@ -129,6 +131,7 @@
       - powerpc64
     branch:
       - main
+      - stable-15
       - stable-14
     jobs:
       - 'FreeBSD-powerpc64-ci':
@@ -141,6 +144,7 @@
       - powerpc64le
     branch:
       - main
+      - stable-15
       - stable-14
       - stable-13
     jobs:
@@ -166,6 +170,7 @@
       - riscv64
     branch:
       - main
+      - stable-15
       - stable-14
       - stable-13
     jobs:
@@ -182,6 +187,7 @@
       - amd64
     branch:
       - main
+      - stable-15
       - stable-14
       - stable-13
     jobs:
@@ -196,6 +202,7 @@
       - aarch64
     branch:
       - main
+      - stable-15
       - stable-14
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-KASAN_build':
@@ -252,6 +259,7 @@
       - amd64
     branch:
       - main
+      - stable-15
       - stable-14
       - stable-13
     jobs:
@@ -264,6 +272,7 @@
       - amd64
     branch:
       - main
+      - stable-15
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-gcc13_build'
 
@@ -274,6 +283,7 @@
       - amd64
     branch:
       - main
+      - stable-15
       - stable-14
       - stable-13
     jobs:

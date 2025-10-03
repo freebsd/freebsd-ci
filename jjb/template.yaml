@@ -111,7 +111,7 @@
     defaults: global
     name: 'FreeBSD-{branch}-{target_arch}-images'
     disabled: '{disable_job_images}'
-    node: image_builder
+    node: jailer
     scm:
       - FreeBSD-src-use_git_commit
     parameters:

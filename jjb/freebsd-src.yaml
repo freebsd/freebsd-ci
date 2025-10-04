@@ -247,7 +247,7 @@
               variable: BACKTRACE_TOKEN
       - timestamps
       - timeout:
-          timeout: 240
+          timeout: 480
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

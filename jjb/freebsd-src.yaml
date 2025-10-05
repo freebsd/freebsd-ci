@@ -474,12 +474,6 @@
           retries: 3
           retry-delay: 10000
       - clean-jail
-      - trigger-parameterized-builds:
-        - project:
-            - 'FreeBSD-main-amd64-KMSAN_test'
-          condition: SUCCESS
-          git-revision: true
-          property-file: trigger.property
     wrappers:
       - timestamps
       - timeout:
@@ -508,6 +502,8 @@
       - execute-job-build-script
     publishers:
       - publish-junit-results
+    triggers:
+      - timed: '0 20 * * *'
     wrappers:
       - timestamps
       - timeout:

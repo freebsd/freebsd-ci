@@ -10,13 +10,13 @@ SRCCONF=${SRCCONF:-/dev/null}
 
 cd /usr/src
 
-sudo make -j ${JFLAG} -DNO_CLEAN \
+sudo make -j ${JFLAG} -DWITHOUT_CLEAN \
 	buildworld \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF}
-sudo make -j ${JFLAG} -DNO_CLEAN \
+sudo make -j ${JFLAG} -DWITHOUT_CLEAN \
 	buildkernel \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \

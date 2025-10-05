@@ -14,7 +14,7 @@ if [ -n "${CROSS_TOOLCHAIN}" ]; then
 	CROSS_TOOLCHAIN_PARAM=CROSS_TOOLCHAIN=${CROSS_TOOLCHAIN}
 fi
 
-sudo make -j ${JFLAG} -DNO_CLEAN \
+sudo make -j ${JFLAG} -DWITHOUT_CLEAN \
 	kernel-toolchain \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
@@ -22,7 +22,7 @@ sudo make -j ${JFLAG} -DNO_CLEAN \
 	__MAKE_CONF=${MAKECONF} \
 	SRCCONF=${SRCCONF} \
 
-sudo make -j ${JFLAG} -DNO_CLEAN \
+sudo make -j ${JFLAG} -DWITHOUT_CLEAN \
 	buildkernel \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \

@@ -11,7 +11,7 @@ KERNCONF=${KERNCONF:-LINT}
 cd ${WORKSPACE}/src
 
 make -j ${JFLAG} \
-	-DNO_CLEAN \
+	-DWITHOUT_CLEAN \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	kernel-toolchain \
@@ -21,7 +21,7 @@ make -j ${JFLAG} \
 	${EXTRA_FLAGS}
 
 make -j ${JFLAG} \
-	-DNO_CLEAN \
+	-DWITHOUT_CLEAN \
 	TARGET=${TARGET} \
 	TARGET_ARCH=${TARGET_ARCH} \
 	buildkernel \

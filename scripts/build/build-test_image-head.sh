@@ -68,6 +68,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 	# Install packages needed by tests:
 	# coreutils: bin/date
+	# filesystems/ext2: sys/fs/fusefs
 	# gdb: local/kyua/utils/stacktrace_test
 	# gtar: sys/fs/tarfs
 	# jq: sys/net/if_bridge_test
@@ -78,13 +79,21 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# perl5: lots of stuff
 	# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 	# porch: sys/kern/tty
+	# net/isc-dhcp44-server: sbin/dhclient/tests
+	# net/ndisc6: sys/netpfil/pf/icmp6.sh
 	# py-dpkt: sys/opencrypto/runtests
+	# net/scapy: sys/netpfil/pf
 	# python3: sys/opencrypto/runtests
 	# devel/py-pytest: sys/net/routing, tests in python in general
+	# devel/py-twisted: sys/netpfil/pf/proxy.sh
+	# security/openvpn: sys/net/if_ovpn
+	# security/setaudit: jail/tests/jail_basic_test.sh
+	# security/sg3_utils: sys/ses
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
 	# tcptestsuite: network stack test suite
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
+		filesystems/ext2 \
 		gdb		\
 		gtar		\
 		jq		\
@@ -93,6 +102,8 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		nmap		\
 		perl5		\
 		porch		\
+		net/isc-dhcp44-server \
+		net/ndisc6	\
 		net/py-dpkt	\
 		net/scapy	\
 		python		\
@@ -100,6 +111,8 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		devel/py-pytest	\
 		devel/py-twisted \
 		security/openvpn \
+		security/setaudit \
+		security/sg3_utils \
 		sudo		\
 		tcptestsuite
 

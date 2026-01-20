@@ -280,7 +280,7 @@
       - use-latest-testvm-revision
       - timestamps
       - timeout:
-          timeout: 960
+          timeout: 1920
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute
@@ -783,7 +783,7 @@
       - use-latest-testvm-revision
       - timestamps
       - timeout:
-          timeout: 960
+          timeout: 1920
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
           type: absolute

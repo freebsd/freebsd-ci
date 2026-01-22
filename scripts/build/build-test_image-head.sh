@@ -68,6 +68,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	sudo chroot ufs env ASSUME_ALWAYS_YES=yes pkg update
 	# Install packages needed by tests:
 	# coreutils: bin/date
+	# fusefs-ext2: sys/fs/fusefs/ctl
 	# gdb: local/kyua/utils/stacktrace_test
 	# gtar: sys/fs/tarfs
 	# jq: sys/net/if_bridge_test
@@ -81,10 +82,12 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# py-dpkt: sys/opencrypto/runtests
 	# python3: sys/opencrypto/runtests
 	# devel/py-pytest: sys/net/routing, tests in python in general
+	# sg3_utils: sys/cam/ctl
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
 	# tcptestsuite: network stack test suite
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
+		fusefs-ext2	\
 		gdb		\
 		gtar		\
 		jq		\
@@ -100,6 +103,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		devel/py-pytest	\
 		devel/py-twisted \
 		security/openvpn \
+		sg3_utils	\
 		sudo		\
 		tcptestsuite
 

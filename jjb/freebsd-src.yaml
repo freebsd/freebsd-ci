@@ -289,6 +289,16 @@
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-gcc14_build'
 
+- project:
+    name: FreeBSD-gcc15_build
+    target_arch:
+      - amd64
+      - riscv64
+    branch:
+      - main
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-gcc14_build'
+
 - job:
     name: FreeBSD-main-amd64-dtrace_build
     defaults: global

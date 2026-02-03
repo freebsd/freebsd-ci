@@ -46,6 +46,7 @@
             - 'FreeBSD-{branch}-{target_arch}-gcc12_build'
             - 'FreeBSD-{branch}-{target_arch}-gcc13_build'
             - 'FreeBSD-{branch}-{target_arch}-gcc14_build'
+            - 'FreeBSD-{branch}-{target_arch}-gcc15_build'
             - 'FreeBSD-{branch}-{target_arch}-dtrace_build'
             - 'FreeBSD-{branch}-{target_arch}-KASAN_build'
             - 'FreeBSD-{branch}-{target_arch}-KMSAN_build'
@@ -843,6 +844,32 @@
 
 - job-template:
     name: 'FreeBSD-{branch}-{target_arch}-gcc14_build'
+    defaults: global
+    node: jailer
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - scan-gcc-warnings
+      - clean-jail
+      - git-mail-notify-failure-mailinglist
+      - git-mail-notify-fixed-admin-only
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 180
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
+    name: 'FreeBSD-{branch}-{target_arch}-gcc15_build'
     defaults: global
     node: jailer
     scm:

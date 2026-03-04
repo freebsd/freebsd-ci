@@ -253,30 +253,6 @@
           type: absolute
 
 - project:
-    name: FreeBSD-gcc12_build
-    target: amd64
-    target_arch:
-      - amd64
-    branch:
-      - main
-      - stable-15
-      - stable-14
-      - stable-13
-    jobs:
-      - 'FreeBSD-{branch}-{target_arch}-gcc12_build'
-
-- project:
-    name: FreeBSD-gcc13_build
-    target: amd64
-    target_arch:
-      - amd64
-    branch:
-      - main
-      - stable-15
-    jobs:
-      - 'FreeBSD-{branch}-{target_arch}-gcc13_build'
-
-- project:
     name: FreeBSD-gcc14_build
     target: amd64
     target_arch:

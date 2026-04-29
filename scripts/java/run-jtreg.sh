@@ -48,7 +48,7 @@ usage()
 	echo "	-k				: cleanup and unmount poudriere jail if it is currently mounted, useful alongside the"
 	echo "					  -n switch, to keep jails mounted for debugging between runs while still starting"
 	echo "					  with a fresh start."
-	echo "	-t <tests>		: run a subset of test projects.  Argument is a comma seperated list of test projects."
+	echo "	-t <tests>		: run a subset of test projects.  Argument is a comma separated list of test projects."
 	echo "					  available projects are nashorn, langtools, hotspot, and jdk"
 	echo "					  defaults to running all test projects"
 	echo "Example: $0 -v releng/10.1 -a amd64 -p openjdk8"

@@ -3,7 +3,7 @@
 Setup:
 - Install jenkins job builder from source (recommended) or ports/pkg `devel/py-jenkins-job-builder`
 - `cp jenkins_jobs.ini.sample jenkins_jobs.ini`
-- Edit `jenkins_jobs.ini` for your credenticals of ci.FreeBSD.org
+- Edit `jenkins_jobs.ini` for your credentials of ci.FreeBSD.org
   (https://ci.freebsd.org/me/configure -> "show api token")
 
 Update jenkins jobs:

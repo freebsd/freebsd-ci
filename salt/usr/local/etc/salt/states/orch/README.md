@@ -1,4 +1,4 @@
-# FreeBSD CI Salt Orachestration
+# FreeBSD CI Salt Orchestration
 
 This directory is for salt based orchestration for freebsd ci system
 

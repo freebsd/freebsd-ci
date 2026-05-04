@@ -15,17 +15,6 @@
           mail_notify_fixed: mailinglist
 
 - project:
-    name: FreeBSD-amd64
-    target_arch:
-      - amd64
-    branch:
-      - stable-13
-    jobs:
-      - 'FreeBSD-{branch}-amd64-ci':
-          target: amd64
-          warnscanner: clang
-
-- project:
     name: FreeBSD-aarch64
     target_arch:
       - aarch64
@@ -33,7 +22,6 @@
       - main
       - stable-15
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-aarch64-ci':
           target: arm64
@@ -46,7 +34,6 @@
       - armv6
     branch:
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-armv6-ci':
           target: arm
@@ -60,7 +47,6 @@
       - main
       - stable-15
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-armv7-ci':
           target: arm
@@ -72,35 +58,10 @@
       - i386
     branch:
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-i386-ci':
           target: i386
           warnscanner: clang
-
-- project:
-    name: FreeBSD-mips
-    target_arch:
-      - mips
-    branch:
-      - stable-13
-    jobs:
-      - 'FreeBSD-{branch}-mips-ci':
-          target: mips
-          warnscanner: clang
-          disable_job_LINT: true
-
-- project:
-    name: FreeBSD-mips64
-    target_arch:
-      - mips64
-    branch:
-      - stable-13
-    jobs:
-      - 'FreeBSD-{branch}-mips64-ci':
-          target: mips
-          warnscanner: clang
-          disable_job_LINT: true
 
 - project:
     name: FreeBSD-powerpc
@@ -108,20 +69,8 @@
       - powerpc
     branch:
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-powerpc-ci':
-          target: powerpc
-          warnscanner: clang
-
-- project:
-    name: FreeBSD-13-powerpc64
-    target_arch:
-      - powerpc64
-    branch:
-      - stable-13
-    jobs:
-      - 'FreeBSD-{branch}-powerpc64-ci':
           target: powerpc
           warnscanner: clang
 
@@ -146,7 +95,6 @@
       - main
       - stable-15
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-powerpc64le-ci':
           target: powerpc
@@ -158,7 +106,6 @@
       - powerpcspe
     branch:
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-powerpcspe-ci':
           target: powerpc
@@ -172,7 +119,6 @@
       - main
       - stable-15
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-riscv64-ci':
           target: riscv
@@ -189,7 +135,6 @@
       - main
       - stable-15
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-KASAN_build':
       - 'FreeBSD-{branch}-{target_arch}-KASAN_testvm':
@@ -261,7 +206,6 @@
       - main
       - stable-15
       - stable-14
-      - stable-13
     jobs:
       - 'FreeBSD-{branch}-{target_arch}-gcc14_build'
 

@@ -72,11 +72,11 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# gdb: local/kyua/utils/stacktrace_test
 	# gtar: sys/fs/tarfs
 	# jq: sys/net/if_bridge_test
-	# kyua: everything
 	# ksh93: tests/sys/cddl/zfs/...
 	# nist-kat: sys/opencrypto/runtests
 	# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
 	# perl5: lots of stuff
+	# pjdfstest: sys/fs/pjdfstest
 	# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 	# porch: sys/kern/tty
 	# py-dpkt: sys/opencrypto/runtests
@@ -95,6 +95,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		nist-kat	\
 		nmap		\
 		perl5		\
+		pjdfstest	\
 		porch		\
 		net/py-dpkt	\
 		net/scapy	\

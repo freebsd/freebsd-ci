@@ -155,6 +155,30 @@
       - 'FreeBSD-{branch}-{target_arch}-KASAN_test_qemu':
 
 - project:
+    name: FreeBSD-BOUNDS_SAFETY-amd64
+    target: amd64
+    target_arch:
+      - amd64
+    branch:
+      - main
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_build':
+      - 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_testvm':
+      - 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_test':
+
+- project:
+    name: FreeBSD-BOUNDS_SAFETY-aarch64
+    target: arm64
+    target_arch:
+      - aarch64
+    branch:
+      - main
+    jobs:
+      - 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_build':
+      - 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_testvm':
+      - 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_test_qemu':
+
+- project:
     name: FreeBSD-srcproj
     target_arch:
       - aarch64

@@ -788,6 +788,154 @@
       - bind-artifact-credential
 
 - job-template:
+    name: 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_build'
+    defaults: global
+    node: jailer_fast
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+            FBSD_TARGET=amd64
+            FBSD_TARGET_ARCH=amd64
+            LINK_TYPE=latest
+            MOUNT_REPO=src
+    triggers:
+      - timed: 'H 2 * * *'
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: 'snapshot'
+          source: 'src/release/artifact/**'
+          remove-prefix: 'src/release/artifact'
+          retries: 3
+          retry-delay: 10000
+      - clean-jail
+      - trigger-parameterized-builds:
+        - project:
+            - 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_testvm'
+          condition: SUCCESS
+          git-revision: true
+          property-file: trigger.property
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 180
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
+- job-template:
+    defaults: global
+    name: 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_testvm'
+    node: image_builder
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - ftp:
+          site: 'artifact.ci.freebsd.org'
+          target: ''
+          source: 'artifact/**'
+          remove-prefix: 'artifact'
+          retries: 3
+          retry-delay: 10000
+      - clean-jail
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 30
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+
+- job-template:
+    name: 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_test'
+    node: vmhost_bhyve
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+            FBSD_TARGET={target}
+            FBSD_TARGET_ARCH={target_arch}
+            LINK_TYPE=latest_tested
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - execute-job-build-script
+    publishers:
+      - publish-junit-results
+    triggers:
+      - timed: '0 20 * * *'
+    wrappers:
+      - timestamps
+      - timeout:
+          timeout: 360
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
+# QEMU test for non x86 architectures.
+- job-template:
+    name: 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_test'
+    id: 'FreeBSD-{branch}-{target_arch}-BOUNDS_SAFETY_test_qemu'
+    node: vmhost_qemu
+    scm:
+      - FreeBSD-src-use_git_commit
+    parameters:
+      - USE_GIT_COMMIT
+    properties:
+      - inject:
+          properties-content: |
+            FBSD_BRANCH={branch}
+            FBSD_TARGET={target}
+            FBSD_TARGET_ARCH={target_arch}
+            LINK_TYPE=latest_tested
+    builders:
+      - add-svn-revision-description
+      - checkout-scripts
+      - setup-jail
+      - execute-in-jail
+    publishers:
+      - clean-jail
+      - publish-junit-results
+    triggers:
+      - timed: '0 22 * * *'
+    wrappers:
+      - use-latest-testvm-revision
+      - timestamps
+      - timeout:
+          timeout: 960
+          timeout-var: 'BUILD_TIMEOUT'
+          fail: true
+          type: absolute
+      - bind-artifact-credential
+
+- job-template:
     name: 'FreeBSD-{branch}-{target_arch}-gcc14_build'
     defaults: global
     node: jailer

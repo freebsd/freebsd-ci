@@ -70,12 +70,17 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# coreutils: bin/date
 	# fusefs-ext2: sys/fs/fusefs/ctl
 	# gdb: local/kyua/utils/stacktrace_test
+	# git-lite: sys/fs/tarfs
 	# gtar: sys/fs/tarfs
+	# isc-dhcp44-server: sbin/dhclient/tests/pcp.sh
 	# jq: sys/net/if_bridge_test
 	# ksh93: tests/sys/cddl/zfs/...
+	# linux_base-rl9: sys/vfs/abi_root_symlink.sh
+	# ndisc6: sys/netpfil/pf/icmp6.sh
 	# nist-kat: sys/opencrypto/runtests
 	# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
 	# perl5: lots of stuff
+	# pimd: sys/netinet/ip_mroute.py
 	# pjdfstest: sys/fs/pjdfstest
 	# pkgconf: local/lutok/examples_test, local/atf/atf-c, local/atf/atf-c++
 	# porch: sys/kern/tty
@@ -84,17 +89,23 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# devel/py-pytest: sys/net/routing, tests in python in general
 	# sg3_utils: sys/cam/ctl
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
+	# security/setaudit: usr.sbin/jail/tests/jail_basic_test.sh
 	# tcptestsuite: network stack test suite
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
 		fusefs-ext2	\
 		gdb		\
+		git-lite	\
 		gtar		\
+		isc-dhcp44-server \
 		jq		\
 		ksh93		\
+		linux_base-rl9	\
+		ndisc6		\
 		nist-kat	\
 		nmap		\
 		perl5		\
+		pimd		\
 		pjdfstest	\
 		porch		\
 		net/py-dpkt	\
@@ -105,6 +116,7 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		devel/py-twisted \
 		security/openvpn \
 		sg3_utils	\
+		security/setaudit \
 		sudo		\
 		tcptestsuite
 

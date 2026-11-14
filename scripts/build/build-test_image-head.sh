@@ -75,7 +75,6 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# isc-dhcp44-server: sbin/dhclient/tests/pcp.sh
 	# jq: sys/net/if_bridge_test
 	# ksh93: tests/sys/cddl/zfs/...
-	# linux_base-rl9: sys/vfs/abi_root_symlink.sh
 	# ndisc6: sys/netpfil/pf/icmp6.sh
 	# nist-kat: sys/opencrypto/runtests
 	# nmap: sys/netinet/fibs_test:arpresolve_checks_interface_fib
@@ -91,6 +90,12 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 	# sudo: tests/sys/cddl/zfs/tests/delegate/...
 	# security/setaudit: usr.sbin/jail/tests/jail_basic_test.sh
 	# tcptestsuite: network stack test suite
+	#
+	# TODO:
+	# - linux_base-rl9: sys/vfs/abi_root_symlink.sh [1]: builder host
+	#   doesn't have linux support enabled.
+	#
+	# [1]: https://github.com/freebsd/freebsd-ci/pull/205
 	sudo chroot ufs pkg install -y	\
 		coreutils	\
 		fusefs-ext2	\
@@ -100,7 +105,6 @@ if [ "${TARGET}" = "amd64" -o "${TARGET}" = "i386" ]; then
 		isc-dhcp44-server \
 		jq		\
 		ksh93		\
-		linux_base-rl9	\
 		ndisc6		\
 		nist-kat	\
 		nmap		\
